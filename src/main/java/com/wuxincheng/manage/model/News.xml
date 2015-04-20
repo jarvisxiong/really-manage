@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="News">
+  <typeAlias alias="News" type="com.wuxincheng.manage.model.News" />
+  
+  <resultMap class="News" id="NewsListMapping">
+  	<result property="id" column="PK" />
+    <result property="commentId" column="COMMENT_ID" />
+    <result property="url" column="URL" />
+  	<result property="domain" column="DOMAIN" />
+  	<result property="imgLink" column="IMG_LINK" />
+  	<result property="title" column="TITLE" />
+  	<result property="createTime" column="CREATE_TIME" />
+  	<result property="creator" column="USERNAME" />
+  	<result property="truthDegree" column="TRUTH_DEGREE" />
+    <result property="opinionTimes" column="OPINION_TIMES" />
+  	<result property="weChatPublicName" column="PUBLIC_NAME" />
+  	<result property="weChatPublicNO" column="PUBLIC_NO" />
+  	<result property="state" column="STATE" />
+  </resultMap>
+  
+  <resultMap class="News" id="NewsSimpleListMapping">
+    <result property="id" column="PK" />
+    <result property="title" column="TITLE" />
+    <result property="state" column="STATE" />
+    <result property="comment" column="COMMENT" />
+  </resultMap>
+  
+  <resultMap class="News" id="NewsMapping">
+    <result property="id" column="PK" />
+    <result property="commentId" column="COMMENT_ID" />
+    <result property="url" column="URL" />
+    <result property="domain" column="DOMAIN" />
+    <result property="imgLink" column="IMG_LINK" />
+    <result property="title" column="TITLE" />
+    <result property="subTitle" column="SUB_TITLE" />
+    <result property="content" column="CONTENT" />
+    <result property="comment" column="COMMENT" />
+    <result property="createTime" column="CREATE_TIME" />
+    <result property="truthDegree" column="TRUTH_DEGREE" />
+    <result property="opinionTimes" column="OPINION_TIMES" />
+    <result property="state" column="STATE" />
+  </resultMap>
+  
+  <update id="sendNews4App" parameterClass="java.lang.String">
+    UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '0' WHERE PK = #id# 
+  </update>
+  
+  <update id="update" parameterClass="News">
+    UPDATE T_REALLY_NEWS SET 
+      TITLE = #title#, SUB_TITLE = #subTitle#, IMG_LINK = #imgLink#, 
+      CREATE_TIME = CURRENT_TIMESTAMP, STATE = #state# 
+    WHERE PK = #id# 
+  </update>
+  
+  <select id="queryNewsById" parameterClass="java.lang.String" resultMap="NewsMapping">
+    SELECT 
+      n.PK, n.URL, n.DOMAIN, n.IMG_LINK, n.TITLE, n.SUB_TITLE, n.CONTENT, n.STATE, 
+      DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME,
+      n.TRUTH_DEGREE, n.OPINION_TIMES, c.CONTENT AS COMMENT, c.PK AS COMMENT_ID
+    FROM T_REALLY_NEWS n 
+      LEFT JOIN T_REALLY_COMMENT c ON n.PK = c.NEWS_ID
+    WHERE n.PK = #id#
+  </select>  
+  
+  <select id="queryPager" parameterClass="java.util.Map" resultMap="NewsListMapping">
+    SELECT 
+    	n.PK, n.DOMAIN, n.IMG_LINK, n.TRUTH_DEGREE, c.PK AS COMMENT_ID,
+        LEFT(n.TITLE, 30) AS TITLE, n.URL, n.TRUTH_DEGREE, n.OPINION_TIMES, 
+    	DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, 
+    	n.OPINION_TIMES, n.STATE, u.USERNAME, p.PUBLIC_NAME, p.PUBLIC_NO
+    FROM T_REALLY_NEWS n 
+    	LEFT JOIN T_REALLY_USER u ON n.CREATOR_ID = u.PK
+    	LEFT JOIN T_MANAGE_WECHAT_PUBLIC p ON n.SOGOU_OPENID = p.OPEN_ID
+    	LEFT JOIN T_REALLY_COMMENT c ON n.PK = c.NEWS_ID
+    <dynamic prepend="WHERE">
+      <isNotNull prepend="AND" property="start">
+        (n.STATE = '0' OR n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
+      <isNotNull prepend="AND" property="queryStartDate">
+        n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
+      </isNotNull>
+      <isNotNull prepend="AND" property="queryEndDate">
+        <![CDATA[n.CREATE_TIME < date(DATE_FORMAT(#queryEndDate#,'%Y%m%d'))]]>
+      </isNotNull>
+    </dynamic>
+    ORDER BY n.STATE DESC, n.CREATE_TIME DESC LIMIT #start#, #end#
+  </select>
+  
+  <select id="queryCountByParams" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+    SELECT COUNT(*) AS queryCount FROM T_REALLY_NEWS n
+    WHERE (n.STATE = '0' OR n.STATE = '1' OR n.STATE IS NULL)
+    <dynamic>
+      <isNotNull prepend="AND" property="queryStartDate">
+        n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
+      </isNotNull>
+      <isNotNull prepend="AND" property="queryEndDate">
+        <![CDATA[n.CREATE_TIME < date(DATE_FORMAT(#queryEndDate#,'%Y%m%d'))]]>
+      </isNotNull>
+    </dynamic>
+  </select>
+  
+  <select id="queryCount" resultClass="java.lang.Integer">
+    SELECT COUNT(*) AS queryCount FROM T_REALLY_NEWS WHERE STATE = '0' OR STATE = '1' OR STATE IS NULL
+  </select>
+  
+  <insert id="insert" parameterClass="News">
+    INSERT INTO T_REALLY_NEWS(
+      URL, DOMAIN, IMG_LINK, TITLE, SUB_TITLE, CONTENT, CREATE_TIME, 
+      CREATOR_ID, TRUTH_DEGREE, OPINION_TIMES, SOGOU_DOCID, SOGOU_OPENID, STATE)
+    VALUES(
+      #url#, #domain#, #imgLink#, #title#, #subTitle#, #content#, CURRENT_TIMESTAMP, 
+      #creator#, #truthDegree#, #opinionTimes#, #sogouDocid#, #sogouOpenid#, #state#)
+  </insert>
+  
+  <select id="getAllWechatDocid" resultClass="java.lang.String">
+    SELECT SOGOU_DOCID FROM T_REALLY_NEWS
+  </select>
+  
+  <select id="queryNewsIdByDocid" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+    SELECT PK FROM T_REALLY_NEWS WHERE SOGOU_DOCID = #sogouDocid#
+  </select>
+  
+  <select id="queryExpireNews" resultMap="NewsSimpleListMapping">
+    SELECT n.PK, n.TITLE, n.STATE FROM T_REALLY_NEWS n
+    WHERE <![CDATA[n.CREATE_TIME <= date_sub(CURRENT_TIMESTAMP, INTERVAL 2 DAY)]]> AND n.STATE = '1'
+  </select>
+  
+  <delete id="delete" parameterClass="java.lang.Long">
+    UPDATE T_REALLY_NEWS n SET n.STATE = '2' WHERE n.PK = #id#
+  </delete>
+	
+</sqlMap>

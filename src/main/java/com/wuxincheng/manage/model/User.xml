@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="User">
+	<typeAlias alias="User" type="com.wuxincheng.manage.model.User" />
+
+	<resultMap class="User" id="UserMapping">
+		<result property="id" column="PK" />
+		<result property="email" column="EMAIL" />
+		<result property="lastLoginTime" column="LAST_LOGIN_TIME" />
+		<result property="mobilePhone" column="MOBILE_PHONE" />
+		<result property="registerTime" column="REGISTER_TIME" />
+		<result property="username" column="USERNAME" />
+		<result property="truthDegreeScore" column="TRUTH_DEGREE_SCORE" />
+	</resultMap>
+	
+	<select id="queryAll" parameterClass="java.lang.String" resultMap="UserMapping">
+		SELECT 
+			PK, EMAIL, MOBILE_PHONE, USERNAME, TRUTH_DEGREE_SCORE, 
+			DATE_FORMAT(LAST_LOGIN_TIME,'%Y%m%d %H:%i:%S') AS LAST_LOGIN_TIME,
+			DATE_FORMAT(REGISTER_TIME,'%Y%m%d %H:%i:%S') AS REGISTER_TIME
+		FROM T_REALLY_USER ORDER BY LAST_LOGIN_TIME DESC, REGISTER_TIME DESC
+	</select>
+	
+</sqlMap>

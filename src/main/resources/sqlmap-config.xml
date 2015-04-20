@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" 
+	"http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+
+  <settings useStatementNamespaces="true" />
+  
+  <sqlMap resource="com/wuxincheng/manage/model/Admins.xml" />
+  <sqlMap resource="com/wuxincheng/manage/model/WeChat.xml" />
+  <sqlMap resource="com/wuxincheng/manage/model/News.xml" />
+  <sqlMap resource="com/wuxincheng/manage/model/Comment.xml" />
+  <sqlMap resource="com/wuxincheng/manage/model/Message.xml" />
+  <sqlMap resource="com/wuxincheng/manage/model/User.xml" />
+
+</sqlMapConfig>

@@ -1,0 +1,331 @@
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,
+code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,
+figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video,
+input[type=radio],input[type=checkbox]
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	list-style-type: none;
+	font-family: Arial, 微软雅黑, 宋体, Geneva, Tahoma, sans-serif;
+	font-size: 9pt;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	background-color: #cbdaef;
+	color: #333333;
+}
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #5083a9;
+	text-decoration: none;
+}
+
+input[type=checkbox],input[type=radio] {
+	vertical-align: middle; 
+	padding: 0px;
+	padding-bottom: 2px;
+	font-family: Arial, 微软雅黑, 宋体, Geneva, Tahoma, sans-serif;
+}
+
+input[type=button], input[type=reset], input[type=submit] {
+	margin: 0px;
+	padding: 0px;
+	height: 20px; 
+	cursor: pointer;
+	margin-bottom: 2px;
+	border: #999999 1px solid; 
+	border: *#eeeeee 1px solid; 
+	background-image:url("../image/bg.button.png");
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 1px\9;
+	font-size: 9pt;
+	overflow:visible;
+	color:#7d0000;
+	font-family: Arial, 微软雅黑, 宋体, Geneva, Tahoma, sans-serif;
+}
+
+input[type=button] {
+	width: auto\9;
+}
+
+input[type=text], input[type=password], select, textarea {
+	height: 16px; 
+	border: #d0d0d0 1px solid; 
+	background-color: #FCFCFC;
+	font-size: 9pt;
+	font-family: Arial, 微软雅黑, 宋体, Geneva, Tahoma, sans-serif;
+}
+
+select {
+	font-size: 9pt;
+	height: 20px;
+	height: 21px\9;
+	padding: 0px;
+	margin: 0px;
+	border: #aaaaaa 1px solid; 
+	vertical-align: middle;
+	vertical-align: baseline\9;
+	margin-bottom: 4px;
+	margin-bottom: -1px\9;
+	font-family: Arial, 微软雅黑, 宋体, Geneva, Tahoma, sans-serif;
+}
+
+#main-table {
+	height:100%; 
+	width:100%; 
+	display:block; 
+	max-width: 997px;
+	width:expression(document.body.clientWidth > 997 ? '997px' : '100%')\9;
+}
+
+#main-table td {
+	background-color: #f5f5f5; 
+	border: 1px #E0E0E0 solid;
+}
+
+#main-title {
+	height: 20px; 
+	line-height: 18px; 
+	font-weight: bold; 
+	padding: 3px; 
+	font-size: 14px; 
+	margin: 4px; 
+	margin-top: 3px; 
+	background-color: #ffffe0; 
+	border: 1px #ffcf85 solid;
+}
+
+#main-toolbar {
+	padding: 3px; 
+	margin: 4px; 
+	margin-top: 3px; 
+	margin-bottom: 0px; 
+	border: 1px #cccccc solid; 
+	padding: 1px;
+}
+
+#main-toolbar div {
+	background-color: #cbdaef; 
+	height: 20px;
+	line-height: 20px;
+	vertical-align: middle;
+	padding-top: 2px;
+	padding-left: 3px;
+}
+
+#main-toolbar div span {
+	padding-left: 21px; 
+	padding-right: 20px; 
+	background-repeat:no-repeat; 
+	float: left; 
+	font-weight: bold; 
+	color:#7d0000;
+	cursor: pointer;
+}
+
+#main-toolbar-line {
+	height: 1px;
+	margin-left: 4px; 
+	margin-right: 4px;
+	background-color: #e5eaed; 
+	overflow: hidden;
+}
+
+#main-line {
+	height: 1px;
+	margin-left: 4px; 
+	margin-right: 4px;
+	background-color: #cccccc; 
+	overflow: hidden;
+}
+
+#main-subtab {
+	padding: 4px; 
+	padding-bottom: 0px; 
+	margin: 4px; 
+	margin-top: 2px; 
+	margin-bottom: 0px; 
+	height: 26px; 
+	background-image: url('../image/line.1.gif'); 
+	background-repeat: repeat-x; 
+	background-position: bottom;
+	vertical-align: bottom;
+	padding-left: 15px;
+}
+
+#main-subtab td {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	vertical-align: bottom;
+	white-space:nowrap;
+}
+
+#main-subtab div {
+	padding: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: 0px;
+	border: 1px #c3c3c3 solid;
+	background-color: #dfdfdf;
+	height: 18px;
+	line-height: 18px;
+	cursor: pointer;
+}
+
+#main-subtab .current{
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px #bbbbbb solid;
+	border-bottom: 1px #ffffff solid;
+	background-color: #ffffff;
+	height: 21px;
+	line-height: 22px;
+	font-weight: bold;
+	font-size: 10pt;
+	cursor: default;
+}
+
+#main-panlebox {
+	padding: 4px; 
+	margin: 4px; 
+	margin-top: 0px; 
+	margin-bottom: 0px;
+	border: 1px #cccccc solid; 
+	border-top: 0px;
+	overflow-x: auto;
+	overflow-y: scroll;
+	background-color: #ffffff;
+}
+
+#main-panle {
+	
+}
+
+#main-tablebox {
+	padding: 4px; 
+	margin: 4px; 
+	margin-top: 0px; 
+	margin-bottom: 0px;
+	border: 1px #cccccc solid; 
+	border-top: 0px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background-color: #ffffff;
+}
+
+#main-div {
+	margin: 4px; 
+	margin-top: 0px; 
+	margin-bottom: 0px; 
+	border: 1px #cccccc solid; 
+	border-top: 0px; 
+	border-bottom: 0px; 
+	background-color: #ffffff;
+	padding: 4px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+} 
+
+#main-div div{
+	border-bottom: 1px #cccccc solid; 
+}
+
+
+#main-footer {
+	margin: 4px; 
+	margin-top: 0px; 
+	border: 1px #cccccc solid; 
+	border-top: 0px; 
+	background-color: #ffffff;
+	height: 22px;
+	padding: 1px;
+}
+
+#main-footer div{
+	background-color: #dddddd;
+	height: 22px;
+	line-height: 22px;
+	vertical-align: middle;
+}
+
+#main-footer span {
+	vertical-align: bottom;
+	color: #5083a9;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#main-footer span input[type=text] {
+	width: 30px; 
+	height: 13px;
+	height: 12px\9;
+	text-align: center;
+}
+
+/** ************************ IE Scrollbar CSS Style Line ************************ */
+body{
+	scrollbar-base-color: #FFFFFF;
+	scrollbar-track-color: #FFFFFF;
+	scrollbar-3dlight-color: #BEBEBE;
+	scrollbar-darkshadow-color: #BEBEBE;
+	scrollbar-arrow-color: #BEBEBE;
+	scrollbar-face-color: #BEBEBE;
+	scrollbar-highlight-color: #FFFFFF;
+	scrollbar-shadow-color: #FFFFFF;
+}
+
+/** ************************ Google Chrome Scrollbar CSS Style Line ************************ */
+/** 滚动条宽和高 */
+::-webkit-scrollbar { width: 15px; height: 15px;}
+/** 滚动条样式底部内层样式 */
+::-webkit-scrollbar-track-piece { background-color: #E0E0E0;}
+/** 滚动条滑块样式 */ /** 滚动条滑块边角–导圆角 */
+::-webkit-scrollbar-thumb{height: 50px; background-color: #BEBEBE; -webkit-border-radius: 0px;}
+/** ************************ Google Chrome Scrollbar CSS Style Line ************************ */
+
+#table_border{  
+    border: solid 1px #d0d0d0;  
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+#table_border tr th{  
+    height: 28px;
+    color: #5B5B5B;
+    border: solid 1px #d0d0d0;
+}
+
+#table_border tr td{  
+    height: 28px;
+    color: #5B5B5B;
+    border: solid 1px #d0d0d0;
+}
+
+.report_title{
+	color: #000000;
+	font-weight: bold;
+}
+
+#table_div{
+	margin: 10px 10px 10px 10px; 
+	border: 1px #d0d0d0 solid; 
+	background-color: #ffffff;
+	padding: 10px 10px 10px 10px;
+}
+

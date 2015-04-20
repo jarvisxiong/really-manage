@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Message">
+	<typeAlias alias="Message" type="com.wuxincheng.manage.model.Message" />
+
+	<resultMap class="Message" id="MessageMapping">
+		<result property="id" column="ID" />
+		<result property="state" column="STATE" />
+		<result property="userId" column="USERID" />
+		<result property="username" column="USERNAME" />
+		<result property="message" column="MESSAGE" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<select id="queryAll" parameterClass="java.lang.String" resultMap="MessageMapping">
+      SELECT m.PK AS ID, m.STATE, u.PK AS USERID, u.USERNAME,
+           LEFT(m.MESSAGE, 50) AS MESSAGE,
+           DATE_FORMAT(m.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME 
+      FROM T_REALLY_MESSAGE m
+           LEFT JOIN T_REALLY_USER u on m.CREATOR = u.PK     
+      ORDER BY m.CREATE_TIME DESC
+	</select>
+	
+</sqlMap>

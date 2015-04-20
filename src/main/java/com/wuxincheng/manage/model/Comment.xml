@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Comment">
+  <typeAlias alias="Comment" type="com.wuxincheng.manage.model.Comment" />
+
+  <resultMap id="CommentMapping" class="Comment">
+  	<result property="id" column="PK" />
+  	<result property="newsId" column="NEWS_ID" />
+  	<result property="content" column="CONTENT" />
+  	<result property="creator" column="CREATOR" />
+  	<result property="createTime" column="CREATE_TIME" />
+  	<result property="background" column="BACKGROUND_RESOURCE_ID" />
+  	<result property="alpha" column="BACKGROUND_ALPHA" />
+  	<result property="hotspotValue" column="HOTSPOT_VALUE" />
+  	<result property="attention" column="ATTENTION" />
+  	<result property="state" column="STATE" />
+  </resultMap>
+  
+  <resultMap id="CommentSimpleListMapping" class="Comment">
+    <result property="id" column="PK" />
+  	<result property="newsId" column="NEWS_ID" />
+  </resultMap>
+  
+  <select id="queryCommentByNewsId" parameterClass="java.lang.String" resultMap="CommentMapping">
+    SELECT 
+      n.PK, n.NEWS_ID, n.CONTENT, n.CREATOR, n.BACKGROUND_RESOURCE_ID, 
+      DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME,
+      n.HOTSPOT_VALUE, n.BACKGROUND_ALPHA, n.ATTENTION, n.STATE
+    FROM T_REALLY_COMMENT n WHERE n.NEWS_ID = #newsId#
+  </select>  
+	
+  <insert id="insert" parameterClass="Comment">
+    INSERT INTO T_REALLY_COMMENT(
+      NEWS_ID, CONTENT, CREATOR, CREATE_TIME, BACKGROUND_RESOURCE_ID, 
+      BACKGROUND_ALPHA, HOTSPOT_VALUE, ATTENTION, STATE)
+    VALUES(
+      #newsId#, #content#, #creator#, CURRENT_TIMESTAMP, #background#, 
+      #alpha#, #hotspotValue#, #attention#, #state#)
+  </insert>
+  
+  <update id="update" parameterClass="Comment">
+    UPDATE T_REALLY_COMMENT SET 
+      CREATE_TIME = CURRENT_TIMESTAMP, CONTENT = #content#, STATE = #state# 
+    WHERE NEWS_ID = #newsId# 
+  </update>
+  
+  <update id="sendNews4App" parameterClass="java.lang.String">
+    UPDATE T_REALLY_COMMENT SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '0' WHERE NEWS_ID = #newsId# 
+  </update>
+  
+  <select id="queryExpireComments" resultMap="CommentSimpleListMapping">
+    SELECT n.PK, n.NEWS_ID FROM T_REALLY_COMMENT n
+    WHERE <![CDATA[n.CREATE_TIME <= date_sub(CURRENT_TIMESTAMP, INTERVAL 2 DAY)]]> AND n.STATE = '1'
+  </select>
+  
+  <delete id="delete" parameterClass="java.lang.Long">
+    UPDATE T_REALLY_COMMENT n SET n.STATE = '2' WHERE n.PK = #id#
+  </delete>
+
+</sqlMap>

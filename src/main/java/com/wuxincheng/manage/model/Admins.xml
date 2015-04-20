@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Admins">
+	<typeAlias alias="Admins" type="com.wuxincheng.manage.model.Admins" />
+
+	<resultMap class="Admins" id="AdminsMapping">
+		<result property="adminsLogin" column="ADMINS_LOGIN" />
+		<result property="adminsPwd" column="ADMINS_PWD" />
+		<result property="adminsName" column="ADMINS_NAME" />
+		<result property="sex" column="SEX" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="memo" column="MEMO" />
+		<result property="state" column="STATE" />
+		<result property="adminsLevel" column="ADMINS_LEVEL" />
+	</resultMap>
+	
+	<select id="queryAll" parameterClass="java.lang.String" resultMap="AdminsMapping">
+		SELECT 
+			ADMINS_LOGIN, ADMINS_PWD, ADMINS_NAME, SEX, MEMO, STATE, ADMINS_LEVEL, 
+			DATE_FORMAT(CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME
+		FROM T_MANAGE_ADMINS
+	</select>
+	
+	<select id="query" parameterClass="Admins" resultMap="AdminsMapping">
+		SELECT 
+			ADMINS_LOGIN, ADMINS_PWD, ADMINS_NAME, SEX, MEMO, STATE, ADMINS_LEVEL, 
+			DATE_FORMAT(CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME
+		FROM T_MANAGE_ADMINS
+		WHERE ADMINS_LOGIN = #adminsLogin#
+		<dynamic>
+			<isNotNull prepend=" AND " property="adminsPwd">
+				ADMINS_PWD = #adminsPwd#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<insert id="insert" parameterClass="Admins">
+		INSERT INTO T_MANAGE_ADMINS (ADMINS_LOGIN, ADMINS_PWD, ADMINS_NAME, SEX, MEMO, STATE, ADMINS_LEVEL, CREATE_TIME) 
+			VALUES (#adminsLogin#, #adminsPwd#, #adminsName#, #sex#, #memo#, #state#, #adminsLevel#, CURRENT_TIMESTAMP)
+	</insert>
+	
+	<update id="update" parameterClass="Admins">
+		UPDATE T_MANAGE_ADMINS SET 
+			ADMINS_NAME = #adminsName#, SEX = #sex#, MEMO = #memo#, STATE = #state#, ADMINS_LEVEL = #adminsLevel#
+		WHERE ADMINS_LOGIN = #adminsLogin#
+	</update>
+	
+	<update id="modifyPwd" parameterClass="Admins">
+		UPDATE T_MANAGE_ADMINS SET ADMINS_NAME = #adminsName# WHERE ADMINS_LOGIN = #adminsLogin#
+	</update>
+</sqlMap>
