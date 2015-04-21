@@ -4,7 +4,7 @@
   version="2.5">
 
   <display-name>really-manage</display-name>
-  <description>真象说后台管理</description>
+  <description>真象日报后台管理</description>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
