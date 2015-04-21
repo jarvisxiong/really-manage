@@ -110,5 +110,14 @@ public interface NewsDao {
 	 * @return
 	 */
 	public abstract List<News> queryExpireNews();
+	
+	/**
+	 * 批量入库
+	 * 
+	 * @param newsIds
+	 */
+	public abstract void intoDBatch(String newsId);
+
+	public abstract void rollback(String string);
 
 }

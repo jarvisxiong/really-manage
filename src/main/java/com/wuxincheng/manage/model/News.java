@@ -29,6 +29,9 @@ public class News implements Serializable {
 	private Double truthDegree = 0D;
 
 	private long opinionTimes = 0L;
+	
+	/** 虚拟活跃度 */
+	private String virtualActive;
 
 	/** 微信公众号名称 */
 	private String weChatPublicName;
@@ -38,7 +41,7 @@ public class News implements Serializable {
 	private String sogouDocid;
 	/** 搜狗搜索微信的ID */
 	private String sogouOpenid;
-	/** 状态: null或0-正常, 1-不发布, 2-删除 */
+	/** 状态: null或0-正常, (-1)-预发布, 1-不发布, 2-删除 */
 	private String state;
 
 	private Long commentId;
@@ -196,6 +199,14 @@ public class News implements Serializable {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getVirtualActive() {
+		return virtualActive;
+	}
+
+	public void setVirtualActive(String virtualActive) {
+		this.virtualActive = virtualActive;
 	}
 
 }

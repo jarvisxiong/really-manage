@@ -37,10 +37,9 @@ function queryReset() {
       <button type="button" class="btn btn-warning btn-sm">新增</button>
       </a>
       <span class="text-danger"></span>
-      <a href="<%=request.getContextPath()%>/manage/news/xxx">
-      <button type="button" class="btn btn-warning btn-sm">入库</button>
+      <a href="#"><!--  -->
+      <button type="button" class="btn btn-warning btn-sm" onclick="selected();">入库</button>
       </a>
-      
     </form>
     <hr />
     <div class="table-responsive">
@@ -48,7 +47,6 @@ function queryReset() {
         <thead>
           <tr>
             <th style="text-align: center;">
-              <input type="checkbox">
               <!-- 
               <input type="checkbox" id="SelectAll" onclick="selectAll();" />
                -->
@@ -170,24 +168,19 @@ function queryReset() {
   <jsp:include page="../bottom.jsp" />
 </body>
 <script type="text/javascript">
-  function selectAll(){  
-    if ($("#selectAll").attr("checked")) {
-  	$(":checkbox").attr("checked", true);
-    } else {
-  	$(":checkbox").attr("checked", false);
-    }  
-  }
-  // 子复选框的事件  
-  function setSelectAll(){
-    // 当没有选中某个子复选框时，SelectAll取消选中  
-    if (!$("#subcheck").checked) {
-  	$("#selectAll").attr("checked", false);
-    }
-    var chsub = $("input[type='checkbox'][id='subcheck']").length; // 获取subcheck的个数  
-    var checkedsub = $("input[type='checkbox'][id='subcheck']:checked").length; // 获取选中的subcheck的个数  
-    if (checkedsub == chsub) {
-  	$("#selectAll").attr("checked", true);
-    }
-  }
+function selected() {
+	// 获取选中的CheckBox
+	var newsIds = $('input[id="subcheck"]:checked').map(function() {
+		return this.value;
+	}).get().join();
+  	
+	// 判断是否已经选择文章
+	if (newsIds == '') {
+  		alert("请您选择需要入库的文章");
+		return;
+	}
+	
+	window.location.href = "<%=request.getContextPath()%>/manage/news/intoDBatch?newsIds="+newsIds;
+}
 </script>
 </html>

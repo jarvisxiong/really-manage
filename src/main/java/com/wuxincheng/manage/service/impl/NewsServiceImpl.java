@@ -1,5 +1,6 @@
 package com.wuxincheng.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,35 @@ public class NewsServiceImpl implements NewsService {
 		News news = newsDao.queryNewsById(newsId+"");
 		// 删除对应的评论
 		commentDao.delete(news.getCommentId());
+	}
+
+	@Override
+	public void intoDBatch(Long[] newsIds) {
+		for (Long newsId : newsIds) {
+			newsDao.intoDBatch(newsId+"");
+		}
+	}
+
+	@Override
+	public void sendBatch(Long[] newsIds) {
+		for (Long newsId : newsIds) {
+			newsDao.sendNews4App(newsId+"");
+			commentDao.sendNews4App(newsId+"");
+		}
+	}
+
+	@Override
+	public List<News> getNewsByIds(Long[] newsIds) {
+		List<News> news = new ArrayList<News>();
+		for (long newsId : newsIds) {
+			news.add(newsDao.queryNewsById(newsId+""));
+		}
+		return news;
+	}
+
+	@Override
+	public void rollback(Long newsId) {
+		newsDao.rollback(newsId+"");
 	}
 	
 }

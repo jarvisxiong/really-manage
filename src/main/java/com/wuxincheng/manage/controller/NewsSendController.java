@@ -2,6 +2,7 @@ package com.wuxincheng.manage.controller;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,6 +90,7 @@ public class NewsSendController extends BaseController {
 		Map<String, Object> queryParam = new HashMap<String, Object>();
 		queryParam.put("start", start);
 		queryParam.put("end", end);
+		queryParam.put("presend", "presend"); // 
 		queryParam.put("queryStartDate", this.queryStartDate);
 		queryParam.put("queryEndDate", queryEndDateAfter);
 		
@@ -130,7 +132,7 @@ public class NewsSendController extends BaseController {
 	@RequestMapping(value = "/praeUrl")
 	public String praeUrl() {
 		logger.info("显示解析URL页面");
-		return "news/prae_url";
+		return "send/prae_url";
 	}
 	
 	@RequestMapping(value = "/praeShow")
@@ -158,7 +160,7 @@ public class NewsSendController extends BaseController {
 		
 		model.addAttribute("news", news);
 		
-		return "news/edit";
+		return "send/edit";
 	}
 	
 	@RequestMapping(value = "/edit")
@@ -178,7 +180,7 @@ public class NewsSendController extends BaseController {
 			model.addAttribute("news", news);
 		}
 		
-		return "news/edit";
+		return "send/edit";
 	}
 	
 	@RequestMapping(value = "/doEdit")
@@ -198,16 +200,42 @@ public class NewsSendController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/send")
-	public String sendBatch(HttpServletRequest request, String newsId, Model model) {
+	public String send(HttpServletRequest request, String newsId, Model model) {
 		logger.info("发布文章");
-		
-		// TODO
 		
 		if (!StringUtils.isEmpty(newsId)) {
 			newsService.sendNews4App(newsId);
 		}
 		
 		return list(request, this.currentPage, null, null, null, model);
+	}
+	
+	@RequestMapping(value = "/sendBatch")
+	public String sendBatch(HttpServletRequest request, Long[] newsIds, Model model) {
+		logger.info("批量发布文章");
+		
+		if (newsIds.length < 1) {
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "批量发布文章失败");
+			return list(request, "1", null, null, null, model);
+		}
+		
+		newsService.sendBatch(newsIds);
+		
+		return list(request, this.currentPage, null, null, null, model);
+	}
+	
+	@RequestMapping(value = "/showBatch")
+	public String showBatch(HttpServletRequest request, Long[] newsIds, Model model) {
+		logger.info("批量发布文章");
+		
+		if (newsIds.length < 1) {
+			return null;
+		}
+		
+		List<News> news = newsService.getNewsByIds(newsIds);
+		model.addAttribute("news", news);
+		
+		return "send/show";
 	}
 	
 	@RequestMapping(value = "/comment")
@@ -217,7 +245,7 @@ public class NewsSendController extends BaseController {
 		model.addAttribute("newsId", newsId);
 		model.addAttribute("commentId", commentId);
 		
-		return "news/comment";
+		return "send/comment";
 	}
 	
 	@RequestMapping(value = "/doComment")
@@ -244,14 +272,12 @@ public class NewsSendController extends BaseController {
 	public String rollback(HttpServletRequest request, Long newsId, Model model) {
 		logger.info("退回文章信息");
 		
-		// TODO 
-		
 		if (StringUtils.isEmpty(newsId)) {
 			model.addAttribute(Constants.MSG_TYPE_DANGER, "退回失败: 帖子newsId为空");
 			return list(request, "1", null, null, null, model);
 		}
 		
-		// newsService.delete(newsId);
+		newsService.rollback(newsId);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "退回成功");
 		

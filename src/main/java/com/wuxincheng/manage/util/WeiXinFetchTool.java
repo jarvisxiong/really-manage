@@ -83,6 +83,7 @@ public class WeiXinFetchTool {
 						fectWeiXin.setSubTitle(CharacterUtil.replaceQuoteCode(itemEle.elementTextTrim("content168"))); // 文章摘要/即为文章子标题
 						fectWeiXin.setCreateTime(itemEle.elementTextTrim("date")); // 发布日期
 						fectWeiXin.setSogouDocid(itemEle.elementTextTrim("docid")); // 唯一标识
+						fectWeiXin.setVirtualActive(NumberUtil.getRandom()+""); // 产生一个随机数
 						fectWeiXin.setState("1"); // 1-不显示, 0-显示
 						fectWeiXin.setCreator("2"); // 为默认用户
 						

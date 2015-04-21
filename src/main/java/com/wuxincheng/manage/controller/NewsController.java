@@ -89,6 +89,7 @@ public class NewsController extends BaseController {
 		Map<String, Object> queryParam = new HashMap<String, Object>();
 		queryParam.put("start", start);
 		queryParam.put("end", end);
+		queryParam.put("resource", "resource"); // 
 		queryParam.put("queryStartDate", this.queryStartDate);
 		queryParam.put("queryEndDate", queryEndDateAfter);
 		
@@ -144,17 +145,15 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/intoDBatch")
-	public String intoDBatch(HttpServletRequest request, Long newsId, Model model) {
+	public String intoDBatch(HttpServletRequest request, Long[] newsIds, Model model) {
 		logger.info("入库");
 		
-		// TODO
-		
-		if (StringUtils.isEmpty(newsId)) {
-			model.addAttribute(Constants.MSG_TYPE_DANGER, "入库失败: 帖子newsId为空");
+		if (newsIds.length < 1) {
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "入库失败，请选择入库文章");
 			return list(request, "1", null, null, null, model);
 		}
 		
-		// newsService.delete(newsId);
+		newsService.intoDBatch(newsIds);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "入库成功");
 		

@@ -1,5 +1,6 @@
 package com.wuxincheng.manage.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wuxincheng.manage.model.News;
@@ -50,5 +51,13 @@ public interface NewsService {
 	 * @param newsId
 	 */
 	public abstract void delete(Long newsId);
+	
+	public abstract void intoDBatch(Long[] newsIds);
+
+	public abstract void sendBatch(Long[] newsIds);
+
+	public abstract List<News> getNewsByIds(Long[] newsIds);
+
+	public abstract void rollback(Long newsId);
 
 }

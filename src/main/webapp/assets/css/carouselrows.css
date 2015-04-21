@@ -1,0 +1,93 @@
+/* FONT AWESOME & not necessary for functions */
+@import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+
+body {
+    padding-top: 0px;
+    background-color: #FFFFFF;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+/*REQUIRED*/
+.carousel-row {
+    margin-bottom: 10px;
+}
+
+.slide-row {
+    margin: 0 5px;
+    background-color: #ffffff;
+    min-height: 130px;
+    border-bottom: 1px solid #e7e7e7;
+    overflow: hidden;
+    height: auto;
+    position: relative;
+}
+
+.slide-carousel {
+    width: 30%;
+    float: left;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.slide-carousel .carousel-indicators {
+    margin-bottom: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+}
+
+.slide-carousel .carousel-indicators li {
+    border-radius: 0;
+    width: 20px;
+    height: 6px;
+}
+
+.slide-carousel .carousel-indicators .active {
+    margin: 1px;
+}
+
+.slide-content {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    display: block;
+    float: left;
+    width: 70%;
+    padding: 0px 10px 10px 10px;
+}
+
+.slide-content h4 {
+    margin-bottom: 3px;
+    margin-top: 0;
+}
+
+.slide-footer {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+    width: 68%;
+    margin: 10px;
+    padding: 0px 25px 0px 0px;
+    color: #837E7E;
+}
+
+/* Scrollbars */
+.slide-content::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.slide-content::-webkit-scrollbar-thumb:vertical {
+  margin: 5px;
+  background-color: #999;
+  -webkit-border-radius: 5px;
+}
+ 
+.slide-content::-webkit-scrollbar-button:start:decrement,
+.slide-content::-webkit-scrollbar-button:end:increment {
+  height: 5px;
+  display: block;
+}
+
+.really-container {
+  margin: 0px -10px;
+}

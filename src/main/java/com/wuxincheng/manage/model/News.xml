@@ -42,10 +42,6 @@
     <result property="state" column="STATE" />
   </resultMap>
   
-  <update id="sendNews4App" parameterClass="java.lang.String">
-    UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '0' WHERE PK = #id# 
-  </update>
-  
   <update id="update" parameterClass="News">
     UPDATE T_REALLY_NEWS SET 
       TITLE = #title#, SUB_TITLE = #subTitle#, IMG_LINK = #imgLink#, 
@@ -74,8 +70,11 @@
     	LEFT JOIN T_MANAGE_WECHAT_PUBLIC p ON n.SOGOU_OPENID = p.OPEN_ID
     	LEFT JOIN T_REALLY_COMMENT c ON n.PK = c.NEWS_ID
     <dynamic prepend="WHERE">
-      <isNotNull prepend="AND" property="start">
-        (n.STATE = '0' OR n.STATE = '1' OR n.STATE IS NULL)
+      <isNotNull prepend="AND" property="resource">
+        (n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
+      <isNotNull prepend="AND" property="presend">
+        (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
       </isNotNull>
       <isNotNull prepend="AND" property="queryStartDate">
         n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
@@ -84,13 +83,18 @@
         <![CDATA[n.CREATE_TIME < date(DATE_FORMAT(#queryEndDate#,'%Y%m%d'))]]>
       </isNotNull>
     </dynamic>
-    ORDER BY n.STATE DESC, n.CREATE_TIME DESC LIMIT #start#, #end#
+    ORDER BY n.STATE ASC, n.CREATE_TIME DESC LIMIT #start#, #end#
   </select>
   
   <select id="queryCountByParams" parameterClass="java.util.Map" resultClass="java.lang.Integer">
     SELECT COUNT(*) AS queryCount FROM T_REALLY_NEWS n
-    WHERE (n.STATE = '0' OR n.STATE = '1' OR n.STATE IS NULL)
-    <dynamic>
+    <dynamic prepend="WHERE">
+      <isNotNull prepend="AND" property="resource">
+        (n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
+      <isNotNull prepend="AND" property="presend">
+        (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
+      </isNotNull>
       <isNotNull prepend="AND" property="queryStartDate">
         n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
       </isNotNull>
@@ -129,5 +133,16 @@
   <delete id="delete" parameterClass="java.lang.Long">
     UPDATE T_REALLY_NEWS n SET n.STATE = '2' WHERE n.PK = #id#
   </delete>
-	
+  
+  <update id="sendNews4App" parameterClass="java.lang.String">
+    UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '0' WHERE PK = #id# 
+  </update>
+  
+  <update id="intoDBatch" parameterClass="java.lang.String">
+    UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '-1' WHERE PK = #id#
+  </update>
+  
+  <update id="rollback" parameterClass="java.lang.String">
+    UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '1' WHERE PK = #id#
+  </update>
 </sqlMap>

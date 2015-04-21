@@ -7,7 +7,8 @@
 <meta charset="utf-8">
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="icon" />
-<script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/My97DatePicker/WdatePicker.js"></script>  
+<script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/popup.js"></script>
 </head>
 <script type="text/javascript">
 function queryReset() {
@@ -39,12 +40,8 @@ function queryReset() {
       <span class="text-danger"></span>
       
       <div class="pull-right">
-        <a href="<%=request.getContextPath()%>/manage/news/xxx">
-        <button type="button" class="btn btn-primary btn-sm">预览</button>
-        </a>
-        <a href="<%=request.getContextPath()%>/manage/news/xxx">
-        <button type="button" class="btn btn-warning btn-sm">发布</button>
-        </a>
+        <button type="button" value="show" onclick="selected(this.value);" class="btn btn-primary btn-sm">预览</button>
+        <button type="button" value="send" onclick="selected(this.value);" class="btn btn-warning btn-sm">发布</button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </form>
@@ -54,7 +51,9 @@ function queryReset() {
         <thead>
           <tr>
             <th style="text-align: center;">
+              <!-- 
               <input type="checkbox" id="SelectAll" onclick="selectAll();" />
+               -->
             </th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
@@ -75,7 +74,9 @@ function queryReset() {
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
                   <td style="text-align: center;">
-                    <input type="checkbox" id="subcheck" value="${obj.id}" onclick="setSelectAll();" />
+                    <c:if test="${'-1' eq obj.state}">
+                      <input type="checkbox" id="subcheck" value="${obj.id}" onclick="setSelectAll();" />
+                    </c:if>
                   </td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
@@ -94,8 +95,8 @@ function queryReset() {
                     <c:if test="${'0' eq obj.state}">
                       <span class="text-success">已发布</span>
                     </c:if> 
-                    <c:if test="${'1' eq obj.state}">
-                      <a href="<%=request.getContextPath()%>/manage/news/send?newsId=${obj.id}">
+                    <c:if test="${'-1' eq obj.state}">
+                      <a href="<%=request.getContextPath()%>/manage/news/send/send?newsId=${obj.id}">
                         <button type="button" class="btn btn-warning btn-sm">发布</button>
                       </a>
                     </c:if>
@@ -107,7 +108,7 @@ function queryReset() {
                       <button type="button" class="btn btn-warning btn-sm">修改</button>
                     </a>
                     <button type="button" class="btn btn-danger btn-sm"
-                      onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/send/rollback?newsId=${obj.id}';">退回</button>
+                      onclick="if(confirm('您确定执行退回吗?')) document.location = '<%=request.getContextPath()%>/manage/news/send/rollback?newsId=${obj.id}';">退回</button>
                   </td>
                 </tr>
               </c:forEach>
@@ -130,25 +131,25 @@ function queryReset() {
         <li
           <c:if test="${'1' eq pager.currentPage}">class="disabled"</c:if>>
           <a
-          <c:if test="${pager.currentPage > 1}">href="<%=request.getContextPath()%>/manage/news/list?currentPage=1"</c:if>>首页</a>
+          <c:if test="${pager.currentPage > 1}">href="<%=request.getContextPath()%>/manage/news/send/list?currentPage=1"</c:if>>首页</a>
         </li>
 
         <li
           <c:if test="${'1' eq pager.currentPage}">class="disabled"</c:if>>
           <a
-          <c:if test="${pager.currentPage > 1}">href="<%=request.getContextPath()%>/manage/news/list?currentPage=${pager.currentPage-1}"</c:if>>上一页</a>
+          <c:if test="${pager.currentPage > 1}">href="<%=request.getContextPath()%>/manage/news/send/list?currentPage=${pager.currentPage-1}"</c:if>>上一页</a>
         </li>
 
         <li
           <c:if test="${pager.lastPage eq pager.currentPage}">class="disabled"</c:if>>
           <a
-          <c:if test="${pager.currentPage < pager.lastPage}">href="<%=request.getContextPath()%>/manage/news/list?currentPage=${pager.currentPage+1}"</c:if>>下一页</a>
+          <c:if test="${pager.currentPage < pager.lastPage}">href="<%=request.getContextPath()%>/manage/news/send/list?currentPage=${pager.currentPage+1}"</c:if>>下一页</a>
         </li>
 
         <li
           <c:if test="${pager.lastPage eq pager.currentPage}">class="disabled"</c:if>>
           <a
-          <c:if test="${pager.currentPage < pager.lastPage}">href="<%=request.getContextPath()%>/manage/news/list?currentPage=${pager.lastPage}"</c:if>>尾页</a>
+          <c:if test="${pager.currentPage < pager.lastPage}">href="<%=request.getContextPath()%>/manage/news/send/list?currentPage=${pager.lastPage}"</c:if>>尾页</a>
         </li>
 
         <li class="">&nbsp;</li>
@@ -166,24 +167,28 @@ function queryReset() {
   <jsp:include page="../bottom.jsp" />
 </body>
 <script type="text/javascript">
-  function selectAll(){  
-    if ($("#selectAll").attr("checked")) {
-  	$(":checkbox").attr("checked", true);
-    } else {
-  	$(":checkbox").attr("checked", false);
-    }  
-  }
-  // 子复选框的事件  
-  function setSelectAll(){
-    // 当没有选中某个子复选框时，SelectAll取消选中  
-    if (!$("#subcheck").checked) {
-  	$("#selectAll").attr("checked", false);
-    }
-    var chsub = $("input[type='checkbox'][id='subcheck']").length; // 获取subcheck的个数  
-    var checkedsub = $("input[type='checkbox'][id='subcheck']:checked").length; // 获取选中的subcheck的个数  
-    if (checkedsub == chsub) {
-  	$("#selectAll").attr("checked", true);
-    }
-  }
+function selected(flag) {
+	// 获取选中的CheckBox
+	var newsIds = $('input[id="subcheck"]:checked').map(function() {
+		return this.value;
+	}).get().join();
+  	
+	// 判断是否已经选择文章
+	if (newsIds == '') {
+  		alert("请您选择需要操作的文章");
+		return;
+	}
+	
+	if (flag == 'show') {
+		var url = "<%=request.getContextPath()%>/manage/news/send/showBatch?newsIds="+newsIds;
+		var pop = new Popup({ contentType:1,scrollType:'auto',isReloadOnClose:false,width:380,height:600});
+        pop.setContent("contentUrl", url);
+        pop.setContent("title", "真相日报 - 基金行业最新资讯");
+        pop.build();
+        pop.show();
+	} else if (flag == 'send') {
+		window.location.href = "<%=request.getContextPath()%>/manage/news/send/sendBatch?newsIds="+newsIds;
+	}
+}
 </script>
 </html>

@@ -80,4 +80,14 @@ public class NewsDaoImpl extends BaseDao implements NewsDao {
 		return this.getSqlMapClientTemplate().queryForList("News.queryExpireNews");
 	}
 
+	@Override
+	public void intoDBatch(String newsId) {
+		this.getSqlMapClientTemplate().update("News.intoDBatch", newsId);
+	}
+
+	@Override
+	public void rollback(String newsId) {
+		this.getSqlMapClientTemplate().update("News.rollback", newsId);
+	}
+
 }

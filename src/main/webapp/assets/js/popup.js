@@ -266,7 +266,7 @@ Popup.prototype = {
 		this.color = {
 			cColor : "#000000",
 			bColor : "#FFFFFF",
-			tColor : "#438EB9",
+			tColor : "#FF5722",
 			wColor : "#FFFFFF"
 		};
 		this.dropClass = null;
