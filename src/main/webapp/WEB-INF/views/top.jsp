@@ -60,8 +60,10 @@
           </li>
           
           <li><a href="<%=request.getContextPath()%>/manage/weChat/list"><span class="glyphicon glyphicon-th-list"></span> 微信公众号管理</a></li>
+          <!-- 
           <li><a href="<%=request.getContextPath()%>/manage/user/list"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
           <li><a href="<%=request.getContextPath()%>/manage/message/list"><span class="glyphicon glyphicon-comment"></span> 留言管理</a></li>
+           -->
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a data-toggle="modal" data-target=".logout-modal" href=""><span class="glyphicon glyphicon-log-out"></span> 退出系统</a></li>
