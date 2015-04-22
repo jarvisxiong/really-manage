@@ -76,6 +76,9 @@
       <isNotNull prepend="AND" property="presend">
         (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
       </isNotNull>
+      <isNotNull prepend="AND" property="weChatPublicNO">
+        (n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
       <isNotNull prepend="AND" property="queryStartDate">
         n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
       </isNotNull>

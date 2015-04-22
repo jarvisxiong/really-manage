@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
+import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.NewsService;
 import com.wuxincheng.manage.service.WeChatService;
 import com.wuxincheng.manage.util.ConfigHelper;
@@ -44,7 +45,7 @@ public class NewsSendController extends BaseController {
 	private String currentPage;
 	
 	@Autowired private NewsService newsService;
-	@Autowired private WeChatService typeService;
+	@Autowired private WeChatService weChatService;
 	
 	/** 查询日期 */
 	private String queryStartDate;
@@ -125,6 +126,13 @@ public class NewsSendController extends BaseController {
 		model.addAttribute("queryEndDate", this.queryEndDate);
 		
 		model.addAttribute("pageSize", pageSize);
+		
+		@SuppressWarnings("unchecked")
+		List<WeChat> weChats = (List<WeChat>)request.getSession().getAttribute("weChats");
+		if (weChats == null || weChats.size() < 1) {
+			weChats = weChatService.queryAll();
+			request.getSession().setAttribute("weChats", weChats);
+		}
 		
 		return "send/list";
 	}

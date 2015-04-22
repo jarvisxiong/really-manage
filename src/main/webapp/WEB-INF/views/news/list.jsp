@@ -31,6 +31,15 @@ function queryReset() {
     	onFocus="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'queryStartDate\')}',maxDate:'20201001'})"
         value="${queryEndDate}" style="width: 150px;" placeholder="选择结束日期">
       &nbsp;&nbsp;&nbsp;&nbsp;
+      <strong>公众号：</strong>
+      <select class="form-control" id="weChatPublicNO" name="weChatPublicNO">
+        <option>全部</option>
+        <option value="">非公众号</option>
+        <c:forEach items="${weChats}" var="chat">
+        <option value="${chat.publicNO}">${chat.publicName}</option>
+        </c:forEach>
+      </select>
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
