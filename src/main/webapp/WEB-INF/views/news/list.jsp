@@ -10,10 +10,6 @@
 <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/My97DatePicker/WdatePicker.js"></script>  
 </head>
 <script type="text/javascript">
-function queryReset() {
-  document.getElementById("queryStartDate").value = null;
-  document.getElementById("queryEndDate").value = null;
-}
 </script>
 <body>
   <jsp:include page="../top.jsp" />
@@ -32,22 +28,25 @@ function queryReset() {
         value="${queryEndDate}" style="width: 150px;" placeholder="选择结束日期">
       &nbsp;&nbsp;&nbsp;&nbsp;
       <strong>公众号：</strong>
-      <select class="form-control" id="weChatPublicNO" name="weChatPublicNO">
-        <option>全部</option>
-        <option value="">非公众号</option>
+      <select class="form-control" id="sogouOpenid" name="sogouOpenid">
+        <option value="">全部</option>
         <c:forEach items="${weChats}" var="chat">
-        <option value="${chat.publicNO}">${chat.publicName}</option>
+        <option value="${chat.openId}">${chat.publicName}</option>
         </c:forEach>
       </select>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
+      <!-- 
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
       <button type="button" class="btn btn-warning btn-sm">新增</button>
       </a>
+       -->
       <span class="text-danger"></span>
-      <a href="#"><!--  -->
-      <button type="button" class="btn btn-warning btn-sm" onclick="selected();">入库</button>
+      <br/>
+      <hr/>
+      <a href="#">
+      <button type="button" class="btn btn-primary btn-sm" onclick="selected();">入库</button>
       </a>
     </form>
     <hr />
@@ -117,7 +116,7 @@ function queryReset() {
                       <button type="button" class="btn btn-warning btn-sm">修改</button>
                     </a>
                      -->
-                    <button type="button" class="btn btn-danger btn-sm"
+                    <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/delete?newsId=${obj.id}';">删除</button>
                   </td>
                 </tr>
@@ -190,6 +189,18 @@ function selected() {
 	}
 	
 	window.location.href = "<%=request.getContextPath()%>/manage/news/intoDBatch?newsIds="+newsIds;
+}
+
+$(document).ready(function() {
+	// 回显微信公众号
+	$("[name=sogouOpenid] option[value=${sogouOpenid}]").attr("selected", "selected");
+});
+
+// "重置"按钮
+function queryReset() {
+  $("#queryStartDate").val(null);
+  $("#queryEndDate").val(null);
+  $("#sogouOpenid").val(null);
 }
 </script>
 </html>

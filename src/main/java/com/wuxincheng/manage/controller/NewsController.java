@@ -51,23 +51,43 @@ public class NewsController extends BaseController {
 	private String queryStartDate;
 	private String queryEndDate;
 	
+	private String sogouOpenid;
+	
 	@RequestMapping(value = "/list")
-	public String list(HttpServletRequest request, String currentPage, 
-			String queryStartDate, String queryEndDate, String query, Model model) {
+	public String list(HttpServletRequest request, String currentPage, String queryStartDate, 
+			String queryEndDate, String query, String sogouOpenid, Model model) {
 		logger.info("显示文章列表页面");
 		setMenuFlag(request, "news");
 		
+		// ---------------------------------
+		// 判断当前页码的合法性
 		if (Validation.isBlank(currentPage) || !Validation.isInt(currentPage, "0+")) {
 			currentPage = "1";
 		}
 		
+		// ---------------------------------
+		// 验证是否为查询
 		if (!StringUtils.isEmpty(query)) { // 查询
 			this.queryStartDate = queryStartDate;
 			this.queryEndDate = queryEndDate;
+			this.sogouOpenid = sogouOpenid;
+		}
+		// 验证查询日期
+		String queryEndDateAfter = null;
+		if (StringUtils.isEmpty(this.queryStartDate) || StringUtils.isEmpty(this.queryEndDate)) {
+			this.queryStartDate = null;
+			this.queryEndDate = null;
+		} else {
+			queryEndDateAfter = DateUtil.getSpecifiedDayAfter(this.queryEndDate, "yyyyMMdd");
+		}
+		// 验证查询的公众号
+		if (StringUtils.isEmpty(this.sogouOpenid)){
+			this.sogouOpenid = null;
 		}
 		
+		// ---------------------------------
+		// 根据当前页处理查询条件
 		this.currentPage = currentPage;
-		
 		Integer current = Integer.parseInt(currentPage);
 		Integer start = null;
 		Integer end = null;
@@ -79,14 +99,6 @@ public class NewsController extends BaseController {
 			end = pageSize;
 		}
 		
-		String queryEndDateAfter = null;
-		if (StringUtils.isEmpty(this.queryStartDate) || StringUtils.isEmpty(this.queryEndDate)) {
-			this.queryStartDate = null;
-			this.queryEndDate = null;
-		} else {
-			queryEndDateAfter = DateUtil.getSpecifiedDayAfter(this.queryEndDate, "yyyyMMdd");
-		}
-		
 		// 封装查询条件
 		Map<String, Object> queryParam = new HashMap<String, Object>();
 		queryParam.put("start", start);
@@ -94,13 +106,15 @@ public class NewsController extends BaseController {
 		queryParam.put("resource", "resource"); // 
 		queryParam.put("queryStartDate", this.queryStartDate);
 		queryParam.put("queryEndDate", queryEndDateAfter);
+		queryParam.put("sogouOpenid", this.sogouOpenid);
 		
+		// ---------------------------------
 		Map<String, Object> pager = newsService.queryPager(queryParam);
 		
 		try {
-			if (pager != null && pager.size() > 0) {
-				Integer totalCount = (Integer)pager.get("totalCount");
-				Integer lastPage = (totalCount/pageSize);
+			if (pager != null && pager.size() > 0) { // 判断查询出来的数据是否为空
+				Integer totalCount = (Integer)pager.get("totalCount"); // 总记录数
+				Integer lastPage = (totalCount/pageSize); // 最后一页
 				Integer flag = (totalCount%pageSize)>0?1:0;
 				pager.put("lastPage", lastPage + flag);
 				
@@ -122,11 +136,14 @@ public class NewsController extends BaseController {
 			logger.error("在查询文章明细时出现异常", e);
 		}
 		
+		// 查询条件的回显
 		model.addAttribute("queryStartDate", this.queryStartDate);
 		model.addAttribute("queryEndDate", this.queryEndDate);
+		model.addAttribute("sogouOpenid", this.sogouOpenid);
 		
 		model.addAttribute("pageSize", pageSize);
 		
+		// 微信公众号
 		@SuppressWarnings("unchecked")
 		List<WeChat> weChats = (List<WeChat>)request.getSession().getAttribute("weChats");
 		if (weChats == null || weChats.size() < 1) {
@@ -143,14 +160,14 @@ public class NewsController extends BaseController {
 		
 		if (StringUtils.isEmpty(newsId)) {
 			model.addAttribute(Constants.MSG_TYPE_DANGER, "删除失败: 帖子newsId为空");
-			return list(request, "1", null, null, null, model);
+			return list(request, "1", null, null, null, null, model);
 		}
 		
 		newsService.delete(newsId);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "删除成功");
 		
-		return list(request, this.currentPage, null, null, null, model);
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 	
 	@RequestMapping(value = "/intoDBatch")
@@ -159,14 +176,14 @@ public class NewsController extends BaseController {
 		
 		if (newsIds.length < 1) {
 			model.addAttribute(Constants.MSG_TYPE_WARNING, "入库失败，请选择入库文章");
-			return list(request, "1", null, null, null, model);
+			return list(request, "1", null, null, null, null, model);
 		}
 		
 		newsService.intoDBatch(newsIds);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "入库成功");
 		
-		return list(request, this.currentPage, null, null, null, model);
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 	
 	// = = = = = = = = = = = = = = = = = = = = = = 以下使用不到 = = = = = = = = = = = = = = = = = = = =
@@ -238,7 +255,7 @@ public class NewsController extends BaseController {
 			model.addAttribute(Constants.MSG_TYPE_DANGER, "文章编辑时出现异常，请联系管理员");
 		}
 		
-		return list(request, this.currentPage, null, null, null, model);
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 	
 	@RequestMapping(value = "/send")
@@ -249,7 +266,7 @@ public class NewsController extends BaseController {
 			newsService.sendNews4App(newsId);
 		}
 		
-		return list(request, this.currentPage, null, null, null, model);
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 	
 	@RequestMapping(value = "/comment")
@@ -279,7 +296,7 @@ public class NewsController extends BaseController {
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "评论成功");
 		
-		return list(request, this.currentPage, null, null, null, model);
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 
 	public String getQueryStartDate() {

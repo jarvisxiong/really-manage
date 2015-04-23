@@ -34,16 +34,17 @@ function queryReset() {
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
+      <!-- 
       <a href="<%=request.getContextPath()%>/manage/news/send/praeUrl">
       <button type="button" class="btn btn-warning btn-sm">新增</button>
       </a>
+       -->
       <span class="text-danger"></span>
       
-      <div class="pull-right">
-        <button type="button" value="show" onclick="selected(this.value);" class="btn btn-primary btn-sm">预览</button>
-        <button type="button" value="send" onclick="selected(this.value);" class="btn btn-warning btn-sm">发布</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
+      <br/>
+      <hr/>
+      <button type="button" value="show" onclick="selected(this.value);" class="btn btn-primary btn-sm">预览</button>
+      <button type="button" value="send" onclick="selected(this.value);" class="btn btn-primary btn-sm">发布</button>
     </form>
     <hr />
     <div class="table-responsive">
@@ -97,17 +98,17 @@ function queryReset() {
                     </c:if> 
                     <c:if test="${'-1' eq obj.state}">
                       <a href="<%=request.getContextPath()%>/manage/news/send/send?newsId=${obj.id}">
-                        <button type="button" class="btn btn-warning btn-sm">发布</button>
+                        <button type="button" class="btn btn-primary btn-sm">发布</button>
                       </a>
                     </c:if>
                   </td>
                   <td style="text-align: center;">
                     <a href="<%=request.getContextPath()%>/manage/news/send/comment?newsId=${obj.id}&commentId=${obj.commentId}">
-                      <button type="button" class="btn btn-warning btn-sm">评论</button></a>
+                      <button type="button" class="btn btn-primary btn-sm">评论</button></a>
                     <a href="<%=request.getContextPath()%>/manage/news/send/edit?newsId=${obj.id}">
-                      <button type="button" class="btn btn-warning btn-sm">修改</button>
+                      <button type="button" class="btn btn-primary btn-sm">修改</button>
                     </a>
-                    <button type="button" class="btn btn-danger btn-sm"
+                    <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行退回吗?')) document.location = '<%=request.getContextPath()%>/manage/news/send/rollback?newsId=${obj.id}';">退回</button>
                   </td>
                 </tr>

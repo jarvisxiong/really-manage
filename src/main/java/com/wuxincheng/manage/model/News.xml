@@ -17,6 +17,7 @@
   	<result property="weChatPublicName" column="PUBLIC_NAME" />
   	<result property="weChatPublicNO" column="PUBLIC_NO" />
   	<result property="state" column="STATE" />
+    <result property="sogouOpenid" column="SOGOU_OPENID" />
   </resultMap>
   
   <resultMap class="News" id="NewsSimpleListMapping">
@@ -63,8 +64,8 @@
     SELECT 
     	n.PK, n.DOMAIN, n.IMG_LINK, n.TRUTH_DEGREE, c.PK AS COMMENT_ID,
         LEFT(n.TITLE, 30) AS TITLE, n.URL, n.TRUTH_DEGREE, n.OPINION_TIMES, 
-    	DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, 
-    	n.OPINION_TIMES, n.STATE, u.USERNAME, p.PUBLIC_NAME, p.PUBLIC_NO
+    	DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, n.STATE, 
+    	n.OPINION_TIMES, u.USERNAME, p.PUBLIC_NAME, p.PUBLIC_NO, n.SOGOU_OPENID
     FROM T_REALLY_NEWS n 
     	LEFT JOIN T_REALLY_USER u ON n.CREATOR_ID = u.PK
     	LEFT JOIN T_MANAGE_WECHAT_PUBLIC p ON n.SOGOU_OPENID = p.OPEN_ID
@@ -76,8 +77,8 @@
       <isNotNull prepend="AND" property="presend">
         (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
       </isNotNull>
-      <isNotNull prepend="AND" property="weChatPublicNO">
-        (n.STATE = '1' OR n.STATE IS NULL)
+      <isNotNull prepend="AND" property="sogouOpenid">
+        n.SOGOU_OPENID = #sogouOpenid#
       </isNotNull>
       <isNotNull prepend="AND" property="queryStartDate">
         n.CREATE_TIME > date(DATE_FORMAT(#queryStartDate#,'%Y%m%d'))
@@ -94,6 +95,9 @@
     <dynamic prepend="WHERE">
       <isNotNull prepend="AND" property="resource">
         (n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
+      <isNotNull prepend="AND" property="sogouOpenid">
+        n.SOGOU_OPENID = #sogouOpenid#
       </isNotNull>
       <isNotNull prepend="AND" property="presend">
         (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
