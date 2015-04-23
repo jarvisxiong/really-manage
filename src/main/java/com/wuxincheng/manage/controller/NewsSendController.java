@@ -1,6 +1,7 @@
 package com.wuxincheng.manage.controller;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,9 @@ public class NewsSendController extends BaseController {
 			this.queryStartDate = queryStartDate;
 			this.queryEndDate = queryEndDate;
 			this.sogouOpenid = sogouOpenid;
+		} else {
+			this.queryStartDate = DateUtil.getCurrentDate(new Date(), "yyyyMMdd");
+			this.queryEndDate = DateUtil.getSpecifiedDayAfter(this.queryStartDate, "yyyyMMdd");
 		}
 		// 验证查询日期
 		String queryEndDateAfter = null;
