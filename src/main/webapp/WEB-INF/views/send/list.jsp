@@ -10,12 +10,6 @@
 <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/popup.js"></script>
 </head>
-<script type="text/javascript">
-function queryReset() {
-  document.getElementById("queryStartDate").value = null;
-  document.getElementById("queryEndDate").value = null;
-}
-</script>
 <body>
   <jsp:include page="../top.jsp" />
 
@@ -31,6 +25,14 @@ function queryReset() {
       <input type="text" id="queryEndDate" name="queryEndDate" class="form-control Wdate" type="text" 
     	onFocus="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'queryStartDate\')}',maxDate:'20201001'})"
         value="${queryEndDate}" style="width: 150px;" placeholder="选择结束日期">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <strong>公众号：</strong>
+      <select class="form-control" id="sogouOpenid" name="sogouOpenid">
+        <option value="">全部</option>
+        <c:forEach items="${weChats}" var="chat">
+        <option value="${chat.openId}">${chat.publicName}</option>
+        </c:forEach>
+      </select>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
@@ -190,6 +192,18 @@ function selected(flag) {
 	} else if (flag == 'send') {
 		window.location.href = "<%=request.getContextPath()%>/manage/news/send/sendBatch?newsIds="+newsIds;
 	}
+}
+
+$(document).ready(function() {
+	// 回显微信公众号
+	$("[name=sogouOpenid] option[value=${sogouOpenid}]").attr("selected", "selected");
+});
+
+// "重置"按钮
+function queryReset() {
+  $("#queryStartDate").val(null);
+  $("#queryEndDate").val(null);
+  $("#sogouOpenid").val(null);
 }
 </script>
 </html>
