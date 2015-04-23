@@ -7,7 +7,7 @@
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="icon" />
 
-<title>真象说后台管理- V1.0</title>
+<title>咖啡日报后台管理- V1.0</title>
 
 <link href="<%=request.getContextPath()%>/assets/css/bootstrap.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/assets/css/dashboard.css" rel="stylesheet">
@@ -15,7 +15,7 @@
 <style type="text/css">
   .page-target {
     font-weight: bold;
-    color: #FF5722;
+    color: #603811;
   }
   .tab-bottom-line {
     margin: 0 auto 0;
@@ -44,7 +44,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand"><strong>真象日报管理平台</strong></a>
+        <a class="navbar-brand"><strong>咖啡日报管理平台</strong></a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
@@ -59,7 +59,7 @@
             </ul>
           </li>
           
-          <li><a href="<%=request.getContextPath()%>/manage/weChat/list"><span class="glyphicon glyphicon-th-list"></span> 微信公众号管理</a></li>
+          <li><a href="<%=request.getContextPath()%>/manage/weChat/list"><span class="glyphicon glyphicon-th-list"></span> 公众号管理</a></li>
           <!-- 
           <li><a href="<%=request.getContextPath()%>/manage/user/list"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
           <li><a href="<%=request.getContextPath()%>/manage/message/list"><span class="glyphicon glyphicon-comment"></span> 留言管理</a></li>

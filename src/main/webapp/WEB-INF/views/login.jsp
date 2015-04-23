@@ -4,9 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>真象日报后台管理系统 - V1.0 - 登录</title>
+<title>咖啡日报后台管理系统 - V1.0 - 登录</title>
+<!-- 
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="icon" />
+ -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css" type="text/css"></link>
 <style type="text/css">
 body {
@@ -103,7 +105,7 @@ body {
          -->
         <div class="panel panel-default">
           <div class="panel-heading">
-            <span class="glyphicon glyphicon-lock"></span> 真象日报后台管理 - 登录
+            <span class="glyphicon glyphicon-lock"></span> 咖啡日报后台管理 - 登录
           </div>
           <div class="panel-body">
             <form action="<%=request.getContextPath()%>/admins/doLogin" class="form-horizontal" role="form"
@@ -130,7 +132,7 @@ body {
               </div>
             </form>
           </div>
-          <div class="panel-footer" style="text-align: right;">真象日报 版权所有</div>
+          <div class="panel-footer" style="text-align: right;">咖啡日报 版权所有</div>
         </div>
       </div>
     </div>

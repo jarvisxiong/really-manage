@@ -17,7 +17,7 @@
     <h5 class="page-header page-target">微信公众号管理</h5>
     <form class="form-inline" role="form">
       <a href="<%=request.getContextPath()%>/manage/weChat/edit">
-        <button type="button" class="btn btn-warning btn-sm">新增</button>
+        <button type="button" class="btn btn-primary btn-sm">新增</button>
       </a>
     </form>
     <hr />
@@ -59,7 +59,7 @@
                       <button type="button"
                         class="btn btn-primary btn-sm">查看</button>
                   </a>
-                  <button type="button" class="btn btn-danger btn-sm"
+                  <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/weChat/delete?openId=${weChat.openId}';">删除</button>
                   </td>
                 </tr>
