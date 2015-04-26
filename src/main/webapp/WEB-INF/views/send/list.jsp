@@ -16,6 +16,7 @@
   <div class="container main-container">
     <h5 class="page-header page-target">文章发布管理</h5>
     <form class="form-inline" role="form" action="<%=request.getContextPath()%>/manage/news/send/list" method="post">
+      <!-- 
       <input type="hidden" id="query" name="query" value="query" />
       <strong>开始日期：</strong>
       <input type="text" id="queryStartDate" name="queryStartDate" class="form-control Wdate" type="text" 
@@ -36,15 +37,8 @@
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
-      <!-- 
-      <a href="<%=request.getContextPath()%>/manage/news/send/praeUrl">
-      <button type="button" class="btn btn-warning btn-sm">新增</button>
-      </a>
        -->
-      <span class="text-danger"></span>
       
-      <br/>
-      <hr/>
       <button type="button" value="show" onclick="selected(this.value);" class="btn btn-primary btn-sm">预览</button>
       <button type="button" value="send" onclick="selected(this.value);" class="btn btn-primary btn-sm">发布</button>
     </form>
@@ -60,8 +54,10 @@
             </th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
+            <!-- 
             <th style="text-align: center;">真象指数</th>
-            <th style="text-align: center;">评论数</th>
+             -->
+            <th style="text-align: center;">阅读数</th>
             <th style="text-align: center;">发表时间</th>
             <!-- 
             <th style="text-align: center;">发表人</th>
@@ -88,7 +84,9 @@
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
+                  <!-- 
                   <td style="text-align: right;"><fmt:formatNumber value="${obj.truthDegree}" pattern="#" type="number"/>%</td>
+                   -->
                   <td style="text-align: right;">${obj.opinionTimes}</td>
                   <td style="text-align: center;">${obj.createTime}</td>
                   <!-- 
