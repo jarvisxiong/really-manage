@@ -43,6 +43,7 @@
       <button type="button" value="send" onclick="selected(this.value);" class="btn btn-primary btn-sm">发布</button>
     </form>
     <hr />
+    <div id="selectedShow"><strong>已选择：</strong></div>
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>
@@ -74,13 +75,13 @@
                 <tr>
                   <td style="text-align: center;">
                     <c:if test="${'-1' eq obj.state}">
-                      <input type="checkbox" id="subcheck" value="${obj.id}" onclick="setSelectAll();" />
+                      <input type="checkbox" id="subcheck" value="${obj.id}" />
                     </c:if>
                   </td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
                     <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
-                    ${obj.title} ... 
+                    ${obj.id} - ${obj.title} ... 
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
