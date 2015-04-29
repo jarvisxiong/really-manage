@@ -4,8 +4,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- 
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="icon" />
+ -->
 
 <title>咖啡日报后台管理- V1.0</title>
 

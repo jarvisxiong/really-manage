@@ -29,10 +29,12 @@
             <th style="text-align: left;">微信公众号名称</th>
             <th style="text-align: left;">微信公众号</th>
             <th style="text-align: right;">文章数量</th>
-            <th style="text-align: right;">文章发布数量</th>
-            <th style="text-align: center;">操作时间</th>
+            <th style="text-align: right;">发布数量</th>
+            <th style="text-align: center;">添加时间</th>
             <th style="text-align: center;">状态</th>
+            <!-- 
             <th style="text-align: center;">说明</th>
+             -->
             <th style="text-align: center;">操作</th>
           </tr>
         </thead>
@@ -53,7 +55,9 @@
                   <td style="text-align: right;">0</td>
                   <td style="text-align: center;">${weChat.createTime}</td>
                   <td style="text-align: center;"><span class="text-success">正常</span></td>
+                  <!-- 
                   <td style="text-align: center;"><span class="text-success">信息正确&nbsp;&nbsp;正常抓取</span></td>
+                   -->
                   <td style="text-align: center;">
                   <a href="<%=request.getContextPath()%>/manage/weChat/view?openId=${weChat.openId}">
                       <button type="button"

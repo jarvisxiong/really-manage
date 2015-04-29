@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>500系统异常 - 真象说后台管理系统</title>
+<title>500系统异常 - 咖啡日报后台管理系统</title>
 <meta charset="utf-8">
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="shortcut icon"/>
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="icon"/>
@@ -27,7 +27,7 @@
 	            <div class="panel panel-danger">
 	                <div class="panel-heading">
 	                    <h3 class="panel-title">
-	                        <span class="glyphicon glyphicon-user"></span> 真象说后台管理系统</h3>
+	                        <span class="glyphicon glyphicon-user"></span> 咖啡日报后台管理系统</h3>
 	                </div>
 	                
 	                <div class="panel-body">
@@ -37,7 +37,7 @@
 	                        </div>
 	                        <div class="col-xs-6 col-md-8">
 	                        	<br>
-	                        	<h3>500系统异常：</h3>
+	                        	<h3><b>500系统异常：</b></h3>
 	                        	<h3>对不起，服务器存在异常</h3>
 	                        	<h3>请联系系统管理员</h3>
 	                        </div>

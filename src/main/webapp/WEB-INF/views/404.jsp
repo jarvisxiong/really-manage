@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>404页面不存在 - 真象说后台管理系统</title>
+<title>404页面不存在 - 咖啡日报后台管理系统</title>
 <meta charset="utf-8">
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="shortcut icon"/>
 <link href="<%=request.getContextPath()%>/assets/images/favicon.png" type="image/x-icon" rel="icon"/>
@@ -24,10 +24,10 @@
 	<div class="container">
 	    <div class="row">
 	        <div>
-	            <div class="panel panel-primary">
+	            <div class="panel panel-danger">
 	                <div class="panel-heading">
 	                    <h3 class="panel-title">
-	                        <span class="glyphicon glyphicon-user"></span> 真象说后台管理系统</h3>
+	                        <span class="glyphicon glyphicon-user"></span> 咖啡日报后台管理系统</h3>
 	                </div>
 	                
 	                <div class="panel-body">
@@ -37,12 +37,12 @@
 	                        </div>
 	                        <div class="col-xs-6 col-md-8">
 	                        	<br>
-	                        	<h3>404错误：</h3>
+	                        	<h3><b>404错误：</b></h3>
 	                        	<h3>您访问的页面不存在</h3>
 	                        	<h3>请您不要进行非正常操作</h3>
 	                        </div>
 	                    </div>
-	                    <a href="<%=request.getContextPath()%>/admins/login" class="btn btn-primary btn-block" role="button">登录</a>
+	                    <a href="<%=request.getContextPath()%>/admins/login" class="btn btn-danger btn-block" role="button">登录</a>
 	                </div>
 	            </div>
 	        </div>
