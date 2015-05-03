@@ -15,8 +15,9 @@
   <jsp:include page="../top.jsp" />
 
   <div class="container main-container">
-    <h5 class="page-header page-target">文章基础管理</h5>
+    <h5 class="page-header page-target">素材管理</h5>
     <form class="form-inline" role="form" action="<%=request.getContextPath()%>/manage/news/list" method="post">
+      <!-- 
       <input type="hidden" id="query" name="query" value="query" />
       <strong>开始日期：</strong>
       <input type="text" id="queryStartDate" name="queryStartDate" class="form-control Wdate" type="text" 
@@ -37,17 +38,14 @@
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
-      <!-- 
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
       <button type="button" class="btn btn-warning btn-sm">新增</button>
       </a>
        -->
-      <span class="text-danger"></span>
-      <br/>
-      <hr/>
       <a href="#">
       <button type="button" class="btn btn-primary btn-sm" onclick="selected();">入库</button>
       </a>
+      <span class="text-danger"></span>
     </form>
     <hr />
     <div class="table-responsive">

@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class Pager {
 
+	public static final int PAGER_SIZE = 20;
+	
 	private List<Object> dataList;
 
 	/** 开始页码 */

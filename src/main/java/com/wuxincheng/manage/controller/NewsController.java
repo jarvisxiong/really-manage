@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.manage.Pager;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
@@ -29,7 +30,7 @@ import com.wuxincheng.manage.util.JsonHelper;
 import com.wuxincheng.manage.util.Validation;
 
 /**
- * 微信文章管理
+ * 微信文章管理/素材管理
  * 
  * @author wuxincheng
  *
@@ -41,7 +42,7 @@ public class NewsController extends BaseController {
 	private static Logger logger = LoggerFactory.getLogger(NewsController.class);
 	
 	/** 每页显示条数 */
-	private final Integer pageSize = 10;
+	private final Integer pageSize = Pager.PAGER_SIZE;
 	
 	private String currentPage;
 	

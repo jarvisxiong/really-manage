@@ -14,7 +14,7 @@
   <jsp:include page="../top.jsp" />
 
   <div class="container main-container">
-    <h5 class="page-header page-target">文章发布管理</h5>
+    <h5 class="page-header page-target">出版管理</h5>
     <form class="form-inline" role="form" action="<%=request.getContextPath()%>/manage/news/send/list" method="post">
       <!-- 
       <input type="hidden" id="query" name="query" value="query" />
@@ -81,7 +81,7 @@
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
                     <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
-                    ${obj.id} - ${obj.title} ... 
+                    ${obj.title} ... 
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
