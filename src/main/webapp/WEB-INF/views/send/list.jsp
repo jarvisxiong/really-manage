@@ -43,11 +43,11 @@
       <button type="button" value="send" onclick="selected(this.value);" class="btn btn-primary btn-sm">发布</button>
     </form>
     <hr />
-    <div id="selectedShow"><strong>已选择：</strong></div>
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>
           <tr>
+            <th style="text-align: center;"></th>
             <th style="text-align: center;">
               <!-- 
               <input type="checkbox" id="SelectAll" onclick="selectAll();" />
@@ -73,6 +73,12 @@
             <c:when test="${not empty pager.news}">
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
+                  <td style="text-align: center;">
+                    <c:if test="${'-1' eq obj.state}">
+                      <img src="<%=request.getContextPath()%>/assets/images/sort-up.png" />
+                      <img src="<%=request.getContextPath()%>/assets/images/sort-down.png" />
+                    </c:if>
+                  </td>
                   <td style="text-align: center;">
                     <c:if test="${'-1' eq obj.state}">
                       <input type="checkbox" id="subcheck" value="${obj.id}" />
