@@ -77,6 +77,9 @@
       <isNotNull prepend="AND" property="presend">
         (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
       </isNotNull>
+      <isNotNull prepend="AND" property="history">
+        (n.STATE = '0' OR n.STATE IS NULL)
+      </isNotNull>
       <isNotNull prepend="AND" property="sogouOpenid">
         n.SOGOU_OPENID = #sogouOpenid#
       </isNotNull>
@@ -95,6 +98,9 @@
     <dynamic prepend="WHERE">
       <isNotNull prepend="AND" property="resource">
         (n.STATE = '1' OR n.STATE IS NULL)
+      </isNotNull>
+      <isNotNull prepend="AND" property="history">
+        (n.STATE = '0' OR n.STATE IS NULL)
       </isNotNull>
       <isNotNull prepend="AND" property="sogouOpenid">
         n.SOGOU_OPENID = #sogouOpenid#

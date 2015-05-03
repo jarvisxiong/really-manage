@@ -52,6 +52,7 @@
         <ul class="nav navbar-nav navbar-left">
           <li><a href="<%=request.getContextPath()%>/admins/main"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
           
+          <!-- 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 文章管理 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -60,8 +61,13 @@
               <li><a href="<%=request.getContextPath()%>/manage/news/send/list"><span class="glyphicon glyphicon-book"></span> 文章发布管理</a></li>
             </ul>
           </li>
+           -->
           
+          <li><a href="<%=request.getContextPath()%>/manage/news/list"><span class="glyphicon glyphicon-th-list"></span> 素材管理</a></li>
+          <li><a href="<%=request.getContextPath()%>/manage/news/send/list"><span class="glyphicon glyphicon-th-list"></span> 出版管理</a></li>
+          <li><a href="<%=request.getContextPath()%>/manage/news/history/list"><span class="glyphicon glyphicon-th-list"></span> 历史管理</a></li>
           <li><a href="<%=request.getContextPath()%>/manage/weChat/list"><span class="glyphicon glyphicon-th-list"></span> 公众号管理</a></li>
+          
           <!-- 
           <li><a href="<%=request.getContextPath()%>/manage/user/list"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
           <li><a href="<%=request.getContextPath()%>/manage/message/list"><span class="glyphicon glyphicon-comment"></span> 留言管理</a></li>
