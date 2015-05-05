@@ -105,7 +105,11 @@ public class WeiXinFetchTool {
 	 * @param openId
 	 */
 	public static WeChat fetchWechatPublicNoInfoBySogouOpenid (String openId) {
+		logger.info("要获取微信公众号的搜狗openId: {}", openId);
+		
 		String url = "http://weixin.sogou.com/gzh?openid=" + openId;
+		
+		logger.info("要获取微信公众号信息的url: {}", url);
 		
 		WeChat wechat = null;
 		
