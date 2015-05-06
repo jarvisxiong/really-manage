@@ -47,7 +47,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th style="text-align: center;"></th>
+            <th style="text-align: center;">排序</th>
             <th style="text-align: center;">
               <!-- 
               <input type="checkbox" id="SelectAll" onclick="selectAll();" />
@@ -110,8 +110,10 @@
                     </c:if>
                   </td>
                   <td style="text-align: center;">
+                    <!-- 
                     <a href="<%=request.getContextPath()%>/manage/news/send/comment?newsId=${obj.id}&commentId=${obj.commentId}">
                       <button type="button" class="btn btn-primary btn-sm">评论</button></a>
+                     -->
                     <a href="<%=request.getContextPath()%>/manage/news/send/edit?newsId=${obj.id}">
                       <button type="button" class="btn btn-primary btn-sm">修改</button>
                     </a>
