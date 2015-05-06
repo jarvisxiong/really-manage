@@ -51,6 +51,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            <th style="text-align: center;">序号</th>
             <th style="text-align: center;">操作</th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
@@ -72,13 +73,19 @@
             <c:when test="${not empty pager.news}">
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
+                  <td style="text-align: center;">${s.index+1}</td>
                   <td style="text-align: center;">
                     <!-- 
                     <input type="checkbox" id="subcheck" value="${obj.id}" onclick="setSelectAll();" />
                      -->
-                    <a href="<%=request.getContextPath()%>/manage/news/intoDBatch?newsIds=${obj.id}">
-                      <button type="button" class="btn btn-primary btn-sm">采集</button>
-                    </a>
+                    <c:if test="${'1' eq obj.state}">
+                      <a href="<%=request.getContextPath()%>/manage/news/intoDBatch?newsIds=${obj.id}">
+                        <button type="button" class="btn btn-primary btn-sm">采集</button>
+                      </a>
+                    </c:if>
+                    <c:if test="${'-1' eq obj.state}">
+                        <button type="button" class="btn btn-primary btn-sm" disabled="disabled">采集</button>
+                    </c:if>
                   </td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
