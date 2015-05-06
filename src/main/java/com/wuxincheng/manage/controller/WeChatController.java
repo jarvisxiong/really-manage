@@ -75,7 +75,7 @@ public class WeChatController extends BaseController {
 		if (wechat != null && !"".equals(wechat)) {
 			model.addAttribute("wechat", wechat);
 		} else {
-			
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "openid不存在");
 		}
 		
 		return "weChat/view";
