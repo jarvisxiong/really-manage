@@ -71,7 +71,13 @@ public class WeChatController extends BaseController {
 		logger.info("抓取微信公众号信息");
 		
 		wechat = WeiXinFetchTool.fetchWechatPublicNoInfoBySogouOpenid(openId);
-		model.addAttribute("wechat", wechat);
+		
+		if (wechat != null && !"".equals(wechat)) {
+			model.addAttribute("wechat", wechat);
+		} else {
+			
+		}
+		
 		return "weChat/view";
 	}
 	
