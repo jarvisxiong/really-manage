@@ -29,7 +29,7 @@ public class WeiXinFetchServiceImpl {
 	 * 定时任务抓取微信公众号文章
 	 */
 	public void processWeiXinFetch() throws ServiceException {
-		logger.info("------------ 开始定时任务抓取微信公众号文章:");
+		logger.info("开始定时任务抓取微信公众号文章");
 		
 		// 查询所有的公众号信息
 		List<WeChat> weChats = weChatDao.queryAll();
@@ -40,7 +40,7 @@ public class WeiXinFetchServiceImpl {
 		
 		// 查询数据库中已经从微信抓取的文章唯一标识docId
 		List<String> savedWeChatNewsDocidCompare = newsDao.getAllWeChatDocid();
-		logger.info("已经查询出数据库中所有的微信文章的docid(搜狗搜索微信返回文章的唯一标识)");
+		logger.info("已经查询出数据库中所有的微信文章的docid");
 		
 		// 根据openId访问搜狗微信搜索
 		for (int i = 0; i < weChats.size(); i++) {
@@ -53,23 +53,17 @@ public class WeiXinFetchServiceImpl {
 			
 			List<News> prepareSaveNews = WeiXinFetchTool.fectWeiXinContentBySogou(weChat.getOpenId(), 0);
 			if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
-				logger.warn("抓取微信文章失败: openid=[" + weChat.getOpenId() + "] 抓取的数据为空");
+				logger.warn("微信公众辆: openid=[" + weChat.getOpenId() + "] 抓取的数据为空");
 				continue;
 			}
-			logger.info("已经抓取" + prepareSaveNews.size() + "篇文章");
 			
 			saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare);
 			
-			logger.info("抓取微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章完成.");
-			if ((i + 1) < weChats.size()) {
-				System.out.println("");
-			}
+			logger.info("处理" + prepareSaveNews.size() + "篇文章");
+			logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取完成.");
 		}
 		
-		logger.info("------------ 定时任务抓取微信公众号文章完成.");
-		
-		System.out.println("");
-		System.out.println("");
+		logger.info("定时任务抓取微信公众号文章完成");
 	}
 
 	/**

@@ -51,18 +51,42 @@ public class WeiXinFetchTool {
 		List<News> fectWeiXinContents = new ArrayList<News>();
     	HttpClientHelper hp = new HttpClientHelper();
     	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&page="+page;
-    	try {
-			String sogouWeiXinResult = hp.getData(sogouUrl);
+    	logger.info("抓取数据的地址: " + sogouUrl);
+    	
+    	String sogouWeiXinResult = null;
+		try {
+			sogouWeiXinResult = hp.getData(sogouUrl);
 			logger.info("接收到搜狗搜索微信返回的原始数据");
 			sogouWeiXinResult = sogouWeiXinResult.replace("sogou.weixin.gzhcb(", "");
 			sogouWeiXinResult = sogouWeiXinResult.substring(0, sogouWeiXinResult.lastIndexOf("//"));
-			
-			logger.info("------------ 开始解析数据：");
-			JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
-			JSONArray items = (JSONArray)sogouWeiXinObject.get("items");
-			String xmlSource = items.toString();
-			xmlSource = xmlSource.replace("\\", "").replace("[\"", "").replace("\"]", "");
-			String[] xmls = xmlSource.split("\",\"");
+		} catch (Exception e) {
+			logger.error("接收到搜狗搜索微信返回原始数据出现异常: ", e);
+		} 
+		
+		if (null == sogouWeiXinResult || sogouWeiXinResult.length() < 1) {
+			logger.warn("解析后的数据为空");
+			return fectWeiXinContents;
+		}
+		
+		logger.info("sogouWeiXinResult= " + sogouWeiXinResult);
+		
+		JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
+		logger.info("数据已经转换成JSONObject对象");
+		
+		logger.info("sogouWeiXinObject= " + sogouWeiXinObject);
+		
+		JSONArray items = (JSONArray)sogouWeiXinObject.get("items");
+		logger.info("数据已经转换成JSONArray数组");
+		
+		logger.info("items= " + items);
+		
+		String xmlSource = items.toString();
+		xmlSource = xmlSource.replace("\\", "").replace("[\"", "").replace("\"]", "");
+		String[] xmls = xmlSource.split("\",\"");
+		logger.info("JSONArray数组中反斜杠已经处理");
+		
+		logger.info("循环解析JSONArray数组的数据");
+    	try {
 			for (int i = 0; i < xmls.length; i++) {
 				News fectWeiXin = new News();
 				Document doc = DocumentHelper.parseText(xmls[i]); // 将字符串转为XML
@@ -91,7 +115,7 @@ public class WeiXinFetchTool {
 					}
 				}
 			}
-			logger.info("------------ 数据解析完成.");
+			logger.info("数据解析完成");
 		} catch (Exception e) {
 			logger.error("抓取微信公众号文章解析数据出现异常: ", e);
 		}

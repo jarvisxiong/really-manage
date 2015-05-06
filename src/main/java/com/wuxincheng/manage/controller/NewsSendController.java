@@ -202,7 +202,7 @@ public class NewsSendController extends BaseController {
 			
 			news = newsService.queryNewsById(newsId);
 			
-			logger.info("查询到文章信息 news: " + news.toString());
+			// logger.info("查询到文章信息 news: " + news.toString());
 			
 			model.addAttribute("news", news);
 		}
