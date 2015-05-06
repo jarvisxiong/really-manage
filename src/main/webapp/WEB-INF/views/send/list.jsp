@@ -47,6 +47,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            <th style="text-align: center;">序号</th>
             <th style="text-align: center;">排序</th>
             <th style="text-align: center;">
               <!-- 
@@ -59,7 +60,7 @@
             <th style="text-align: center;">真象指数</th>
              -->
             <th style="text-align: center;">阅读数</th>
-            <th style="text-align: center;">发表时间</th>
+            <th style="text-align: center;">发布时间</th>
             <!-- 
             <th style="text-align: center;">发表人</th>
              -->
@@ -73,11 +74,13 @@
             <c:when test="${not empty pager.news}">
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
+                  <td style="text-align: center;">${s.index+1}</td>
                   <td style="text-align: center;">
                     <c:if test="${'-1' eq obj.state}">
                       <img src="<%=request.getContextPath()%>/assets/images/sort-up.png" onClick="moveUp(this);" style="cursor: pointer;" />
                       <img src="<%=request.getContextPath()%>/assets/images/sort-down.png" onClick="moveDown(this);" style="cursor: pointer;" />
                     </c:if>
+                    <c:if test="${'0' eq obj.state}">---</c:if>
                   </td>
                   <td style="text-align: center;">
                     <c:if test="${'-1' eq obj.state}">

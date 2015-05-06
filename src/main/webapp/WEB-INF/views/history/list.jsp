@@ -49,6 +49,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            <th style="text-align: center;">序号</th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
             <!-- 
@@ -68,10 +69,11 @@
             <c:when test="${not empty pager.news}">
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
+                  <td style="text-align: center;">${s.index+1}</td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
                     <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
-                    ${obj.title} ... 
+                    ${obj.title}
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
