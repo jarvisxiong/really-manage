@@ -75,8 +75,8 @@
                 <tr>
                   <td style="text-align: center;">
                     <c:if test="${'-1' eq obj.state}">
-                      <img src="<%=request.getContextPath()%>/assets/images/sort-up.png" />
-                      <img src="<%=request.getContextPath()%>/assets/images/sort-down.png" />
+                      <img src="<%=request.getContextPath()%>/assets/images/sort-up.png" onClick="moveUp(this);" style="cursor: pointer;" />
+                      <img src="<%=request.getContextPath()%>/assets/images/sort-down.png" onClick="moveDown(this);" style="cursor: pointer;" />
                     </c:if>
                   </td>
                   <td style="text-align: center;">
@@ -87,7 +87,7 @@
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
                     <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
-                    ${obj.title} ... 
+                    ${obj.title}
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
@@ -209,6 +209,24 @@ function queryReset() {
   $("#queryStartDate").val(null);
   $("#queryEndDate").val(null);
   $("#sogouOpenid").val(null);
+}
+</script>
+
+<script type="text/javascript">  
+function moveUp(obj) {
+	var current = $(obj).parent().parent();
+	var prev = current.prev();
+	if (current.index() > 1) {
+		current.insertBefore(prev);
+	}
+}
+
+function moveDown(obj) {
+	var current = $(obj).parent().parent();
+	var next = current.next();
+	if (next) {
+		current.insertAfter(next);
+	}
 }
 </script>
 </html>
