@@ -98,7 +98,7 @@ public class NewsHistoryController extends BaseController {
 		Map<String, Object> queryParam = new HashMap<String, Object>();
 		queryParam.put("start", start);
 		queryParam.put("end", end);
-		queryParam.put("presend", "history"); // 
+		queryParam.put("history", "history"); // 
 		queryParam.put("queryStartDate", this.queryStartDate);
 		queryParam.put("queryEndDate", queryEndDateAfter);
 		queryParam.put("sogouOpenid", this.sogouOpenid);
