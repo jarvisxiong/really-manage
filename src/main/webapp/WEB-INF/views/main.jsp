@@ -3,12 +3,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- 
 <link href="<%=request.getContextPath()%>/assets/images/logo.png"
   type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/logo.png"
   type="image/x-icon" rel="icon" />
- -->
   
 <link href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/assets/css/dashboard.css" rel="stylesheet">

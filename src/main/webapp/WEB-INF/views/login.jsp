@@ -5,10 +5,8 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>咖啡日报后台管理系统 - V1.0 - 登录</title>
-<!-- 
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="shortcut icon" />
 <link href="<%=request.getContextPath()%>/assets/images/logo.png" type="image/x-icon" rel="icon" />
- -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/bootstrap.css" type="text/css"></link>
 <style type="text/css">
 body {
