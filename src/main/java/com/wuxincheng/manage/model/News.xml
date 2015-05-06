@@ -72,7 +72,7 @@
     	LEFT JOIN T_REALLY_COMMENT c ON n.PK = c.NEWS_ID
     <dynamic prepend="WHERE">
       <isNotNull prepend="AND" property="resource">
-        (n.STATE = '1' OR n.STATE IS NULL)
+        (n.STATE = '1' OR n.STATE IS NULL OR n.STATE = '-1')
       </isNotNull>
       <isNotNull prepend="AND" property="presend">
         (n.STATE = '0' OR n.STATE = '-1' OR n.STATE IS NULL)
@@ -97,7 +97,7 @@
     SELECT COUNT(*) AS queryCount FROM T_REALLY_NEWS n
     <dynamic prepend="WHERE">
       <isNotNull prepend="AND" property="resource">
-        (n.STATE = '1' OR n.STATE IS NULL)
+        (n.STATE = '1' OR n.STATE IS NULL OR n.STATE = '-1')
       </isNotNull>
       <isNotNull prepend="AND" property="history">
         (n.STATE = '0' OR n.STATE IS NULL)
