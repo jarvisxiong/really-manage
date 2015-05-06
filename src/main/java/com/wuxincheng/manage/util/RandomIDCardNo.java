@@ -16,13 +16,19 @@ public class RandomIDCardNo {
 	// 5-6位县、县级市、区代码；
 	// 7-14位出生年月日，比如19670401代表1967年4月1日；
 	// 15-17位为顺序号，其中17位（倒数第二位）男为单数，女为双数；
-	// 18位为校验码，0-9和X。
-	// 作为尾号的校验码，是由把前十七位数字带入统一的公式计算出来的，
-	// 计算的结果是0-10，如果某人的尾号是0－9，都不会出现X，但如果尾号是10，那么就得用X来代替，
-	// 因为如果用10做尾号，那么此人的身份证就变成了19位。X是罗马数字的10，用X来代替10
+	// 前17位的构成： 2(省)+2(市)+2(县)+4(年)+2(月)+2(日)+2(序号)+1(性别)
+	// 第十八位数字的计算方法为：
+	// 1.将前面的身份证号码17位数分别乘以不同的系数。从第一位到第十七位的系数分别为：7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2
+	// 2.将这17位数字和系数相乘的结果相加。
+	// 3.用加出来和除以11，看余数是多少？
+	// 4.余数只可能有0 1 2 3 4 5 6 7 8 9 10这11个数字。其分别对应的最后一位身份证的号码为1 0 X 9 8 7 6 5 4 3 2。
 
 	public static String generate() {
-		String id = "";
+		String valCodeArr[] = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
+		
+		String[] wi = { "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5",
+                "8", "4", "2" };
+		
 		// 随机生成省、自治区、直辖市代码 1-2
 		String provinces[] = { "11", "12", "13", "14", "15", "21", "22", "23",
 				"31", "32", "33", "34", "35", "36", "37", "41", "42", "43",
@@ -48,14 +54,18 @@ public class RandomIDCardNo {
 		String birth = dft.format(date.getTime());
 		// 随机生成顺序号 15-17
 		String no = new Random().nextInt(999) + "";
-		// 随机生成校验码 18
-		String checks[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-				"X" };
-		String check = checks[new Random().nextInt(checks.length - 1)];
-		// 拼接身份证号码
-		id = province + city + county + birth + no + check;
+		
+		String ai = province + city + county + birth + no;
+		int totalmulAiWi = 0;
+        for (int i = 0; i < 17; i++) {
+            totalmulAiWi = totalmulAiWi + Integer.parseInt(String.valueOf(ai.charAt(i)))
+                    * Integer.parseInt(wi[i]);
+        }
+        int modValue = totalmulAiWi % 11;
+        String strVerifyCode = valCodeArr[modValue];
+        ai = ai + strVerifyCode;
 
-		return id;
+		return ai;
 	}
-	
+
 }
