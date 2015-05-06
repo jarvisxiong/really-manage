@@ -41,22 +41,17 @@
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
       <button type="button" class="btn btn-warning btn-sm">新增</button>
       </a>
-       -->
       <a href="#">
       <button type="button" class="btn btn-primary btn-sm" onclick="selected();">入库</button>
       </a>
+       -->
       <span class="text-danger"></span>
     </form>
-    <hr />
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th style="text-align: center;">
-              <!-- 
-              <input type="checkbox" id="SelectAll" onclick="selectAll();" />
-               -->
-            </th>
+            <th style="text-align: center;">操作</th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
             <!-- 
@@ -67,8 +62,8 @@
             <!-- 
             <th style="text-align: center;">发表人</th>
             <th style="text-align: center;">状态</th>
-             -->
             <th style="text-align: center;">操作</th>
+             -->
           </tr>
         </thead>
         <tbody>
@@ -78,12 +73,17 @@
               <c:forEach items="${pager.news}" var="obj" varStatus="s">
                 <tr>
                   <td style="text-align: center;">
+                    <!-- 
                     <input type="checkbox" id="subcheck" value="${obj.id}" onclick="setSelectAll();" />
+                     -->
+                    <a href="<%=request.getContextPath()%>/manage/news/intoDBatch?newsIds=${obj.id}">
+                      <button type="button" class="btn btn-primary btn-sm">采集</button>
+                    </a>
                   </td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
                     <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
-                    ${obj.title} ... 
+                    ${obj.title}
                     </a>
                   </td>
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
@@ -106,17 +106,17 @@
                     </c:if>
                   </td>
                    -->
-                  <td style="text-align: center;">
                     <!-- 
+                  <td style="text-align: center;">
                     <a href="<%=request.getContextPath()%>/manage/news/comment?newsId=${obj.id}&commentId=${obj.commentId}">
                       <button type="button" class="btn btn-warning btn-sm">评论</button></a>
                     <a href="<%=request.getContextPath()%>/manage/news/edit?newsId=${obj.id}">
                       <button type="button" class="btn btn-warning btn-sm">修改</button>
                     </a>
-                     -->
                     <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/delete?newsId=${obj.id}';">删除</button>
                   </td>
+                     -->
                 </tr>
               </c:forEach>
             </c:when>
