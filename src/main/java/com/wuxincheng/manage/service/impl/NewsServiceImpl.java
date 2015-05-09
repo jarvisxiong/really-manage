@@ -118,10 +118,11 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public void sendBatch(Long[] newsIds) {
+	public void sendBatch(Long[] newsIds) throws Exception {
 		for (Long newsId : newsIds) {
 			newsDao.sendNews4App(newsId+"");
 			commentDao.sendNews4App(newsId+"");
+			Thread.sleep(1000);
 		}
 	}
 

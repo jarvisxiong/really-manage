@@ -246,7 +246,11 @@ public class NewsSendController extends BaseController {
 			return list(request, "1", null, null, null, null, model);
 		}
 		
-		newsService.sendBatch(newsIds);
+		try {
+			newsService.sendBatch(newsIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return list(request, this.currentPage, null, null, null, null, model);
 	}

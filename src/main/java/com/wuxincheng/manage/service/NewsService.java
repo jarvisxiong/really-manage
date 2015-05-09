@@ -54,7 +54,7 @@ public interface NewsService {
 	
 	public abstract void intoDBatch(Long[] newsIds);
 
-	public abstract void sendBatch(Long[] newsIds);
+	public abstract void sendBatch(Long[] newsIds) throws Exception;
 
 	public abstract List<News> getNewsByIds(Long[] newsIds);
 
