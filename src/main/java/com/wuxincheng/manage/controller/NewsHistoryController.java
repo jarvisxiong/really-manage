@@ -19,6 +19,7 @@ import com.wuxincheng.manage.Pager;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.NewsService;
 import com.wuxincheng.manage.service.WeChatService;
+import com.wuxincheng.manage.util.Constants;
 import com.wuxincheng.manage.util.DateUtil;
 import com.wuxincheng.manage.util.Validation;
 
@@ -144,6 +145,22 @@ public class NewsHistoryController extends BaseController {
 		}
 		
 		return "history/list";
+	}
+	
+	@RequestMapping(value = "/delete")
+	public String delete(HttpServletRequest request, Long newsId, Model model) {
+		logger.info("删除文章信息");
+		
+		if (StringUtils.isEmpty(newsId)) {
+			model.addAttribute(Constants.MSG_TYPE_DANGER, "删除失败: 帖子newsId为空");
+			return list(request, "1", null, null, null, null, model);
+		}
+		
+		newsService.delete(newsId);
+		
+		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "删除成功");
+		
+		return list(request, this.currentPage, null, null, null, null, model);
 	}
 
 	public String getQueryStartDate() {

@@ -59,8 +59,8 @@
             <th style="text-align: center;">发布时间</th>
             <!-- 
             <th style="text-align: center;">发表人</th>
-            <th style="text-align: center;">状态</th>
              -->
+            <th style="text-align: center;">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -84,18 +84,12 @@
                   <td style="text-align: center;">${obj.createTime}</td>
                   <!-- 
                   <td style="text-align: left;">${obj.creator}</td>
+                   -->
                   
                   <td style="text-align: center;">
-                    <c:if test="${'0' eq obj.state}">
-                      <span class="text-success">已发布</span>
-                    </c:if> 
-                    <c:if test="${'1' eq obj.state}">
-                      <a href="<%=request.getContextPath()%>/manage/news/send?newsId=${obj.id}">
-                        <button type="button" class="btn btn-warning btn-sm">发布</button>
-                      </a>
-                    </c:if>
+                    <button type="button" class="btn btn-primary btn-sm"
+                      onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/history/delete?newsId=${obj.id}';">删除</button>
                   </td>
-                   -->
                 </tr>
               </c:forEach>
             </c:when>
