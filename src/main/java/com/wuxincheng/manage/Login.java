@@ -22,11 +22,13 @@ public class Login {
 	
 	private static Logger logger = LoggerFactory.getLogger(Login.class);
 	
+	private static final String MANAGE_NAME = Constants.MANAGE_NAME;
+	
 	@Autowired private AdminsService adminsService;
 	
 	@RequestMapping(value = "/login")
 	public String login(Model model) {
-		logger.info("显示后台管理登录页面");
+		logger.info(MANAGE_NAME+"显示后台管理登录页面");
 		
 		/*
 		// 登录背景切换方式
@@ -48,7 +50,7 @@ public class Login {
 	@RequestMapping(value = "/doLogin")
 	public String doLogin(HttpServletRequest request, Model model,
 			@RequestParam String adminsLogin, @RequestParam String adminsPwd) {
-		logger.info("登录到系统");
+		logger.info(MANAGE_NAME+"登录到系统");
 		
 		if (Validation.isBlank(adminsLogin) || Validation.isBlank(adminsPwd)) {
 			model.addAttribute(Constants.MSG_TYPE_WARNING, "用户名和密码都不能为空");

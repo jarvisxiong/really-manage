@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.manage.util.Constants;
+
 /**
  * 退出
  * 
@@ -20,9 +22,11 @@ public class Logout {
 
 	private static Logger logger = LoggerFactory.getLogger(Logout.class);
 	
+	private static final String MANAGE_NAME = Constants.MANAGE_NAME;
+	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request, Model model) {
-		logger.info("退出系统");
+		logger.info(MANAGE_NAME+"退出系统");
 		
 		request.getSession().removeAttribute("admins"); // 这一步可以不需要
 		

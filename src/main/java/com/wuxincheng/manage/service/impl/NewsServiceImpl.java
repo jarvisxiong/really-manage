@@ -8,8 +8,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.wuxincheng.manage.dao.CommentDao;
@@ -26,15 +24,12 @@ import com.wuxincheng.manage.service.NewsService;
  */
 @Service("newsService")
 public class NewsServiceImpl implements NewsService {
-	private static Logger logger = LoggerFactory.getLogger(NewsServiceImpl.class);
 
 	@Resource private NewsDao newsDao;
 	@Resource private CommentDao commentDao;
 	
 	@Override
 	public Map<String, Object> queryPager(Map<String, Object> queryParam) {
-		logger.info("查询所有博客信息");
-		
 		// 返回结果
 		Map<String, Object> reault = new HashMap<String, Object>();
 		
@@ -55,15 +50,11 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public News queryNewsById(String newsId) {
-		logger.info("根据主键查询帖子, newsId: " + newsId);
-		
 		return newsDao.queryNewsById(newsId);
 	}
 
 	@Override
 	public void edit(News news) {
-		logger.info("编辑帖子");
-		
 		if (news.getId() != null && !"".equals(news.getId())) { // 更新
 			newsDao.update(news);
 			Comment comment = new Comment();
@@ -92,16 +83,12 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public void sendNews4App(String newsId) {
-		logger.info("发布帖子");
-		
 		newsDao.sendNews4App(newsId);
 		commentDao.sendNews4App(newsId);
 	}
 
 	@Override
 	public void delete(Long newsId) {
-		logger.info("删除帖子");
-		
 		// 删除帖子
 		newsDao.delete(newsId);
 		
