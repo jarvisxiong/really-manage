@@ -20,16 +20,18 @@
 	<jsp:include page="../top.jsp" />
 	
 	<div class="container main-container">
-		<h5 class="page-header page-target">文章信息管理 - 编辑文章</h5>
+		<h5 class="page-header page-target">素材管理 - 编辑素材</h5>
 		<form action="<%=request.getContextPath()%>/manage/news/doEdit" role="form" method="post">
 			<!-- 隐藏字段 -->
 			<input type="hidden" id="id" name="id" value="${news.id}" />
 			<input type="hidden" id="commentId" name="commentId" value="${news.commentId}" />
 			<input type="hidden" id="url" name="url" value="${news.url}" />
+            <!-- 
             <div class="form-group">
               <label for="comment">文章评论：</label>
               <textarea cols="30" id="comment" class="form-control" name="comment" rows="3" style="width: 100%;" placeholder="请输入文章评论">${news.comment}</textarea>
             </div>
+             -->
 			<div class="form-group">
 				<label for="title">文章标题：</label>
 			    <input type="text" name="title" value="${news.title}" class="form-control" style="width: 100%;" placeholder="请输入文章标题" />
