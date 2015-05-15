@@ -16,6 +16,58 @@ import java.util.regex.Pattern;
 public class Validation {
 
 	/**
+	 * 判断输入的URL格式
+	 * 
+	 * @param url
+	 * @return false: 非法格式, true: 格式正确
+	 */
+	public static boolean isUrl(String url) {
+		String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+		Pattern patt = Pattern.compile(regex);
+		Matcher matcher = patt.matcher(url);
+		boolean isMatch = matcher.matches();
+		if (!isMatch) { // 您输入的URL地址不正确
+			return false;
+		} else { // 正确
+			return true;
+		}
+	}
+
+	/**
+	 * 验证字符串中是否存在中文
+	 * 
+	 * @param strName
+	 * @return true: 字符串存在中文, false: 字符串不存在中文
+	 */
+	public static final boolean isChinese(String strName) {
+		char[] ch = strName.toCharArray();
+		for (int i = 0; i < ch.length; i++) {
+			char c = ch[i];
+			if (isChinese(c)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	// GENERAL_PUNCTUATION 判断中文的“号
+	// CJK_SYMBOLS_AND_PUNCTUATION 判断中文的。号
+	// HALFWIDTH_AND_FULLWIDTH_FORMS 判断中文的，号
+	private static final boolean isChinese(char c) {
+		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+				|| ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+				|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * 检查是否为null
 	 * 
 	 * @author
