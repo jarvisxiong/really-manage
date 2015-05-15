@@ -38,21 +38,24 @@
       &nbsp;&nbsp;&nbsp;&nbsp;
       <button type="submit" class="btn btn-primary btn-sm">查询</button>
       <button type="button" onclick="queryReset();" class="btn btn-primary btn-sm">重置</button>
-      <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
-      <button type="button" class="btn btn-warning btn-sm">新增</button>
-      </a>
+      
       <a href="#">
       <button type="button" class="btn btn-primary btn-sm" onclick="selected();">入库</button>
       </a>
        -->
+      
+      <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
+      <button type="button" class="btn btn-primary btn-sm">新增</button>
+      </a>
       <span class="text-danger"></span>
     </form>
+    <hr>
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>
           <tr>
             <th style="text-align: center;">序号</th>
-            <th style="text-align: center;">操作</th>
+            <th style="text-align: center;">采集</th>
             <th style="text-align: center;">标题</th>
             <th style="text-align: center;">来源</th>
             <!-- 
@@ -63,8 +66,8 @@
             <!-- 
             <th style="text-align: center;">发表人</th>
             <th style="text-align: center;">状态</th>
-            <th style="text-align: center;">操作</th>
              -->
+            <th style="text-align: center;">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -113,17 +116,18 @@
                     </c:if>
                   </td>
                    -->
-                    <!-- 
                   <td style="text-align: center;">
-                    <a href="<%=request.getContextPath()%>/manage/news/comment?newsId=${obj.id}&commentId=${obj.commentId}">
-                      <button type="button" class="btn btn-warning btn-sm">评论</button></a>
                     <a href="<%=request.getContextPath()%>/manage/news/edit?newsId=${obj.id}">
-                      <button type="button" class="btn btn-warning btn-sm">修改</button>
+                      <button type="button" class="btn btn-primary btn-sm">修改</button>
                     </a>
                     <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/delete?newsId=${obj.id}';">删除</button>
-                  </td>
+                    <!-- 
+                    <a href="<%=request.getContextPath()%>/manage/news/comment?newsId=${obj.id}&commentId=${obj.commentId}">
+                      <button type="button" class="btn btn-warning btn-sm">评论</button></a>
+                    
                      -->
+                  </td>
                 </tr>
               </c:forEach>
             </c:when>
