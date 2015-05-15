@@ -236,11 +236,13 @@
     </dependency>
 
     <!-- WEB javax -->
+    <!-- 
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.faces</artifactId>
       <version>2.2.4</version>
     </dependency>
+     -->
 
     <dependency>
       <groupId>org.glassfish</groupId>
