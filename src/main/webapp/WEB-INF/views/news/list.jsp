@@ -43,7 +43,6 @@
       <button type="button" class="btn btn-primary btn-sm" onclick="selected();">入库</button>
       </a>
        -->
-      
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
       <button type="button" class="btn btn-primary btn-sm">新增</button>
       </a>
