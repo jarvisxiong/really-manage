@@ -48,5 +48,12 @@ public interface WeChatDao {
 	 * @param openId
 	 */
 	public abstract void updateState(WeChat wechat);
+
+	/**
+	 * 更新公众号抓取的时间
+	 * 
+	 * @param publicNO
+	 */
+	public abstract void updateFetchTime(String publicNO);
 	
 }

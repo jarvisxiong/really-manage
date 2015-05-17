@@ -72,7 +72,7 @@
 				<label class="radio-inline">
 				  <input type="radio" name="state" id="state" value="1" 
 			    	<c:if test="${'1' eq news.state}">checked="checked"</c:if>>
-			    	还未完成，存到草稿箱
+			    	还未完成，存到素材库
 				</label>
 			</div>
 			<input type="submit" class="btn btn-primary btn-sm" value="保存" />

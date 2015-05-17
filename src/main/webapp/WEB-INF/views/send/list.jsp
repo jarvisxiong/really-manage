@@ -97,7 +97,7 @@
                   <!-- 
                   <td style="text-align: right;"><fmt:formatNumber value="${obj.truthDegree}" pattern="#" type="number"/>%</td>
                    -->
-                  <td style="text-align: right;">${obj.opinionTimes}</td>
+                  <td style="text-align: right;">${obj.readerCount}</td>
                   <td style="text-align: center;">${obj.createTime}</td>
                   <!-- 
                   <td style="text-align: left;">${obj.creator}</td>

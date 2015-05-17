@@ -59,6 +59,9 @@ public class WeiXinFetchServiceImpl {
 			
 			saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare);
 			
+			// 更新公众号抓取的时间
+			weChatDao.updateFetchTime(weChat.getPublicNO());
+			
 			logger.info("处理" + prepareSaveNews.size() + "篇文章");
 			logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取完成.");
 		}
@@ -87,6 +90,7 @@ public class WeiXinFetchServiceImpl {
 			}
 			
 			prepareSaveNew.setSogouOpenid(openid);
+			prepareSaveNew.setReaderCount(0);
 			newsDao.insert(prepareSaveNew);
 			
 			int newsid = newsDao.queryNewsIdByDocid(prepareSaveNew.getSogouDocid());

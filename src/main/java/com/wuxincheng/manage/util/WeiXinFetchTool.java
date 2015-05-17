@@ -68,7 +68,12 @@ public class WeiXinFetchTool {
 			return fectWeiXinContents;
 		}
 		
-		logger.info("sogouWeiXinResult= " + sogouWeiXinResult);
+		// logger.info("sogouWeiXinResult= " + sogouWeiXinResult);
+		
+		if (sogouWeiXinResult.indexOf("}") < 1 || sogouWeiXinResult.indexOf("{") < 1 
+				|| sogouWeiXinResult.indexOf("page") < 1 || sogouWeiXinResult.indexOf("items") < 1) {
+			return null;
+		}
 		
 		JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
 		logger.info("数据已经转换成JSONObject对象");

@@ -36,4 +36,9 @@ public class WeChatDaoImpl extends BaseDao implements WeChatDao {
 		this.getSqlMapClientTemplate().insert("WeChat.updateState", wechat);		
 	}
 
+	@Override
+	public void updateFetchTime(String publicNO) {
+		this.getSqlMapClientTemplate().update("WeChat.updateFetchTime", publicNO);
+	}
+
 }

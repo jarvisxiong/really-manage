@@ -54,8 +54,8 @@
             <th style="text-align: center;">来源</th>
             <!-- 
             <th style="text-align: center;">真象指数</th>
-            <th style="text-align: center;">评论数</th>
              -->
+            <th style="text-align: center;">阅读数</th>
             <th style="text-align: center;">发布时间</th>
             <!-- 
             <th style="text-align: center;">发表人</th>
@@ -79,8 +79,8 @@
                   <td style="text-align: left;">${obj.domain}<br>${obj.weChatPublicNO}</td>
                   <!-- 
                   <td style="text-align: right;"><fmt:formatNumber value="${obj.truthDegree}" pattern="#" type="number"/>%</td>
-                  <td style="text-align: right;">${obj.opinionTimes}</td>
                    -->
+                  <td style="text-align: right;">${obj.readerCount}</td>
                   <td style="text-align: center;">${obj.createTime}</td>
                   <!-- 
                   <td style="text-align: left;">${obj.creator}</td>

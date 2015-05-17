@@ -30,6 +30,7 @@ public class WeChat implements Serializable {
 	private String state;
 
 	private String createTime;
+	private String updateTime;
 
 	public WeChat() {
 	}
@@ -113,6 +114,14 @@ public class WeChat implements Serializable {
 				+ getMemo() + ", weChatCret: " + getWeChatCret()
 				+ ", logoLink: " + getLogoLink() + ", cdnLink: " + getCdnLink()
 				+ "]";
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
 	}
 
 }

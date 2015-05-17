@@ -65,8 +65,9 @@ public class NewsServiceImpl implements NewsService {
 		} else { // 新增
 			String mockDocid = UUID.randomUUID()+"";
 			news.setSogouDocid(mockDocid); // 这个ID不是来自搜狗微信搜索
-			// news.setState("1"); // 1-不显示, 0-显示
+			news.setState("1"); // 1-不显示, 0-显示
 			news.setCreator("2"); // 为默认用户
+			news.setReaderCount(0); // 设置文章访问量0
 			newsDao.insert(news);
 			
 			int newsid = newsDao.queryNewsIdByDocid(mockDocid);

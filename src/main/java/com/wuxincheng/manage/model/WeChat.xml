@@ -12,6 +12,7 @@
   	<result property="logoLink" column="LOGO_LINK" />
   	<result property="cdnLink" column="CDN_LINK" />
   	<result property="createTime" column="CREATE_TIME" />
+    <result property="updateTime" column="UPDATE_TIME" />
   	<result property="state" column="STATE" />
   </resultMap>
 	
@@ -19,10 +20,11 @@
     SELECT 
   	 bt.OPEN_ID, bt.PUBLIC_NAME, bt.PUBLIC_NO, bt.MEMO, bt.WECHAT_CRET,
      DATE_FORMAT(bt.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, 
+     DATE_FORMAT(bt.UPDATE_TIME,'%Y%m%d %H:%i:%S') AS UPDATE_TIME,
      bt.LOGO_LINK, bt.CDN_LINK, bt.STATE
   	FROM T_MANAGE_WECHAT_PUBLIC bt 
     WHERE bt.STATE = '0'
-    ORDER BY bt.CREATE_TIME DESC
+    ORDER BY bt.UPDATE_TIME DESC
   </select>
   
   <select id="checkOpenIdPK" parameterClass="java.lang.String" resultClass="java.lang.String">
@@ -39,15 +41,21 @@
   
   <insert id="insert" parameterClass="WeChat">
     INSERT INTO T_MANAGE_WECHAT_PUBLIC(
-      OPEN_ID, PUBLIC_NAME, PUBLIC_NO, MEMO, WECHAT_CRET, LOGO_LINK, CDN_LINK, CREATE_TIME, STATE)
+      OPEN_ID, PUBLIC_NAME, PUBLIC_NO, MEMO, WECHAT_CRET, LOGO_LINK, CDN_LINK, 
+      UPDATE_TIME, CREATE_TIME, STATE)
     VALUES(
-      #openId#, #publicName#, #publicNO#, #memo#, #weChatCret#, #logoLink#, #cdnLink#, CURRENT_TIMESTAMP, #state#)
+      #openId#, #publicName#, #publicNO#, #memo#, #weChatCret#, #logoLink#, #cdnLink#, 
+      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #state#)
   </insert>
   
   <update id="updateState" parameterClass="WeChat">
     UPDATE T_MANAGE_WECHAT_PUBLIC SET 
-      CREATE_TIME = CURRENT_TIMESTAMP, STATE = #state# 
+      UPDATE_TIME = CURRENT_TIMESTAMP, STATE = #state# 
     WHERE OPEN_ID = #openId#
+  </update>
+  
+  <update id="updateFetchTime" parameterClass="java.lang.String">
+    UPDATE T_MANAGE_WECHAT_PUBLIC SET UPDATE_TIME = CURRENT_TIMESTAMP WHERE PUBLIC_NO = #publicNO#
   </update>
 
 </sqlMap>

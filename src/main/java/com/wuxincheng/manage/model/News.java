@@ -30,6 +30,11 @@ public class News implements Serializable {
 
 	private long opinionTimes = 0L;
 	
+	/**
+	 * 文章访问量
+	 */
+	private Integer readerCount;
+	
 	/** 虚拟活跃度 */
 	private String virtualActive;
 
@@ -207,6 +212,14 @@ public class News implements Serializable {
 
 	public void setVirtualActive(String virtualActive) {
 		this.virtualActive = virtualActive;
+	}
+
+	public Integer getReaderCount() {
+		return readerCount;
+	}
+
+	public void setReaderCount(Integer readerCount) {
+		this.readerCount = readerCount;
 	}
 
 }
