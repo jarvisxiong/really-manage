@@ -81,11 +81,10 @@ public class FetchService {
 				newsDao.updateImgLocPath(updateImg);
 				logger.info("图片更新成功 {}", updateImg);
 			} catch (Exception e) {
-				logger.error("图片更新成功出现异常 {}", updateImg);
+				logger.error("图片更新成功出现异常", e);
 			}
 		}
 		
 		logger.info("结束处理图片");
 	}
-
 }

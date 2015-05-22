@@ -167,4 +167,8 @@
     SELECT n.PK, n.TITLE, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n 
     WHERE (n.STATE = '0' OR n.STATE IS NULL) AND IMG_LOC_PATH IS NULL
   </select>
+  
+  <update id="updateImgLocPath" parameterClass="java.util.Map">
+    UPDATE T_REALLY_NEWS SET IMG_LOC_PATH = #IMG_LOC_PATH# WHERE PK = #id#
+  </update>
 </sqlMap>

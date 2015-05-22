@@ -81,7 +81,7 @@ public class NewsDao extends BaseDao {
 	}
 
 	public void updateImgLocPath(Map<String, Object> updateImg) {
-		
+		this.getSqlMapClientTemplate().update("News.updateImgLocPath", updateImg);
 	}
 
 }
