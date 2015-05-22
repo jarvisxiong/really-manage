@@ -84,12 +84,12 @@ public class WeiXinFetchTool {
 		JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
 		logger.info("数据已经转换成JSONObject对象");
 		
-		logger.info("sogouWeiXinObject= " + sogouWeiXinObject);
+		// logger.info("sogouWeiXinObject= " + sogouWeiXinObject);
 		
 		JSONArray items = (JSONArray)sogouWeiXinObject.get("items");
 		logger.info("数据已经转换成JSONArray数组");
 		
-		logger.info("items= " + items);
+		// logger.info("items= " + items);
 		
 		String xmlSource = items.toString();
 		xmlSource = xmlSource.replace("\\", "").replace("[\"", "").replace("\"]", "");

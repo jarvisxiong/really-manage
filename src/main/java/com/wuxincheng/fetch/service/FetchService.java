@@ -1,7 +1,6 @@
 package com.wuxincheng.fetch.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +48,19 @@ public class FetchService {
 				logger.info("成功下载一张图片 fileName={}", fileName);
 			} catch (Exception e) {
 				logger.error("图片下载出现异常 imgLink={}", pojo.getImgLink());
+				
+				Map<String, Object> updateImg = new HashMap<String, Object>();
+				updateImg.put("IMG_LOC_PATH", "logo");
+				updateImg.put("id", pojo.getId());
+				
+				logger.info("换成网站Logo");
+				try {
+					newsDao.updateImgLocPath(updateImg);
+					logger.info("图片更新成功 {}", updateImg);
+				} catch (Exception ex) {
+					logger.error("图片更新成功出现异常", ex);
+				}
+				
 				continue;
 			}
 			
@@ -63,8 +75,21 @@ public class FetchService {
 				File imgFileCut = new File(localPath + "K-" +fileName);
 				FetchImageUtil.cutImage(imgFileRes, imgFileCut);
 				logger.info("成功截取图片 newFileName={}", "K-" +fileName);
-			} catch (IOException e1) {
-				logger.error("图片截取出现异常 fileName={}", fileName);
+			} catch (Exception e1) {
+				logger.error("图片截取出现异常", e1);
+				
+				Map<String, Object> updateImg = new HashMap<String, Object>();
+				updateImg.put("IMG_LOC_PATH", "logo");
+				updateImg.put("id", pojo.getId());
+				
+				logger.info("换成网站Logo");
+				try {
+					newsDao.updateImgLocPath(updateImg);
+					logger.info("图片更新成功 {}", updateImg);
+				} catch (Exception e) {
+					logger.error("图片更新成功出现异常", e);
+				}
+				
 				continue;
 			}
 			

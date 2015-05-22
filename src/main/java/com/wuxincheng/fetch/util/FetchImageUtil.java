@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -46,9 +45,9 @@ public class FetchImageUtil {
 	 * @param cuted
 	 *            截取后的File
 	 * 
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	public static void cutImage(File image, File cuted) throws IOException {
+	public static void cutImage(File image, File cuted) throws Exception {
 		// 判断参数是否合法
 		if (null == image) {
 			new Exception("哎呀，截图出错！！！");
