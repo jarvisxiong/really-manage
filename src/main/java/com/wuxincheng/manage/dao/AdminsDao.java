@@ -2,53 +2,38 @@ package com.wuxincheng.manage.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.wuxincheng.manage.model.Admins;
 
 /**
- * 管理员Dao
+ * 管理员
  * 
  * @author wuxincheng
  *
  */
-public interface AdminsDao {
-	
-	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	public abstract List<Admins> queryAll();
+@Repository("adminsDao")
+public class AdminsDao extends BaseDao {
 
-	/**
-	 * 查询
-	 * 
-	 * @param admins
-	 * @return
-	 */
-	public abstract Admins query(Admins admins);
-	
-	/**
-	 * 增加
-	 * 
-	 * @param admins
-	 * @return
-	 */
-	public abstract void insert(Admins admins);
-	
-	/**
-	 * 更新
-	 * 
-	 * @param admins
-	 * @return
-	 */
-	public abstract void update(Admins admins);
-	
-	/**
-	 * 更新
-	 * 
-	 * @param admins
-	 * @return
-	 */
-	public abstract void modifyPwd(Admins admins);
-	
+	public Admins query(Admins admins) {
+		return (Admins)this.getSqlMapClientTemplate().queryForObject("Admins.query", admins);
+	}
+
+	public void insert(Admins admins) {
+		this.getSqlMapClientTemplate().insert("Admins.insert", admins);
+	}
+
+	public void update(Admins admins) {
+		this.getSqlMapClientTemplate().update("Admins.update", admins);
+	}
+
+	public void modifyPwd(Admins admins) {
+		this.getSqlMapClientTemplate().update("Admins.modifyPwd", admins);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Admins> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("Admins.queryAll");
+	}
+
 }

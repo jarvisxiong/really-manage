@@ -3,121 +3,80 @@ package com.wuxincheng.manage.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
+import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.model.News;
 
-/**
- * 文章信息Dao接口
- * 
- * @author wuxincheng
- *
- */
-public interface NewsDao {
+@Repository("newsDao")
+public class NewsDao extends BaseDao {
+	
+	public Integer queryNewsIdByDocid(String sogouDocid) {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("News.queryNewsIdByDocid", sogouDocid);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getAllWeChatDocid() {
+		return this.getSqlMapClientTemplate().queryForList("News.getAllWechatDocid");
+	}
 
-	/**
-	 * 查询所有文件信息
-	 * 
-	 * @return
-	 */
-	public abstract List<News> queryAll();
+	@SuppressWarnings("unchecked")
+	public List<News> queryPager(Map<String, Object> params) {
+		return this.getSqlMapClientTemplate().queryForList("News.queryPager", params);
+	}
 	
-	/**
-	 * 分页查询
-	 * 
-	 * @param start
-	 * @param end
-	 * @param flag
-	 * @return
-	 */
-	public abstract List<News> queryPager(Map<String, Object> params);
+	public int queryCountByParams(Map<String, Object> queryParam) {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("News.queryCountByParams", queryParam);
+	}
 	
-	/**
-	 * 添加
-	 * 
-	 * @param blogInfo
-	 */
-	public abstract void insert(News news);
+	public Integer queryCount() {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("News.queryCount");
+	}
 	
-	/**
-	 * 查询最大ID值
-	 * 
-	 * @return
-	 */
-	public abstract Integer queryMaxId();
+	@SuppressWarnings("unchecked")
+	public List<News> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("News.queryAll");
+	}
 
-	/**
-	 * 更新
-	 * 
-	 * @param blogInfo
-	 */
-	public abstract void update(News news);
+	public void insert(News news) {
+		this.getSqlMapClientTemplate().insert("News.insert", news);
+	}
 	
-	/**
-	 * 删除文章
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract Integer delete(Long newsId);
+	public Integer queryMaxId() {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("News.queryMaxId");
+	}
 
-	/**
-	 * 统计总记录条数
-	 * 
-	 * @return
-	 */
-	public abstract Integer queryCount();
+	public void update(News news) {
+		this.getSqlMapClientTemplate().insert("News.update", news);
+	}
 	
-	/**
-	 * 根据条件统计总记录条数
-	 * 
-	 * @param queryParam
-	 * @return
-	 */
-	public abstract int queryCountByParams(Map<String, Object> queryParam);
+	public Integer delete(Long id) {
+		return (Integer) this.getSqlMapClientTemplate().delete("News.delete", id);
+	}
 
-	/**
-	 * 查询所有微信DOCID
-	 * 
-	 * @return
-	 */
-	public abstract List<String> getAllWeChatDocid();
-	
-	/**
-	 * 根据DOCID查询帖子
-	 * 
-	 * @param docId
-	 * @return
-	 */
-	public abstract Integer queryNewsIdByDocid(String docId);
-	
-	/**
-	 * 根据主键查询帖子
-	 * 
-	 * @param newsId
-	 * @return
-	 */
-	public abstract News queryNewsById(String newsId);
+	public News queryNewsById(String newsId) {
+		return (News) this.getSqlMapClientTemplate().queryForObject("News.queryNewsById", newsId);
+	}
 
-	/**
-	 * 发布帖子
-	 * 
-	 * @param newsId
-	 */
-	public abstract void sendNews4App(String newsId);
-	
-	/**
-	 * 查询到所有过期的帖子
-	 * 
-	 * @return
-	 */
-	public abstract List<News> queryExpireNews();
-	
-	/**
-	 * 批量入库
-	 * 
-	 * @param newsIds
-	 */
-	public abstract void intoDBatch(String newsId);
+	public void sendNews4App(String newsId) {
+		this.getSqlMapClientTemplate().delete("News.sendNews4App", newsId);
+	}
 
-	public abstract void rollback(String string);
+	@SuppressWarnings("unchecked")
+	public List<News> queryExpireNews() {
+		return this.getSqlMapClientTemplate().queryForList("News.queryExpireNews");
+	}
+
+	public void intoDBatch(String newsId) {
+		this.getSqlMapClientTemplate().update("News.intoDBatch", newsId);
+	}
+
+	public void rollback(String newsId) {
+		this.getSqlMapClientTemplate().update("News.rollback", newsId);
+	}
+
+	public List<News> querySended() {
+		return null;
+	}
 
 }

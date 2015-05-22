@@ -1,63 +1,122 @@
 package com.wuxincheng.manage.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.wuxincheng.manage.dao.CommentDao;
+import com.wuxincheng.manage.dao.NewsDao;
+import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
+import com.wuxincheng.manage.service.NewsService;
 
 /**
- * 信息Service接口
+ * 帖子Service
  * 
  * @author wuxincheng
  *
  */
-public interface NewsService {
+@Service("newsService")
+public class NewsService {
+
+	@Resource private NewsDao newsDao;
+	@Resource private CommentDao commentDao;
 	
-	/**
-	 * 分页查询
-	 * 
-	 * @param start
-	 * @param end
-	 * @param flag
-	 * @return
-	 */
-	public abstract Map<String, Object> queryPager(Map<String, Object> queryParam);
+	public Map<String, Object> queryPager(Map<String, Object> queryParam) {
+		// 返回结果
+		Map<String, Object> reault = new HashMap<String, Object>();
+		
+		// 查询条件
+		// int start, int end
+		// Map<String, Object> params = new HashMap<String, Object>();
+		// params.put("start", start);
+		// params.put("end", end);
+		
+		int totalCount = newsDao.queryCountByParams(queryParam); // 总记录数
+		List<News> news = newsDao.queryPager(queryParam); // 当前页的数据
+		
+		reault.put("news", news);
+		reault.put("totalCount", totalCount);
+		
+		return reault;
+	}
 
-	/**
-	 * 根据ID查询帖子
-	 * 
-	 * @param newsId
-	 * @return
-	 */
-	public abstract News queryNewsById(String newsId);
+	public News queryNewsById(String newsId) {
+		return newsDao.queryNewsById(newsId);
+	}
 
-	/**
-	 * 编辑帖子
-	 * 
-	 * @param news
-	 */
-	public abstract void edit(News news);
+	public void edit(News news) {
+		if (news.getId() != null && !"".equals(news.getId())) { // 更新
+			newsDao.update(news);
+			Comment comment = new Comment();
+			comment.setNewsId(news.getId()+"");
+			comment.setState(news.getState());
+			comment.setContent(news.getComment());
+			commentDao.update(comment);
+		} else { // 新增
+			String mockDocid = UUID.randomUUID()+"";
+			news.setSogouDocid(mockDocid); // 这个ID不是来自搜狗微信搜索
+			news.setState("1"); // 1-不显示, 0-显示
+			news.setCreator("2"); // 为默认用户
+			news.setReaderCount(0); // 设置文章访问量0
+			newsDao.insert(news);
+			
+			int newsid = newsDao.queryNewsIdByDocid(mockDocid);
+			Comment comment = new Comment();
+			comment.setNewsId(newsid+"");
+			comment.setContent(news.getComment());
+			comment.setBackground(2014000000);
+			comment.setAlpha(-1);
+			comment.setCreator("2");
+			comment.setState(news.getState()); // 1-不显示, 0-显示
+			commentDao.insert(comment);
+		}
+	}
 
-	/**
-	 * 发布帖子
-	 * 
-	 * @param newsId
-	 */
-	public abstract void sendNews4App(String newsId);
+	public void sendNews4App(String newsId) {
+		newsDao.sendNews4App(newsId);
+		commentDao.sendNews4App(newsId);
+	}
 
-	/**
-	 * 删除帖子
-	 * 
-	 * @param newsId
-	 */
-	public abstract void delete(Long newsId);
+	public void delete(Long newsId) {
+		// 删除帖子
+		newsDao.delete(newsId);
+		
+		News news = newsDao.queryNewsById(newsId+"");
+		// 删除对应的评论
+		commentDao.delete(news.getCommentId());
+	}
+
+	public void intoDBatch(Long[] newsIds) {
+		for (Long newsId : newsIds) {
+			newsDao.intoDBatch(newsId+"");
+		}
+	}
+
+	public void sendBatch(Long[] newsIds) throws Exception {
+		for (Long newsId : newsIds) {
+			newsDao.sendNews4App(newsId+"");
+			commentDao.sendNews4App(newsId+"");
+			Thread.sleep(1000);
+		}
+	}
+
+	public List<News> getNewsByIds(Long[] newsIds) {
+		List<News> news = new ArrayList<News>();
+		for (long newsId : newsIds) {
+			news.add(newsDao.queryNewsById(newsId+""));
+		}
+		return news;
+	}
+
+	public void rollback(Long newsId) {
+		newsDao.rollback(newsId+"");
+	}
 	
-	public abstract void intoDBatch(Long[] newsIds);
-
-	public abstract void sendBatch(Long[] newsIds) throws Exception;
-
-	public abstract List<News> getNewsByIds(Long[] newsIds);
-
-	public abstract void rollback(Long newsId);
-
 }

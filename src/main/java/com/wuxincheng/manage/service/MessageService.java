@@ -2,10 +2,21 @@ package com.wuxincheng.manage.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.wuxincheng.manage.dao.MessageDao;
 import com.wuxincheng.manage.model.Message;
+import com.wuxincheng.manage.service.MessageService;
 
-public interface MessageService {
+@Service("messageService")
+public class MessageService {
 
-	public abstract List<Message> queryAll();
+	@Resource private MessageDao messageDao;
 	
+	public List<Message> queryAll() {
+		return messageDao.queryAll();
+	}
+
 }

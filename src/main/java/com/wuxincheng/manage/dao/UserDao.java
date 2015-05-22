@@ -2,36 +2,25 @@ package com.wuxincheng.manage.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.wuxincheng.manage.dao.UserDao;
 import com.wuxincheng.manage.model.User;
 
-/**
- * 用户信息Dao接口
- * 
- * @author wuxincheng
- *
- */
-public interface UserDao {
-	
-	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	public abstract List<User> queryAll();
-	
-	/**
-	 * 修改用户状态
-	 * 
-	 * @param userId
-	 */
-	public abstract void modifyState(String userId);
-	
-	/**
-	 * 查看用户详细信息
-	 * 
-	 * @param logiName
-	 * @return
-	 */
-	public abstract User queryBylogiName(String logiName);
+@Repository("userDao")
+public class UserDao extends BaseDao {
+
+	@SuppressWarnings("unchecked")
+	public List<User> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("User.queryAll");
+	}
+
+	public void modifyState(String userId) {
+		this.getSqlMapClientTemplate().update("User.modifyState", userId);
+	}
+
+	public User queryBylogiName(String logiName) {
+		return (User)this.getSqlMapClientTemplate().queryForObject("User.queryBylogiName", logiName);
+	}
 	
 }

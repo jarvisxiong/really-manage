@@ -3,75 +3,45 @@ package com.wuxincheng.manage.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.wuxincheng.manage.model.BlogInfo;
 
-/**
- * 博客信息Dao接口
- * 
- * @author wuxincheng
- *
- */
-public interface BlogInfoDao {
+@Repository("blogInfoDao")
+public class BlogInfoDao extends BaseDao {
 
-	/**
-	 * 查询所有文件信息
-	 * 
-	 * @return
-	 */
-	public abstract List<BlogInfo> queryAll();
+	@SuppressWarnings("unchecked")
+	public List<BlogInfo> queryPager(Map<String, Object> params) {
+		return this.getSqlMapClientTemplate().queryForList("BlogInfo.queryPager", params);
+	}
 	
-	/**
-	 * 分页查询
-	 * 
-	 * @param start
-	 * @param end
-	 * @param flag
-	 * @return
-	 */
-	public abstract List<BlogInfo> queryPager(Map<String, Object> params);
-	
-	/**
-	 * 根据主键查询
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract BlogInfo queryByBlogId(String blogId);
-	
-	/**
-	 * 添加
-	 * 
-	 * @param blogInfo
-	 */
-	public abstract void insert(BlogInfo blogInfo);
-	
-	/**
-	 * 查询最大ID值
-	 * 
-	 * @return
-	 */
-	public abstract Integer queryMaxId();
+	@SuppressWarnings("unchecked")
+	public List<BlogInfo> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("BlogInfo.queryAll");
+	}
 
-	/**
-	 * 更新
-	 * 
-	 * @param blogInfo
-	 */
-	public abstract void update(BlogInfo blogInfo);
-	
-	/**
-	 * 删除博客
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract Integer delete(String blogId);
+	public void insert(BlogInfo blogInfo) {
+		this.getSqlMapClientTemplate().insert("BlogInfo.insert", blogInfo);
+	}
 
-	/**
-	 * 统计总记录条数
-	 * 
-	 * @return
-	 */
-	public abstract Integer queryCount();
+	public Integer queryCount() {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("BlogInfo.queryCount");
+	}
 	
+	public Integer queryMaxId() {
+		return (Integer)this.getSqlMapClientTemplate().queryForObject("BlogInfo.queryMaxId");
+	}
+
+	public BlogInfo queryByBlogId(String blogId) {
+		return (BlogInfo) this.getSqlMapClientTemplate().queryForObject("BlogInfo.queryByBlogId", blogId);
+	}
+
+	public void update(BlogInfo blogInfo) {
+		this.getSqlMapClientTemplate().insert("BlogInfo.update", blogInfo);
+	}
+	
+	public Integer delete(String blogId) {
+		return (Integer) this.getSqlMapClientTemplate().delete("BlogInfo.delete", blogId);
+	}
+
 }

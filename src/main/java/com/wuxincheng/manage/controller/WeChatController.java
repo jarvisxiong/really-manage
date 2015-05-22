@@ -89,7 +89,12 @@ public class WeChatController extends BaseController {
 			return "weChat/edit";
 		}
 		
-		wechat = WeiXinFetchTool.fetchWechatPublicNoInfoBySogouOpenid(openId);
+		// 直接从网络获取
+		// wechat = WeiXinFetchTool.fetchWechatPublicNoInfoBySogouOpenid(openId);
+		
+		// 在库里查询
+		wechat = weChatService.queryByOpenId(openId);
+		
 		if (null == wechat) {
 			model.addAttribute(Constants.MSG_TYPE_WARNING, "openid不存在");
 			return "weChat/edit";
@@ -133,6 +138,48 @@ public class WeChatController extends BaseController {
 		}
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "新增成功");
+		
+		return list(request, model);
+	}
+	
+	@RequestMapping(value = "/update")
+	public String update(String openId, Model model) {
+		logger.info("查看微信公众号信息 openId={}", openId);
+		
+		if (StringUtils.isEmpty(openId)) {
+			return "weChat/edit";
+		}
+		
+		// 在库里查询
+		wechat = weChatService.queryByOpenId(openId);
+		
+		if (null == wechat) {
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "openid不存在");
+			return "weChat/edit";
+		}
+		
+		model.addAttribute("wechat", wechat);
+		
+		return "weChat/update";
+	}
+	
+	@RequestMapping(value = "/doUpdate")
+	public String doUpdate(HttpServletRequest request, Model model, WeChat wechatEncry) {
+		logger.info("处理微信公众号信息");
+		if (null == wechatEncry) {
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "更新失败");
+			return "weChat/edit";
+		}
+		
+		// 保存
+		try {
+			weChatService.updateFetchEncry(wechatEncry);
+		} catch (Exception e) {
+			model.addAttribute(Constants.MSG_TYPE_DANGER, "更新失败");
+			return list(request, model);
+		}
+		
+		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "更新成功");
 		
 		return list(request, model);
 	}

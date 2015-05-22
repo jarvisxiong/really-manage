@@ -14,23 +14,39 @@ public class WeChat implements Serializable {
 
 	/** 搜狗openid */
 	private String openId;
+	
+	/** 搜狗请求加密的字段 */
+	private String encryData;
+	
 	/** 公众号名称 */
 	private String publicName;
+	
 	/** 微信公众号 */
 	private String publicNO;
+	
 	/** 功能介绍 */
 	private String memo;
+	
 	/** 微信认证 */
 	private String weChatCret;
+	
 	/** Logo地址 */
 	private String logoLink;
+	
 	/** 二维码地址 */
 	private String cdnLink;
-	/** 博客类型状态: 0-正常, 1-禁用, 2-删除 */
+	
+	/** 状态: 0-正常, 1-禁用, 2-删除 */
 	private String state;
-
+	
+	/** 创建日期 */
 	private String createTime;
+	
+	/** 更新日期 */
 	private String updateTime;
+	
+	/** 更新日期 */
+	private String fetchTime;
 
 	public WeChat() {
 	}
@@ -122,6 +138,22 @@ public class WeChat implements Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getEncryData() {
+		return encryData;
+	}
+
+	public void setEncryData(String encryData) {
+		this.encryData = encryData;
+	}
+
+	public String getFetchTime() {
+		return fetchTime;
+	}
+
+	public void setFetchTime(String fetchTime) {
+		this.fetchTime = fetchTime;
 	}
 
 }

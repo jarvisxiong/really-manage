@@ -2,68 +2,50 @@ package com.wuxincheng.manage.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Repository;
+
+import com.wuxincheng.manage.dao.AdminsDao;
 import com.wuxincheng.manage.model.Admins;
+import com.wuxincheng.manage.service.AdminsService;
 
-/**
- * 管理员
- * 
- * @author wuxincheng
- *
- */
-public interface AdminsService {
+@Repository("adminsService")
+public class AdminsService {
 	
-	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	public abstract List<Admins> queryAll();
+	@Resource private AdminsDao adminsDao;
 
-	/**
-	 * 查询
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract Admins query(String adminsLogin);
-	
-	/**
-	 * 登录查询
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract Admins login(String adminsLogin, String adminsPwd);
-	
-	/**
-	 * 增加
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract void insert(Admins admins);
-	
-	/**
-	 * 更新
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract void update(Admins admins);
-	
-	/**
-	 * 更新
-	 * 
-	 * @param blogId
-	 * @return
-	 */
-	public abstract void modifyPwd(Admins admins);
-	
-	/**
-	 * 添加
-	 * 
-	 * @param admins
-	 */
-	public abstract void edit(Admins admins);
-	
+	public Admins query(String adminsLogin) {
+		Admins admins = new Admins();
+		admins.setAdminsLogin(adminsLogin);
+		return adminsDao.query(admins);
+	}
+
+	public Admins login(String adminsLogin, String adminsPwd) {
+		Admins admins = new Admins();
+		admins.setAdminsLogin(adminsLogin);
+		admins.setAdminsPwd(adminsPwd);
+		return adminsDao.query(admins);
+	}
+
+	public void insert(Admins admins) {
+		adminsDao.insert(admins);
+	}
+
+	public void update(Admins admins) {
+		adminsDao.update(admins);
+	}
+
+	public void modifyPwd(Admins admins) {
+		adminsDao.modifyPwd(admins);
+	}
+
+	public List<Admins> queryAll() {
+		return adminsDao.queryAll();
+	}
+
+	public void edit(Admins admins) {
+		
+	}
+
 }

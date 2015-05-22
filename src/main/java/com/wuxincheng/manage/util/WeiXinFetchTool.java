@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -47,10 +48,15 @@ public class WeiXinFetchTool {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<News> fectWeiXinContentBySogou(String openid, int page) {
+	public static List<News> fectArticle(String openid, String encryData, int page) {
+		if (StringUtils.isEmpty(encryData) || StringUtils.isEmpty(openid)) {
+			return null;
+		}
+		
 		List<News> fectWeiXinContents = new ArrayList<News>();
     	HttpClientHelper hp = new HttpClientHelper();
-    	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&page="+page;
+    	// String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&page="+page;
+    	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&eqs="+encryData+"&ekv=1&page="+page;
     	logger.info("抓取数据的地址: " + sogouUrl);
     	
     	String sogouWeiXinResult = null;

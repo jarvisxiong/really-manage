@@ -14,7 +14,11 @@ public class News implements Serializable {
 
 	private String domain;
 
+	/** 源图片地址 */
 	private String imgLink;
+	
+	/** 图片存在本地的位置 */
+	private String imgLocalPath;
 
 	private String title;
 
@@ -27,7 +31,6 @@ public class News implements Serializable {
 	private String creator;
 
 	private Double truthDegree = 0D;
-
 	private long opinionTimes = 0L;
 	
 	/**
@@ -220,6 +223,14 @@ public class News implements Serializable {
 
 	public void setReaderCount(Integer readerCount) {
 		this.readerCount = readerCount;
+	}
+
+	public String getImgLocalPath() {
+		return imgLocalPath;
+	}
+
+	public void setImgLocalPath(String imgLocalPath) {
+		this.imgLocalPath = imgLocalPath;
 	}
 
 }

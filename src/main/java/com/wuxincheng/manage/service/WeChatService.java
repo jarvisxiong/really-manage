@@ -2,45 +2,45 @@ package com.wuxincheng.manage.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.wuxincheng.manage.dao.WeChatDao;
 import com.wuxincheng.manage.model.WeChat;
+import com.wuxincheng.manage.service.WeChatService;
 
-public interface WeChatService {
+@Service("weChatService")
+public class WeChatService {
 
-	/**
-	 * 查询微信公众号信息
-	 * 
-	 * @return
-	 */
-	public abstract List<WeChat> queryAll();
-
-	/**
-	 * 根据openId查检公众号是否存在
-	 * 
-	 * @param openId
-	 * @return
-	 */
-	public abstract String checkOpenIdPK(String openId);
-
-	/**
-	 * 插入一条新的公众号
-	 * 
-	 * @param wechat
-	 */
-	public abstract void insert(WeChat wechat);
+	@Resource private WeChatDao weChatDao;
 	
-	/**
-	 * 根据openId查询公众信息
-	 * 
-	 * @param openId
-	 * @return
-	 */
-	public abstract WeChat queryByOpenId(String openId);
+	public List<WeChat> queryAll() {
+		return weChatDao.queryAll();
+	}
+
+	public String checkOpenIdPK(String openId) {
+		return weChatDao.checkOpenIdPK(openId);
+	}
+
+	public void insert(WeChat wechat) {
+		weChatDao.insert(wechat);
+	}
+
+	public WeChat queryByOpenId(String openId) {
+		return weChatDao.queryByOpenId(openId);
+	}
+
+	public void updateState(WeChat wechat) {
+		weChatDao.updateState(wechat);		
+	}
 	
-	/**
-	 * 更新状态
-	 * 
-	 * @param openId
-	 */
-	public abstract void updateState(WeChat wechat);
+	public void updateFetchTime(WeChat wechat) {
+		weChatDao.updateFetchTime(wechat);
+	}
 	
+	public void updateFetchEncry(WeChat wechat) {
+		weChatDao.updateFetchEncry(wechat);
+	}
+
 }

@@ -30,8 +30,7 @@
             <th style="text-align: left;">微信公众号</th>
             <th style="text-align: right;">文章数量</th>
             <th style="text-align: right;">发布数量</th>
-            <th style="text-align: center;">更新时间</th>
-            <th style="text-align: center;">添加时间</th>
+            <th style="text-align: center;">抓取时间</th>
             <th style="text-align: center;">状态</th>
             <!-- 
             <th style="text-align: center;">说明</th>
@@ -54,16 +53,26 @@
                   <td style="text-align: left;">${weChat.publicNO}</td>
                   <td style="text-align: right;">0</td>
                   <td style="text-align: right;">0</td>
-                  <td style="text-align: center;">${weChat.updateTime}</td>
-                  <td style="text-align: center;">${weChat.createTime}</td>
-                  <td style="text-align: center;"><span class="text-success">正常</span></td>
+                  <td style="text-align: center;">${weChat.fetchTime}</td>
+                  <td style="text-align: center;">
+                    <c:if test="${not empty weChat.encryData}">
+                      <span class="text-success">数据正常</span>
+                    </c:if>
+                    <c:if test="${empty weChat.encryData}">
+                      <span class="text-danger">加密串不存在</span>
+                    </c:if>
+                  </td>
                   <!-- 
                   <td style="text-align: center;"><span class="text-success">信息正确&nbsp;&nbsp;正常抓取</span></td>
                    -->
                   <td style="text-align: center;">
-                  <a href="<%=request.getContextPath()%>/manage/weChat/view?openId=${weChat.openId}">
+                  <a href="<%=request.getContextPath()%>/manage/weChat/show?openId=${weChat.openId}">
                       <button type="button"
                         class="btn btn-primary btn-sm">查看</button>
+                  </a>
+                  <a href="<%=request.getContextPath()%>/manage/weChat/update?openId=${weChat.openId}">
+                      <button type="button"
+                        class="btn btn-primary btn-sm">修改</button>
                   </a>
                   <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/weChat/delete?openId=${weChat.openId}';">删除</button>

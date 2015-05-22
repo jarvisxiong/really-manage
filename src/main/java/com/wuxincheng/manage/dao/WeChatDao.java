@@ -2,58 +2,41 @@ package com.wuxincheng.manage.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.wuxincheng.manage.dao.WeChatDao;
 import com.wuxincheng.manage.model.WeChat;
 
-/**
- * 微信公众号接口
- * 
- * @author wuxincheng
- *
- */
-public interface WeChatDao {
+@Repository("weChatDao")
+public class WeChatDao extends BaseDao {
 
-	/**
-	 * 查询微信公众号信息
-	 * 
-	 * @return
-	 */
-	public abstract List<WeChat> queryAll();
+	@SuppressWarnings("unchecked")
+	public List<WeChat> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("WeChat.queryAll");
+	}
 
-	/**
-	 * 根据openId查检公众号是否存在
-	 * 
-	 * @param openId
-	 * @return
-	 */
-	public abstract String checkOpenIdPK(String openId);
+	public String checkOpenIdPK(String openId) {
+		return (String)this.getSqlMapClientTemplate().queryForObject("WeChat.checkOpenIdPK", openId);
+	}
 
-	/**
-	 * 插入一条新的公众号
-	 * 
-	 * @param wechat
-	 */
-	public abstract void insert(WeChat wechat);
+	public void insert(WeChat wechat) {
+		this.getSqlMapClientTemplate().insert("WeChat.insert", wechat);
+	}
+
+	public WeChat queryByOpenId(String openId) {
+		return (WeChat)this.getSqlMapClientTemplate().queryForObject("WeChat.queryByOpenId", openId);
+	}
+
+	public void updateState(WeChat wechat) {
+		this.getSqlMapClientTemplate().insert("WeChat.updateState", wechat);		
+	}
+
+	public void updateFetchTime(WeChat wechat) {
+		this.getSqlMapClientTemplate().update("WeChat.updateFetchTime", wechat);
+	}
 	
-	/**
-	 * 根据openId查询公众信息
-	 * 
-	 * @param openId
-	 * @return
-	 */
-	public abstract WeChat queryByOpenId(String openId);
-	
-	/**
-	 * 更新状态
-	 * 
-	 * @param openId
-	 */
-	public abstract void updateState(WeChat wechat);
+	public void updateFetchEncry(WeChat wechat) {
+		this.getSqlMapClientTemplate().insert("WeChat.updateFetchEncry", wechat);		
+	}
 
-	/**
-	 * 更新公众号抓取的时间
-	 * 
-	 * @param publicNO
-	 */
-	public abstract void updateFetchTime(String publicNO);
-	
 }

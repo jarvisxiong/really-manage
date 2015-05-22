@@ -1,5 +1,6 @@
-package com.wuxincheng.manage.service.impl;
+package com.wuxincheng.manage.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,15 +16,18 @@ import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
+import com.wuxincheng.manage.util.DateUtil;
 import com.wuxincheng.manage.util.WeiXinFetchTool;
 
 @Service("weiXinFetchService")
-public class WeiXinFetchServiceImpl {
-	private static Logger logger = LoggerFactory.getLogger(WeiXinFetchServiceImpl.class);
+public class WeiXinFetchService {
+	private static Logger logger = LoggerFactory.getLogger(WeiXinFetchService.class);
 
 	@Autowired private NewsDao newsDao;
 	@Autowired private CommentDao commentDao;
 	@Autowired private WeChatDao weChatDao;
+	
+	private Integer insertCount = 0;
 	
 	/**
 	 * 定时任务抓取微信公众号文章
@@ -44,6 +48,7 @@ public class WeiXinFetchServiceImpl {
 		
 		// 根据openId访问搜狗微信搜索
 		for (int i = 0; i < weChats.size(); i++) {
+			insertCount = 0; // 新增标志置0
 			WeChat weChat = weChats.get(i);
 			logger.info("抓取第"+(i+1)+"个公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章数据");
 			if (StringUtils.isEmpty(weChat.getOpenId())) { // 如果openId为空, 继续下一个公众号文章的抓取
@@ -51,18 +56,33 @@ public class WeiXinFetchServiceImpl {
 				continue;
 			}
 			
-			List<News> prepareSaveNews = WeiXinFetchTool.fectWeiXinContentBySogou(weChat.getOpenId(), 0);
-			if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
-				logger.warn("微信公众辆: openid=[" + weChat.getOpenId() + "] 抓取的数据为空");
+			if (StringUtils.isEmpty(weChat.getEncryData())) { // 如果EncryData为空, 继续下一个公众号文章的抓取
+				logger.warn("抓取微信文章失败: EncryData为空");
 				continue;
 			}
 			
-			saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare);
+			int page = 1;
+			List<News> prepareSaveNews = null;
+			while (page < 10) { // 最多抓取到第10页
+				prepareSaveNews = WeiXinFetchTool.fectArticle(weChat.getOpenId(), weChat.getEncryData(), page);
+				if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
+					logger.warn("抓取的数据为空 page={}", page);
+					break;
+				}
+				
+				if (saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare)) {
+					break;
+				}
+				
+				page++;
+			}
 			
-			// 更新公众号抓取的时间
-			weChatDao.updateFetchTime(weChat.getPublicNO());
+			if (insertCount > 0) {
+				// 更新公众号抓取的时间
+				weChat.setFetchTime(DateUtil.getCurrentDate(new Date(), "yyyyMMdd HH:mm:ss"));
+				weChatDao.updateFetchTime(weChat);
+			}
 			
-			logger.info("处理" + prepareSaveNews.size() + "篇文章");
 			logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取完成.");
 		}
 		
@@ -79,12 +99,16 @@ public class WeiXinFetchServiceImpl {
 	 * @param docidSavedCompare
 	 *            数据库中已经保存文章的docId
 	 */
-	private void saveCurrentFetchData(String openid, List<News> prepareSaveNews, List<String> docidSavedCompare) {
+	private boolean saveCurrentFetchData(String openid, List<News> prepareSaveNews, List<String> docidSavedCompare) {
+		// 是否继续抓取这个公众号的文章, false-继续, true-不继续
+		boolean isFetchContinue = false;
+		
 		for (News prepareSaveNew : prepareSaveNews) {
 			if (docidSavedCompare != null && docidSavedCompare.size() > 0) {
 				if (docidSavedCompare.contains(prepareSaveNew.getSogouDocid())) {
 					// logger.info("文章[" + prepareSaveNew.getTitle() + "]在数据库中已经存在");
 					// 验证是否已经保存此微信文章了, docId是搜狗返回的唯一标识
+					isFetchContinue = true;
 					continue;
 				}
 			}
@@ -102,8 +126,12 @@ public class WeiXinFetchServiceImpl {
 			comment.setState("1"); // 1-不显示, 0-显示
 			commentDao.insert(comment);
 			
+			insertCount++;
+			
 			logger.info("添加文章成功, data: " + prepareSaveNew.toString());
 		}
+		
+		return isFetchContinue;
 	}
 	
 }

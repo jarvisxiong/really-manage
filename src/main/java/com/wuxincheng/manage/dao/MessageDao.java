@@ -2,10 +2,17 @@ package com.wuxincheng.manage.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.wuxincheng.manage.dao.MessageDao;
 import com.wuxincheng.manage.model.Message;
 
-public interface MessageDao {
-	
-	public abstract List<Message> queryAll();
-	
+@Repository("messageDao")
+public class MessageDao extends BaseDao {
+
+	@SuppressWarnings("unchecked")
+	public List<Message> queryAll() {
+		return this.getSqlMapClientTemplate().queryForList("Message.queryAll");
+	}
+
 }
