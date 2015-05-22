@@ -1,22 +1,22 @@
 package com.wuxincheng.fetch.util;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.imageio.ImageIO;
+
 public class FetchImageUtil {
 
-	public static void main(String[] args) {
-		try {
-			downloadByURL("http://avatar.csdn.net/F/8/4/1_itbiyu.jpg", "/test.jpg");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void downloadByURL(String imgUrl, String imgName) throws Exception {
+	public static void downloadByURL(String imgUrl, String imgName)
+			throws Exception {
 		// 构造URL
 		URL url = new URL(imgUrl);
 		// 打开连接
@@ -38,4 +38,54 @@ public class FetchImageUtil {
 		is.close();
 	}
 
+	/**
+	 * 截取一个图像的中央区域
+	 * 
+	 * @param image
+	 *            图像File
+	 * @param cuted
+	 *            截取后的File
+	 * 
+	 * @throws IOException
+	 */
+	public static void cutImage(File image, File cuted) throws IOException {
+		// 判断参数是否合法
+		if (null == image) {
+			new Exception("哎呀，截图出错！！！");
+		}
+		InputStream inputStream = new FileInputStream(image);
+		// 用ImageIO读取字节流
+		BufferedImage bufferedImage = ImageIO.read(inputStream);
+		BufferedImage distin = null;
+
+		// 返回源图片的宽度。
+		int srcWidth = bufferedImage.getWidth();
+
+		// 返回源图片的高度。
+		int srcHeight = bufferedImage.getHeight();
+		int x = 0, y = 0;
+		int w = 0, h = 0;
+		if (srcWidth > srcHeight) {
+			w = srcHeight; 
+			h = srcHeight;
+		} else if (srcWidth < srcHeight) {
+			w = srcWidth; 
+			h = srcWidth;
+		} else {
+			w = srcWidth; 
+			h = srcWidth;
+		}
+		
+		// 使截图区域居中
+		x = srcWidth / 2 - w / 2;
+		y = srcHeight / 2 - h / 2;
+		srcWidth = srcWidth / 2 + w / 2;
+		srcHeight = srcHeight / 2 + h / 2;
+		// 生成图片
+		distin = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		Graphics g = distin.getGraphics();
+		g.drawImage(bufferedImage, 0, 0, w, h, x, y, srcWidth, srcHeight, null);
+		ImageIO.write(distin, "jpg", cuted);
+	}
+	
 }

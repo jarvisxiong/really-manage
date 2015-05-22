@@ -1,6 +1,7 @@
 package com.wuxincheng.manage.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import com.wuxincheng.manage.dao.CommentDao;
 import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
-import com.wuxincheng.manage.service.NewsService;
+import com.wuxincheng.manage.util.DateUtil;
 
 /**
  * 帖子Service
@@ -27,6 +28,8 @@ public class NewsService {
 
 	@Resource private NewsDao newsDao;
 	@Resource private CommentDao commentDao;
+	
+	private String settleDate = DateUtil.getCurrentDate(new Date(), "yyyyMMdd");
 	
 	public Map<String, Object> queryPager(Map<String, Object> queryParam) {
 		// 返回结果
@@ -65,6 +68,7 @@ public class NewsService {
 			news.setState("1"); // 1-不显示, 0-显示
 			news.setCreator("2"); // 为默认用户
 			news.setReaderCount(0); // 设置文章访问量0
+			news.setSettleDate(settleDate);
 			newsDao.insert(news);
 			
 			int newsid = newsDao.queryNewsIdByDocid(mockDocid);

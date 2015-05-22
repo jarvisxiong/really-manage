@@ -18,7 +18,10 @@ public class News implements Serializable {
 	private String imgLink;
 	
 	/** 图片存在本地的位置 */
-	private String imgLocalPath;
+	private String imgResPath;
+	
+	/** 图片存在本地处理后的位置 */
+	private String imgLocPath;
 
 	private String title;
 
@@ -32,6 +35,9 @@ public class News implements Serializable {
 
 	private Double truthDegree = 0D;
 	private long opinionTimes = 0L;
+	
+	/** 文章存入日期 */
+	private String settleDate;
 	
 	/**
 	 * 文章访问量
@@ -225,12 +231,28 @@ public class News implements Serializable {
 		this.readerCount = readerCount;
 	}
 
-	public String getImgLocalPath() {
-		return imgLocalPath;
+	public String getImgResPath() {
+		return imgResPath;
 	}
 
-	public void setImgLocalPath(String imgLocalPath) {
-		this.imgLocalPath = imgLocalPath;
+	public void setImgResPath(String imgResPath) {
+		this.imgResPath = imgResPath;
+	}
+
+	public String getImgLocPath() {
+		return imgLocPath;
+	}
+
+	public void setImgLocPath(String imgLocPath) {
+		this.imgLocPath = imgLocPath;
+	}
+
+	public String getSettleDate() {
+		return settleDate;
+	}
+
+	public void setSettleDate(String settleDate) {
+		this.settleDate = settleDate;
 	}
 
 }

@@ -75,8 +75,13 @@ public class NewsDao extends BaseDao {
 		this.getSqlMapClientTemplate().update("News.rollback", newsId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<News> querySended() {
-		return null;
+		return this.getSqlMapClientTemplate().queryForList("News.querySended");
+	}
+
+	public void updateImgLocPath(Map<String, Object> updateImg) {
+		
 	}
 
 }

@@ -48,11 +48,14 @@
   <task:scheduler id="weiXinFetchScheduler" pool-size="10"/>
   
   <!-- 每天22:30触发删除前两天之前所有未发布的内容 -->
-  <!-- 
   <task:scheduled-tasks scheduler="commentsExpireProcessScheduler">
     <task:scheduled ref="commentService" method="commentsExpireProcess" cron="0 30 22 * * ?" />
   </task:scheduled-tasks>
   <task:scheduler id="commentsExpireProcessScheduler" pool-size="10"/>
-   -->
-
+  
+  <task:scheduled-tasks scheduler="fetchServiceScheduler">
+    <task:scheduled ref="fetchService" method="downloadAndProcessSendedIndexImg" fixed-delay="7200000" />
+  </task:scheduled-tasks>
+  <task:scheduler id="fetchServiceScheduler" pool-size="10"/>
+  
 </beans>

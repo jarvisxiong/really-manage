@@ -25,7 +25,8 @@
     <result property="id" column="PK" />
     <result property="title" column="TITLE" />
     <result property="state" column="STATE" />
-    <result property="comment" column="COMMENT" />
+    <result property="imgLink" column="IMG_LINK" />
+    <result property="settleDate" column="SETTLE_DATE" />
   </resultMap>
   
   <resultMap class="News" id="NewsMapping">
@@ -127,10 +128,10 @@
   <insert id="insert" parameterClass="News">
     INSERT INTO T_REALLY_NEWS(
       URL, DOMAIN, IMG_LINK, TITLE, SUB_TITLE, CONTENT, CREATE_TIME, READER_COUNT,
-      CREATOR_ID, TRUTH_DEGREE, OPINION_TIMES, SOGOU_DOCID, SOGOU_OPENID, STATE)
+      CREATOR_ID, TRUTH_DEGREE, OPINION_TIMES, SOGOU_DOCID, SOGOU_OPENID, STATE, SETTLE_DATE)
     VALUES(
       #url#, #domain#, #imgLink#, #title#, #subTitle#, #content#, CURRENT_TIMESTAMP, 0, 
-      #creator#, #truthDegree#, #opinionTimes#, #sogouDocid#, #sogouOpenid#, #state#)
+      #creator#, #truthDegree#, #opinionTimes#, #sogouDocid#, #sogouOpenid#, #state#, #settleDate#)
   </insert>
   
   <select id="getAllWechatDocid" resultClass="java.lang.String">
@@ -142,7 +143,7 @@
   </select>
   
   <select id="queryExpireNews" resultMap="NewsSimpleListMapping">
-    SELECT n.PK, n.TITLE, n.STATE FROM T_REALLY_NEWS n
+    SELECT n.PK, n.TITLE, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n
     WHERE <![CDATA[n.CREATE_TIME <= date_sub(CURRENT_TIMESTAMP, INTERVAL 2 DAY)]]> AND n.STATE = '1'
   </select>
   
@@ -161,4 +162,9 @@
   <update id="rollback" parameterClass="java.lang.String">
     UPDATE T_REALLY_NEWS SET CREATE_TIME = CURRENT_TIMESTAMP, STATE = '1' WHERE PK = #id#
   </update>
+  
+  <select id="querySended" resultMap="NewsSimpleListMapping">
+    SELECT n.PK, n.TITLE, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n 
+    WHERE (n.STATE = '0' OR n.STATE IS NULL) AND IMG_LOC_PATH IS NULL
+  </select>
 </sqlMap>

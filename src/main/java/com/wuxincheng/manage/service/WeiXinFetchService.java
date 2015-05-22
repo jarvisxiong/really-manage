@@ -29,6 +29,8 @@ public class WeiXinFetchService {
 	
 	private Integer insertCount = 0;
 	
+	private String settleDate = DateUtil.getCurrentDate(new Date(), "yyyyMMdd");
+	
 	/**
 	 * 定时任务抓取微信公众号文章
 	 */
@@ -115,6 +117,7 @@ public class WeiXinFetchService {
 			
 			prepareSaveNew.setSogouOpenid(openid);
 			prepareSaveNew.setReaderCount(0);
+			prepareSaveNew.setSettleDate(settleDate);
 			newsDao.insert(prepareSaveNew);
 			
 			int newsid = newsDao.queryNewsIdByDocid(prepareSaveNew.getSogouDocid());

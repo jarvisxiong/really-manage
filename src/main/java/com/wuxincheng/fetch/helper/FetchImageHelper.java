@@ -1,16 +1,17 @@
 package com.wuxincheng.fetch.helper;
 
-import org.springframework.ui.Model;
+import com.wuxincheng.fetch.util.FetchImageUtil;
+import com.wuxincheng.manage.util.ConfigHelper;
+import com.wuxincheng.manage.util.FileUtil;
 
 public class FetchImageHelper {
-
-	public static void main(String[] args) {
-		String str = "xesjoDvgz3srolMpLuNjZulfrK68g%2F8F8JL0hd6Z9HavofD8NL7s%2B1klhosaw1MWQOLzN";
-		System.out.println(str.length());
-	}
 	
-	public void donwloadImage(Model model){
-		
+	private static String imgHomePath = ConfigHelper.getInstance().getConfig("imgHomePath", "config.properties");
+	
+	public static void process(String imgUrl, String subPath, String fileName) throws Exception{
+		String localPath = imgHomePath + subPath;
+		FileUtil.createOrCheckFilePathExist(localPath);
+		FetchImageUtil.downloadByURL(imgUrl, localPath+fileName);
 	}
 	
 }
