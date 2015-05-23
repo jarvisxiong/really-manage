@@ -26,7 +26,7 @@
      bt.LOGO_LINK, bt.CDN_LINK, bt.STATE, bt.FETCH_TIME, bt.ENCRY_DATA
   	FROM T_MANAGE_WECHAT_PUBLIC bt 
     WHERE bt.STATE = '0'
-    ORDER BY bt.UPDATE_TIME DESC
+    ORDER BY bt.FETCH_TIME DESC
   </select>
   
   <select id="checkOpenIdPK" parameterClass="java.lang.String" resultClass="java.lang.String">
