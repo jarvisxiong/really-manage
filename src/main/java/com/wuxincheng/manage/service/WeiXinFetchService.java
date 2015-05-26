@@ -85,7 +85,7 @@ public class WeiXinFetchService {
 				weChatDao.updateFetchTime(weChat);
 			}
 			
-			logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取完成.");
+			logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取结束.");
 		}
 		
 		logger.info("定时任务抓取微信公众号文章完成");

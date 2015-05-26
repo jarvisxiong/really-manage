@@ -17,11 +17,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wuxincheng.manage.Pager;
+import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.NewsService;
 import com.wuxincheng.manage.service.WeChatService;
+import com.wuxincheng.manage.service.WeiXinFetchService;
 import com.wuxincheng.manage.util.ConfigHelper;
 import com.wuxincheng.manage.util.Constants;
 import com.wuxincheng.manage.util.DateUtil;
@@ -50,6 +52,7 @@ public class NewsController extends BaseController {
 	
 	@Autowired private NewsService newsService;
 	@Autowired private WeChatService weChatService;
+	@Autowired private WeiXinFetchService weiXinFetchService;
 	
 	/** 查询日期 */
 	private String queryStartDate;
@@ -300,6 +303,21 @@ public class NewsController extends BaseController {
 		return list(request, this.currentPage, null, null, null, null, model);
 	}
 
+	@RequestMapping(value = "/fetchManually")
+	public String fetchManually(HttpServletRequest request, String newsId, Model model) {
+		logger.info("{}开始手动抓取微信文章", MANAGE_NAME);
+		try {
+			weiXinFetchService.processWeiXinFetch();
+		} catch (ServiceException e) {
+			logger.error("{}手动抓取出现异常", MANAGE_NAME, e);
+		}
+		logger.info("{}手动抓取微信文章结束", MANAGE_NAME);
+		
+		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "抓取完成");
+		
+		return list(request, "1", null, null, null, null, model);
+	}
+	
 	public String getQueryStartDate() {
 		return queryStartDate;
 	}

@@ -46,6 +46,9 @@
       <a href="<%=request.getContextPath()%>/manage/news/praeUrl">
       <button type="button" class="btn btn-primary btn-sm">新增</button>
       </a>
+      <a href="<%=request.getContextPath()%>/manage/news/fetchManually">
+      <button type="button" class="btn btn-primary btn-sm">抓取</button>
+      </a>
       <span class="text-danger"></span>
     </form>
     <hr>

@@ -55,8 +55,8 @@ public class WeiXinFetchTool {
 		
 		List<News> fectWeiXinContents = new ArrayList<News>();
     	HttpClientHelper hp = new HttpClientHelper();
-    	// String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&page="+page;
-    	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&eqs="+encryData+"&ekv=1&page="+page;
+    	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&eqs="+encryData+"&ekv=9&page="+page;
+    	
     	logger.info("抓取数据的地址: " + sogouUrl);
     	
     	String sogouWeiXinResult = null;
@@ -82,21 +82,21 @@ public class WeiXinFetchTool {
 		}
 		
 		JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
-		logger.info("数据已经转换成JSONObject对象");
+		logger.debug("数据已经转换成JSONObject对象");
 		
 		// logger.info("sogouWeiXinObject= " + sogouWeiXinObject);
 		
 		JSONArray items = (JSONArray)sogouWeiXinObject.get("items");
-		logger.info("数据已经转换成JSONArray数组");
+		logger.debug("数据已经转换成JSONArray数组");
 		
 		// logger.info("items= " + items);
 		
 		String xmlSource = items.toString();
 		xmlSource = xmlSource.replace("\\", "").replace("[\"", "").replace("\"]", "");
 		String[] xmls = xmlSource.split("\",\"");
-		logger.info("JSONArray数组中反斜杠已经处理");
+		logger.debug("JSONArray数组中反斜杠已经处理");
 		
-		logger.info("循环解析JSONArray数组的数据");
+		logger.debug("循环解析JSONArray数组的数据");
     	try {
 			for (int i = 0; i < xmls.length; i++) {
 				News fectWeiXin = new News();
