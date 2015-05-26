@@ -1,4 +1,4 @@
-package com.wuxincheng.manage.util;
+package com.wuxincheng.fetch.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +30,10 @@ import org.slf4j.LoggerFactory;
 
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
+import com.wuxincheng.manage.util.CharacterUtil;
+import com.wuxincheng.manage.util.FontTag;
+import com.wuxincheng.manage.util.HttpClientHelper;
+import com.wuxincheng.manage.util.NumberUtil;
 
 /**
  * 抓取微信内容

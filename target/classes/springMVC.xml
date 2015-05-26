@@ -42,21 +42,27 @@
   <task:annotation-driven />
   
   <!-- 每隔两小时定时抓取微信内容 -->
+  <!-- 
   <task:scheduled-tasks scheduler="weiXinFetchScheduler">
     <task:scheduled ref="weiXinFetchService" method="processWeiXinFetch" fixed-delay="7200000" />
   </task:scheduled-tasks>
   <task:scheduler id="weiXinFetchScheduler" pool-size="10"/>
+   -->
   
   <!-- 每天22:30触发删除前两天之前所有未发布的内容 -->
+  <!-- 
   <task:scheduled-tasks scheduler="commentsExpireProcessScheduler">
     <task:scheduled ref="commentService" method="commentsExpireProcess" cron="0 30 22 * * ?" />
   </task:scheduled-tasks>
   <task:scheduler id="commentsExpireProcessScheduler" pool-size="10"/>
+   -->
   
   <!-- 每隔两分钟抓取图片 -->
+  <!-- 
   <task:scheduled-tasks scheduler="fetchServiceScheduler">
     <task:scheduled ref="fetchService" method="downloadAndProcessSendedIndexImg" fixed-delay="120000" />
   </task:scheduled-tasks>
   <task:scheduler id="fetchServiceScheduler" pool-size="10"/>
+   -->
   
 </beans>

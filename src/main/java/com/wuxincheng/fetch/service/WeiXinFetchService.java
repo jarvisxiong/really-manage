@@ -1,4 +1,4 @@
-package com.wuxincheng.manage.service;
+package com.wuxincheng.fetch.service;
 
 import java.util.Date;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wuxincheng.fetch.util.WeiXinFetchTool;
 import com.wuxincheng.manage.dao.CommentDao;
 import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.dao.WeChatDao;
@@ -17,7 +18,6 @@ import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.util.DateUtil;
-import com.wuxincheng.manage.util.WeiXinFetchTool;
 
 @Service("weiXinFetchService")
 public class WeiXinFetchService {

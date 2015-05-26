@@ -5,12 +5,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 public class FetchImageUtil {
 
@@ -86,5 +90,28 @@ public class FetchImageUtil {
 		g.drawImage(bufferedImage, 0, 0, w, h, x, y, srcWidth, srcHeight, null);
 		ImageIO.write(distin, "jpg", cuted);
 	}
+	
+	public static void checkImageType(File imageFile) throws IOException {
+        // get image format in a file
+        File file = imageFile;
+
+        // create an image input stream from the specified file
+        ImageInputStream iis = ImageIO.createImageInputStream(file);
+
+        // get all currently registered readers that recognize the image format
+        Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
+
+        if (!iter.hasNext()) {
+            throw new RuntimeException("No readers found!");
+        }
+
+        // get the first reader
+        ImageReader reader = iter.next();
+
+        System.out.println("Format: " + reader.getFormatName());
+
+        // close stream
+        iis.close();
+    }
 	
 }
