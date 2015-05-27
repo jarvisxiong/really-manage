@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.fetch.helper.FetchHtmlHelper;
 import com.wuxincheng.fetch.service.WeiXinFetchService;
 import com.wuxincheng.manage.Pager;
 import com.wuxincheng.manage.exception.ServiceException;
@@ -28,7 +29,6 @@ import com.wuxincheng.manage.util.ConfigHelper;
 import com.wuxincheng.manage.util.Constants;
 import com.wuxincheng.manage.util.DateUtil;
 import com.wuxincheng.manage.util.HttpClientHelper;
-import com.wuxincheng.manage.util.ParseHtmlTool;
 import com.wuxincheng.manage.util.Validation;
 
 /**
@@ -208,7 +208,7 @@ public class NewsController extends BaseController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("news_url", url);
 		
-		Map<String, String> responseData = ParseHtmlTool.parse(url);
+		Map<String, String> responseData = FetchHtmlHelper.getData(url);
 		
 		if(responseData == null) {
 			model.addAttribute("message", "没有找到文章内容");
