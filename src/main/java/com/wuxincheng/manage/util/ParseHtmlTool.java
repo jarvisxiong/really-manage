@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Stack;
 
-import org.apache.commons.lang.StringUtils;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -14,7 +13,6 @@ import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.http.ConnectionManager;
-import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.TitleTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
@@ -39,6 +37,8 @@ public class ParseHtmlTool {
 			data.put("news_title", HtmlRegexpUtil.html2Text(titleNode.getTitle()));
 		}
 
+		// 在这里不抓取图片
+		/*
 		NodeList imgs = getNodeList(url, "img");
 		for (int i = 0; i < imgs.size(); i++) {
 			ImageTag imgNode = (ImageTag) imgs.elementAt(i);
@@ -49,6 +49,7 @@ public class ParseHtmlTool {
 				break;
 			}
 		}
+		 */
 		
 		return data;
 	}
