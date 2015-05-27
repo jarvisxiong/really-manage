@@ -304,14 +304,14 @@ public class NewsController extends BaseController {
 	}
 
 	@RequestMapping(value = "/fetchManually")
-	public String fetchManually(HttpServletRequest request, String newsId, Model model) {
-		logger.info("{}开始手动抓取微信文章", MANAGE_NAME);
+	public String fetchManually(HttpServletRequest request, Model model) {
+		logger.info("{}开始启动抓取微信文章", MANAGE_NAME);
 		try {
 			weiXinFetchService.processWeiXinFetch();
 		} catch (ServiceException e) {
-			logger.error("{}手动抓取出现异常", MANAGE_NAME, e);
+			logger.error("{}启动抓取出现异常", MANAGE_NAME, e);
 		}
-		logger.info("{}手动抓取微信文章结束", MANAGE_NAME);
+		logger.info("{}启动抓取微信文章结束", MANAGE_NAME);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "抓取完成");
 		

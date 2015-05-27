@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.fetch.service.WeiXinFetchService;
 import com.wuxincheng.fetch.util.WeiXinFetchTool;
+import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.WeChatService;
 import com.wuxincheng.manage.util.Constants;
@@ -34,6 +36,7 @@ public class WeChatController extends BaseController {
 	private static final String WECHAT_STATE_DELETED = "2";
 	
 	@Autowired private WeChatService weChatService;
+	@Autowired private WeiXinFetchService weiXinFetchService;
 	
 	private WeChat wechat;
 	
@@ -206,6 +209,28 @@ public class WeChatController extends BaseController {
 	
 	@RequestMapping(value = "/frozen")
 	public String frozen(HttpServletRequest request, String openId, Model model) {
+		return list(request, model);
+	}
+	
+	@RequestMapping(value = "/fetchShow")
+	public String fetchShow() {
+		return "/fetch/show";
+	}
+	
+	@RequestMapping(value = "/fetchSimpleStart")
+	public String fetchSimpleStart(HttpServletRequest request, String encryData, String openid, Model model) {
+		logger.info("抓取开始 encryData={}", encryData);
+		
+		if (StringUtils.isEmpty(encryData)) {
+			model.addAttribute(Constants.MSG_TYPE_WARNING, "链接不能为空");
+		}
+		
+		try {
+			weiXinFetchService.fetchWeiXinArticle(openid, encryData);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		
 		return list(request, model);
 	}
 

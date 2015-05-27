@@ -52,14 +52,21 @@ public class WeiXinFetchTool {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<News> fectArticle(String openid, String encryData, int page) {
+	public static List<News> fectArticle(String openid, String encryData, String encryLink, int page) {
 		if (StringUtils.isEmpty(encryData) || StringUtils.isEmpty(openid)) {
 			return null;
 		}
 		
 		List<News> fectWeiXinContents = new ArrayList<News>();
     	HttpClientHelper hp = new HttpClientHelper();
-    	String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&eqs="+encryData+"&ekv=9&page="+page;
+    	
+    	String sogouUrl = null;
+    	if (StringUtils.isEmpty(openid) || StringUtils.isEmpty(encryData)) {
+    		sogouUrl = encryLink;
+    	} else {
+    		sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid="+openid+"&eqs="+encryData+"&ekv=4&page="+page;
+    	}
+    	
     	
     	logger.info("抓取数据的地址: " + sogouUrl);
     	

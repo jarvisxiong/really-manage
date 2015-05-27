@@ -32,6 +32,40 @@ public class WeiXinFetchService {
 	private String settleDate = DateUtil.getCurrentDate(new Date(), "yyyyMMdd");
 	
 	/**
+	 * 单独抓取
+	 * 
+	 * @param encryData
+	 * @throws ServiceException
+	 */
+	public void fetchWeiXinArticle(String openid, String encryLink) throws ServiceException {
+		logger.info("开始手动抓取微信公众号文章");
+		
+		// 查询数据库中已经从微信抓取的文章唯一标识docId
+		List<String> savedWeChatNewsDocidCompare = newsDao.getAllWeChatDocid();
+		logger.debug("已经查询出数据库中所有的微信文章的docid");
+		
+		WeChat weChat = weChatDao.queryByOpenId(openid);
+		
+		List<News> prepareSaveNews = WeiXinFetchTool.fectArticle(null, null, encryLink, 0);
+		if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
+			logger.warn("抓取的数据为空");
+			return;
+		}
+		
+		if (saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare)) {
+			return;
+		}
+		
+		if (insertCount > 0) {
+			// 更新公众号抓取的时间
+			weChat.setFetchTime(DateUtil.getCurrentDate(new Date(), "yyyyMMdd HH:mm:ss"));
+			weChatDao.updateFetchTime(weChat);
+		}
+		
+		logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取结束.");
+	}
+	
+	/**
 	 * 定时任务抓取微信公众号文章
 	 */
 	public void processWeiXinFetch() throws ServiceException {
@@ -66,7 +100,7 @@ public class WeiXinFetchService {
 			int page = 1;
 			List<News> prepareSaveNews = null;
 			while (page < 10) { // 最多抓取到第10页
-				prepareSaveNews = WeiXinFetchTool.fectArticle(weChat.getOpenId(), weChat.getEncryData(), page);
+				prepareSaveNews = WeiXinFetchTool.fectArticle(weChat.getOpenId(), weChat.getEncryData(), null, page);
 				if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
 					logger.warn("抓取的数据为空 page={}", page);
 					break;

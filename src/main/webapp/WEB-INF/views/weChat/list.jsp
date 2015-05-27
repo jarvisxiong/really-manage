@@ -20,6 +20,11 @@
         <button type="button" class="btn btn-primary btn-sm">新增</button>
       </a>
     </form>
+    <!-- 
+    <a href="<%=request.getContextPath()%>/manage/weChat/fetchShow">
+      <button type="button" class="btn btn-primary btn-sm">手动抓取</button>
+    </a>
+     -->
     <hr />
     <div class="table-responsive">
       <table class="table table-hover">
