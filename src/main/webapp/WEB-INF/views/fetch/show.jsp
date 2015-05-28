@@ -11,12 +11,12 @@
 	<jsp:include page="../top.jsp" />
 	
 	<div class="container main-container">
-		<h5 class="page-header page-target">微信公众号管理 - 新增微信公众号</h5>
+		<h5 class="page-header page-target">众号管理 - 抓取文章</h5>
 		<form action="<%=request.getContextPath()%>/manage/weChat/fetchSimpleStart" role="form" method="post">
 			<!-- 隐藏字段 -->
 			<div class="form-group">
 				<label for="typeName">请输入搜狗微信抓取链接：</label>
-			    <input type="text" id="encryData" name="encryData" class="form-control" style="width: 538px;" placeholder="请输入搜狗微信抓取链接" /><br>
+			    <input type="text" id="encryDataLink" name="encryDataLink" class="form-control" style="width: 538px;" placeholder="请输入搜狗微信抓取链接" /><br>
                 <c:if test="${not empty warning}">
                 <label class="text-danger">错误提示：${warning}</label>
                 </c:if>

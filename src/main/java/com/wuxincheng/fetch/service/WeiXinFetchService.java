@@ -37,14 +37,12 @@ public class WeiXinFetchService {
 	 * @param encryData
 	 * @throws ServiceException
 	 */
-	public void fetchWeiXinArticle(String openid, String encryLink) throws ServiceException {
+	public void fetchWeiXinArticle(String encryLink) throws ServiceException {
 		logger.info("开始手动抓取微信公众号文章");
 		
 		// 查询数据库中已经从微信抓取的文章唯一标识docId
 		List<String> savedWeChatNewsDocidCompare = newsDao.getAllWeChatDocid();
 		logger.debug("已经查询出数据库中所有的微信文章的docid");
-		
-		WeChat weChat = weChatDao.queryByOpenId(openid);
 		
 		List<News> prepareSaveNews = WeiXinFetchTool.fectArticle(null, null, encryLink, 0);
 		if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
@@ -52,17 +50,9 @@ public class WeiXinFetchService {
 			return;
 		}
 		
-		if (saveCurrentFetchData(weChat.getOpenId(), prepareSaveNews, savedWeChatNewsDocidCompare)) {
+		if (saveCurrentFetchData(null, prepareSaveNews, savedWeChatNewsDocidCompare)) {
 			return;
 		}
-		
-		if (insertCount > 0) {
-			// 更新公众号抓取的时间
-			weChat.setFetchTime(DateUtil.getCurrentDate(new Date(), "yyyyMMdd HH:mm:ss"));
-			weChatDao.updateFetchTime(weChat);
-		}
-		
-		logger.info("微信公众号["+weChat.getPublicName()+"("+weChat.getPublicNO()+")]文章抓取结束.");
 	}
 	
 	/**

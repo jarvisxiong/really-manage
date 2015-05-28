@@ -19,12 +19,12 @@
       <a href="<%=request.getContextPath()%>/manage/weChat/edit">
         <button type="button" class="btn btn-primary btn-sm">新增</button>
       </a>
+      <!-- 
+      <a href="<%=request.getContextPath()%>/manage/weChat/fetchShow">
+        <button type="button" class="btn btn-primary btn-sm">手动抓取</button>
+      </a>
+       -->
     </form>
-    <!-- 
-    <a href="<%=request.getContextPath()%>/manage/weChat/fetchShow">
-      <button type="button" class="btn btn-primary btn-sm">手动抓取</button>
-    </a>
-     -->
     <hr />
     <div class="table-responsive">
       <table class="table table-hover">
@@ -71,13 +71,14 @@
                   <td style="text-align: center;"><span class="text-success">信息正确&nbsp;&nbsp;正常抓取</span></td>
                    -->
                   <td style="text-align: center;">
+                  <a href="http://weixin.sogou.com/gzh?openid=${weChat.openId}" target="_blank">
+                      <button type="button" class="btn btn-primary btn-sm">查看搜狗</button>
+                  </a>
                   <a href="<%=request.getContextPath()%>/manage/weChat/show?openId=${weChat.openId}">
-                      <button type="button"
-                        class="btn btn-primary btn-sm">查看</button>
+                      <button type="button" class="btn btn-primary btn-sm">查看</button>
                   </a>
                   <a href="<%=request.getContextPath()%>/manage/weChat/update?openId=${weChat.openId}">
-                      <button type="button"
-                        class="btn btn-primary btn-sm">修改</button>
+                      <button type="button" class="btn btn-primary btn-sm">修改</button>
                   </a>
                   <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/weChat/delete?openId=${weChat.openId}';">删除</button>

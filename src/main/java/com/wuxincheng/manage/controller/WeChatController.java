@@ -218,18 +218,22 @@ public class WeChatController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/fetchSimpleStart")
-	public String fetchSimpleStart(HttpServletRequest request, String encryData, String openid, Model model) {
-		logger.info("抓取开始 encryData={}", encryData);
+	public String fetchSimpleStart(HttpServletRequest request, String encryDataLink, Model model) {
+		logger.info("抓取开始 encryDataLink={}", encryDataLink);
 		
-		if (StringUtils.isEmpty(encryData)) {
+		if (StringUtils.isEmpty(encryDataLink)) {
 			model.addAttribute(Constants.MSG_TYPE_WARNING, "链接不能为空");
+			return "/fetch/show";
 		}
 		
 		try {
-			weiXinFetchService.fetchWeiXinArticle(openid, encryData);
+			weiXinFetchService.fetchWeiXinArticle(encryDataLink);
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			model.addAttribute(Constants.MSG_TYPE_DANGER, "抓取失败");
+			return "/fetch/show";
 		}
+		
+		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "抓取成功");
 		
 		return list(request, model);
 	}

@@ -157,7 +157,7 @@ public class FetchImageUtil {
 		List<String> imgSrc = getImageSrc(imgUrl);
 		return imgSrc;
 	}
-
+	
 	/***
 	 * 获取HTML内容
 	 * 
@@ -171,11 +171,11 @@ public class FetchImageUtil {
 		InputStream in = connection.getInputStream();
 		byte[] buf = new byte[1024];
 		int length = 0;
-		System.out.println(length);
 		StringBuffer sb = new StringBuffer();
 		while ((length = in.read(buf, 0, buf.length)) > 0) {
 			sb.append(new String(buf, ECODING));
 		}
+		System.out.println("read after Length value: " + length);
 		in.close();
 		return sb.toString();
 	}

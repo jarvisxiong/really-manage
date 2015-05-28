@@ -217,7 +217,8 @@ public class NewsController extends BaseController {
 		
 		News news = new News();
 		news.setTitle(responseData.get("news_title").toString());
-		news.setImgLink(responseData.get("news_img_link").toString());
+		// news.setImgLink(responseData.get("news_img_link").toString());
+		news.setImgLocPath(responseData.get("img_loc_path").toString());
 		news.setDomain(responseData.get("news_domain").toString());
 		news.setUrl(url);
 		

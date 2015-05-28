@@ -87,7 +87,8 @@ public class HttpClientHelper {
         try {
             get = new GetMethod(url);
             get.getParams().setContentCharset(contentCharSet);
-            get.setRequestHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+            // get.setRequestHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+            get.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36");
             HttpClient httpClient = getHttpClient();
             int i = httpClient.executeMethod(get);
             String result = get.getResponseBodyAsString();

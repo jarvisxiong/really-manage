@@ -46,11 +46,18 @@
             </div>
 			<div class="form-group">
 				<label for="imgLink">文章图片：</label>
-			    <input type="text" name="imgLink" value="${news.imgLink}" class="form-control" style="width: 100%;" placeholder="请选择文章图片" />
+			    <input type="text" name="imgLocPath" value="${news.imgLocPath}" class="form-control" style="width: 100%;" placeholder="请选择文章图片" />
 			</div>
             <div class="form-group">
               <label for="imgLink"></label>
-              <img src="${news.imgLink}" />
+              <c:choose>
+                <c:when test="${'logo' eq news.imgLocPath}">
+                  <img src="<%=request.getContextPath()%>/assets/images/favicon.png" />
+                </c:when>
+                <c:otherwise>
+                  <img src="<%=request.getContextPath()%>/imgbase/${news.imgLocPath}" />
+                </c:otherwise>
+              </c:choose>
             </div>
             
             <!-- 
