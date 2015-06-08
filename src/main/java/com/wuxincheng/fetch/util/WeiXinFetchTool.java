@@ -44,6 +44,15 @@ import com.wuxincheng.manage.util.NumberUtil;
 public class WeiXinFetchTool {
 	private static Logger logger = LoggerFactory.getLogger(WeiXinFetchTool.class);
 	
+	public static void main(String[] args) {
+		String openid = "";
+		String encryData = "";
+		String encryLink = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt9Jt9iSM0fpb9H8cgy4bq5U&eqs=9SszowQgmN2TolhfwliAyuiu1t05naoi9g6nbSArBMcXcswYYjTXpp7Ag9MHA%2FzfnBy97&ekv=4&page=1&t=1433726183174";
+		int page = 1;
+		List<News> Articles = fectArticle(openid, encryData, encryLink, page);
+		logger.info("Articles size={}", Articles.size());
+	}
+	
 	/**
 	 * 根据openid抓取从搜狗搜索出来的微信文章
 	 * 

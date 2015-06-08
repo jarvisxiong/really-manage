@@ -15,8 +15,8 @@
 		<form action="<%=request.getContextPath()%>/manage/weChat/fetchSimpleStart" role="form" method="post">
 			<!-- 隐藏字段 -->
 			<div class="form-group">
-				<label for="typeName">请输入搜狗微信抓取链接：</label>
 			    <input type="text" id="encryDataLink" name="encryDataLink" class="form-control" style="width: 538px;" placeholder="请输入搜狗微信抓取链接" /><br>
+                <input type="text" id="openid" name="openid" class="form-control" style="width: 538px;" placeholder="请输入搜狗微信抓取链接" /><br>
                 <c:if test="${not empty warning}">
                 <label class="text-danger">错误提示：${warning}</label>
                 </c:if>

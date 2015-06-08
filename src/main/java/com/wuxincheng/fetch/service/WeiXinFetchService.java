@@ -37,7 +37,7 @@ public class WeiXinFetchService {
 	 * @param encryData
 	 * @throws ServiceException
 	 */
-	public void fetchWeiXinArticle(String encryLink) throws ServiceException {
+	public void fetchWeiXinArticle(String encryLink, String openid) throws ServiceException {
 		logger.info("开始手动抓取微信公众号文章");
 		
 		// 查询数据库中已经从微信抓取的文章唯一标识docId

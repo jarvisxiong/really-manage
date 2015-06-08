@@ -218,7 +218,7 @@ public class WeChatController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/fetchSimpleStart")
-	public String fetchSimpleStart(HttpServletRequest request, String encryDataLink, Model model) {
+	public String fetchSimpleStart(HttpServletRequest request, String encryDataLink, String openid, Model model) {
 		logger.info("抓取开始 encryDataLink={}", encryDataLink);
 		
 		if (StringUtils.isEmpty(encryDataLink)) {
@@ -227,7 +227,7 @@ public class WeChatController extends BaseController {
 		}
 		
 		try {
-			weiXinFetchService.fetchWeiXinArticle(encryDataLink);
+			weiXinFetchService.fetchWeiXinArticle(encryDataLink, openid);
 		} catch (ServiceException e) {
 			model.addAttribute(Constants.MSG_TYPE_DANGER, "抓取失败");
 			return "/fetch/show";
