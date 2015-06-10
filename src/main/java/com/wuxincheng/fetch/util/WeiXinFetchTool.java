@@ -148,6 +148,94 @@ public class WeiXinFetchTool {
     	
     	return fectWeiXinContents;
 	}
+
+	/**
+	 * 根据openid抓取从搜狗搜索出来的微信文章
+	 * 
+	 * @param openid 搜索上的OpenId
+	 * @param page 当前页
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<News> parseData(String resource) {
+		logger.info("数据解析");
+		
+		List<News> fectWeiXinContents = new ArrayList<News>();
+    	
+    	String sogouWeiXinResult = null;
+		try {
+			sogouWeiXinResult = resource;
+			logger.info("接收到搜狗搜索微信返回的原始数据");
+			sogouWeiXinResult = sogouWeiXinResult.replace("sogou.weixin.gzhcb(", "");
+			sogouWeiXinResult = sogouWeiXinResult.substring(0, sogouWeiXinResult.lastIndexOf("//"));
+		} catch (Exception e) {
+			logger.error("接收到搜狗搜索微信返回原始数据出现异常: ", e);
+		} 
+		
+		if (null == sogouWeiXinResult || sogouWeiXinResult.length() < 1) {
+			logger.warn("解析后的数据为空");
+			return fectWeiXinContents;
+		}
+		
+		// logger.info("sogouWeiXinResult= " + sogouWeiXinResult);
+		
+		if (sogouWeiXinResult.indexOf("}") < 1 || sogouWeiXinResult.indexOf("{") < 1 
+				|| sogouWeiXinResult.indexOf("page") < 1 || sogouWeiXinResult.indexOf("items") < 1) {
+			return null;
+		}
+		
+		JSONObject sogouWeiXinObject = new JSONObject(sogouWeiXinResult);
+		logger.debug("数据已经转换成JSONObject对象");
+		
+		// logger.info("sogouWeiXinObject= " + sogouWeiXinObject);
+		
+		JSONArray items = (JSONArray)sogouWeiXinObject.get("items");
+		logger.debug("数据已经转换成JSONArray数组");
+		
+		// logger.info("items= " + items);
+		
+		String xmlSource = items.toString();
+		xmlSource = xmlSource.replace("\\", "").replace("[\"", "").replace("\"]", "");
+		String[] xmls = xmlSource.split("\",\"");
+		logger.debug("JSONArray数组中反斜杠已经处理");
+		
+		logger.debug("循环解析JSONArray数组的数据");
+    	try {
+			for (int i = 0; i < xmls.length; i++) {
+				News fectWeiXin = new News();
+				Document doc = DocumentHelper.parseText(xmls[i]); // 将字符串转为XML
+				Element rootElt = doc.getRootElement(); // 获取根节点
+				
+				Iterator<Element> iter = rootElt.elementIterator("item"); // 获取根节点下的子节点
+				while (iter.hasNext()) {
+					Element recordEle = (Element) iter.next();
+					Iterator<Element> iters = recordEle.elementIterator("display"); 
+					while (iters.hasNext()) {
+						Element itemEle = (Element) iters.next();
+						// String headimage = itemEle.elementTextTrim("headimage"); // 公众号图标
+						
+						fectWeiXin.setUrl(itemEle.elementTextTrim("url")); // 文章地址
+						fectWeiXin.setDomain(""+itemEle.elementTextTrim("sourcename")); // 公众号名称
+						fectWeiXin.setImgLink(itemEle.elementTextTrim("imglink")); // 图片链接
+						fectWeiXin.setTitle(CharacterUtil.replaceQuoteCode(itemEle.elementTextTrim("title"))); // 文章标题
+						fectWeiXin.setSubTitle(CharacterUtil.replaceQuoteCode(itemEle.elementTextTrim("content168"))); // 文章摘要/即为文章子标题
+						fectWeiXin.setCreateTime(itemEle.elementTextTrim("date")); // 发布日期
+						fectWeiXin.setSogouDocid(itemEle.elementTextTrim("docid")); // 唯一标识
+						fectWeiXin.setVirtualActive(NumberUtil.getRandom()+""); // 产生一个随机数
+						fectWeiXin.setState("1"); // 1-不显示, 0-显示
+						fectWeiXin.setCreator("2"); // 为默认用户
+						
+						fectWeiXinContents.add(fectWeiXin);
+					}
+				}
+			}
+			logger.info("数据解析完成");
+		} catch (Exception e) {
+			logger.error("抓取微信公众号文章解析数据出现异常: ", e);
+		}
+    	
+    	return fectWeiXinContents;
+	}
 	
 	/**
 	 * 根据搜狗openId抓取微信公众号信息

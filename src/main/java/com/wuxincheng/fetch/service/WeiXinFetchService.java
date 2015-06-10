@@ -18,6 +18,7 @@ import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
+import com.wuxincheng.walker.htmlunit.HtmlUnitSpider;
 
 @Service("weiXinFetchService")
 public class WeiXinFetchService {
@@ -90,7 +91,8 @@ public class WeiXinFetchService {
 			int page = 1;
 			List<News> prepareSaveNews = null;
 			while (page < 10) { // 最多抓取到第10页
-				prepareSaveNews = WeiXinFetchTool.fectArticle(weChat.getOpenId(), weChat.getEncryData(), null, page);
+				prepareSaveNews = HtmlUnitSpider.wechatParse(weChat.getOpenId(), weChat.getEncryData(), page);
+				// WeiXinFetchTool.fectArticle(weChat.getOpenId(), weChat.getEncryData(), null, page);
 				if (null == prepareSaveNews || prepareSaveNews.size() < 1) { // 如果没有抓取到数据继续抓取
 					logger.warn("抓取的数据为空 page={}", page);
 					break;

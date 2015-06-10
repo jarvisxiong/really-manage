@@ -188,6 +188,12 @@
       <version>1.0</version>
     </dependency>
     
+    <!-- 爬虫框架htmlunit -->
+    <dependency>
+      <groupId>htmlunit</groupId>
+      <artifactId>htmlunit</artifactId>
+      <version>1.14</version>
+    </dependency>
 
     <dependency>
       <groupId>commons-pool</groupId>
