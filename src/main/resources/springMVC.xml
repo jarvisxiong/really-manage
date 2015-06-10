@@ -12,7 +12,7 @@
     	http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-  <context:component-scan base-package="com.wuxincheng.manage,com.wuxincheng.fetch" use-default-filters="false">
+  <context:component-scan base-package="com.wuxincheng" use-default-filters="false">
     <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
   </context:component-scan>
 
@@ -41,9 +41,9 @@
   <!-- Spring定时器注解开关-->
   <task:annotation-driven />
   
-  <!-- 每隔两小时定时抓取微信内容 -->
+  <!-- 每隔四个小时定时抓取微信内容 -->
   <task:scheduled-tasks scheduler="weiXinFetchScheduler">
-    <task:scheduled ref="weiXinFetchService" method="processWeiXinFetch" fixed-delay="7200000" />
+    <task:scheduled ref="weiXinFetchService" method="processWeiXinFetch" fixed-delay="14400000" />
   </task:scheduled-tasks>
   <task:scheduler id="weiXinFetchScheduler" pool-size="10"/>
   

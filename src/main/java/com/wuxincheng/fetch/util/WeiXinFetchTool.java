@@ -231,7 +231,7 @@ public class WeiXinFetchTool {
 			}
 			logger.info("数据解析完成");
 		} catch (Exception e) {
-			logger.error("抓取微信公众号文章解析数据出现异常: ", e);
+			logger.error("抓取微信公众号文章解析数据出现异常: ", e.getMessage());
 		}
     	
     	return fectWeiXinContents;

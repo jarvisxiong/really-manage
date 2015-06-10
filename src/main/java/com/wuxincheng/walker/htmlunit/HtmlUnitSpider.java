@@ -19,18 +19,30 @@ public class HtmlUnitSpider {
 
 	private static Logger logger = LoggerFactory.getLogger(HtmlUnitSpider.class);
 
+	/**
+	 * 抓取微信公众号文章
+	 * 
+	 * @param openid
+	 * @param encryData
+	 * @param pager
+	 * @return
+	 */
 	public static List<News> wechatParse(String openid, String encryData, int pager) {
-		String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=" + openid
+		logger.info("HtmlUnit框架启动抓取");
+		
+		String fetchWechatUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=" + openid
 				+ "&eqs=" + encryData + "&ekv=4&page=" + pager + "&t=1433917797189";
 
+		logger.info("抓取请求地址 fetchWechatUrl={}", fetchWechatUrl);
+		
 		// 新建一个WebClient对象，此对象相当于浏览器
 		final WebClient webClient = new WebClient();
 		// 构造一个URL,指向需要测试的URL，如http://www.javaeye.com
 		URL url = null;
 		try {
-			url = new URL(sogouUrl);
+			url = new URL(fetchWechatUrl);
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			logger.error("链接请求异常", e);
 		}
 
 		// 通过getPage()方法，返回相应的页面
