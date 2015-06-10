@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wuxincheng.manage.util.Constants;
+import com.wuxincheng.common.util.Constants;
 
 /**
  * 退出

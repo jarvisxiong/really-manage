@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wuxincheng.common.util.ConfigHelper;
+import com.wuxincheng.common.util.FileUtil;
 import com.wuxincheng.fetch.util.FetchImageUtil;
 import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.model.News;
-import com.wuxincheng.manage.util.ConfigHelper;
-import com.wuxincheng.manage.util.FileUtil;
 
 @Service("fetchService")
 public class FetchService {

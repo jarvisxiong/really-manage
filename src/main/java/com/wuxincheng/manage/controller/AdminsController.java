@@ -14,9 +14,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wuxincheng.common.util.Constants;
 import com.wuxincheng.manage.model.Admins;
 import com.wuxincheng.manage.service.AdminsService;
-import com.wuxincheng.manage.util.Constants;
 
 /**
  * 管理员管理

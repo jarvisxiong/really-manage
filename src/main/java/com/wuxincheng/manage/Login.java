@@ -10,11 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wuxincheng.common.util.Constants;
+import com.wuxincheng.common.util.MD5;
+import com.wuxincheng.common.util.Validation;
 import com.wuxincheng.manage.model.Admins;
 import com.wuxincheng.manage.service.AdminsService;
-import com.wuxincheng.manage.util.Constants;
-import com.wuxincheng.manage.util.MD5;
-import com.wuxincheng.manage.util.Validation;
 
 @Controller
 @RequestMapping("/admins")

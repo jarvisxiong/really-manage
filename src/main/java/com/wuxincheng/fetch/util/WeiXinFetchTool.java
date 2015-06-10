@@ -28,12 +28,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wuxincheng.common.util.CharacterUtil;
+import com.wuxincheng.common.util.FontTag;
+import com.wuxincheng.common.util.HttpClientHelper;
+import com.wuxincheng.common.util.NumberUtil;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
-import com.wuxincheng.manage.util.CharacterUtil;
-import com.wuxincheng.manage.util.FontTag;
-import com.wuxincheng.manage.util.HttpClientHelper;
-import com.wuxincheng.manage.util.NumberUtil;
 
 /**
  * 抓取微信内容

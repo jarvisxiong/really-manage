@@ -11,11 +11,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.wuxincheng.common.util.DateUtil;
 import com.wuxincheng.manage.dao.CommentDao;
 import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
-import com.wuxincheng.manage.util.DateUtil;
 
 /**
  * 帖子Service

@@ -13,12 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.common.util.Constants;
 import com.wuxincheng.fetch.service.WeiXinFetchService;
 import com.wuxincheng.fetch.util.WeiXinFetchTool;
 import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.WeChatService;
-import com.wuxincheng.manage.util.Constants;
 
 /**
  * 微信号公众号管理

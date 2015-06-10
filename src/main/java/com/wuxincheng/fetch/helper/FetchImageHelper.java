@@ -1,8 +1,8 @@
 package com.wuxincheng.fetch.helper;
 
+import com.wuxincheng.common.util.ConfigHelper;
+import com.wuxincheng.common.util.FileUtil;
 import com.wuxincheng.fetch.util.FetchImageUtil;
-import com.wuxincheng.manage.util.ConfigHelper;
-import com.wuxincheng.manage.util.FileUtil;
 
 public class FetchImageHelper {
 	

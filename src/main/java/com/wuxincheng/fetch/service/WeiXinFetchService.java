@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wuxincheng.common.util.DateUtil;
 import com.wuxincheng.fetch.util.WeiXinFetchTool;
 import com.wuxincheng.manage.dao.CommentDao;
 import com.wuxincheng.manage.dao.NewsDao;
@@ -17,7 +18,6 @@ import com.wuxincheng.manage.exception.ServiceException;
 import com.wuxincheng.manage.model.Comment;
 import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
-import com.wuxincheng.manage.util.DateUtil;
 
 @Service("weiXinFetchService")
 public class WeiXinFetchService {

@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wuxincheng.common.util.ConfigHelper;
+import com.wuxincheng.common.util.FileUtil;
+import com.wuxincheng.common.util.ParseHtmlTool;
 import com.wuxincheng.fetch.util.FetchImageUtil;
-import com.wuxincheng.manage.util.ConfigHelper;
-import com.wuxincheng.manage.util.FileUtil;
-import com.wuxincheng.manage.util.ParseHtmlTool;
 
 public class FetchHtmlHelper {
 

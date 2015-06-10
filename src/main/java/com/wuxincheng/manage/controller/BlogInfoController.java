@@ -14,12 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.common.util.Constants;
+import com.wuxincheng.common.util.Validation;
 import com.wuxincheng.manage.model.BlogInfo;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.BlogInfoService;
 import com.wuxincheng.manage.service.WeChatService;
-import com.wuxincheng.manage.util.Constants;
-import com.wuxincheng.manage.util.Validation;
 
 /**
  * 博客管理

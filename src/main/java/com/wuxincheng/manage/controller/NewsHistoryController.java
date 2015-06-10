@@ -15,13 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wuxincheng.common.util.Constants;
+import com.wuxincheng.common.util.DateUtil;
+import com.wuxincheng.common.util.Validation;
 import com.wuxincheng.manage.Pager;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.NewsService;
 import com.wuxincheng.manage.service.WeChatService;
-import com.wuxincheng.manage.util.Constants;
-import com.wuxincheng.manage.util.DateUtil;
-import com.wuxincheng.manage.util.Validation;
 
 /**
  * 微信文章历史管理
