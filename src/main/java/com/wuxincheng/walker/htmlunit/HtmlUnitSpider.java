@@ -58,7 +58,7 @@ public class HtmlUnitSpider {
 		return WeiXinFetchTool.parseData(page.getContent());
 	}
 
-	public static void wechatParse() {
+	public static void wechatParse(String sogouWechatUrl) {
 		java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 	    java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 	    
@@ -88,14 +88,5 @@ public class HtmlUnitSpider {
 		System.out.println(page.getWebResponse().getStatusMessage());
 		System.out.println(page.getWebResponse().getResponseBody());
 	}
-
-	public static void main(String[] args) {
-		wechatParse();
-	}
-
-	static String sogouWechatUrl = "http://weixin.sogou.com/gzh?openid=oIWsFt26ylf0J6vXkvs7D-A5T4No";
-
-	static String sogouUrl = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt74G_meNYl2JeYX1wOyehz4"
-			+ "&eqs=NcsUoD%2BgcpABoASFbpuW2ufyPxx1%2Bwok1nMWvPoo%2FGCbHJsK15hDZkuJf8tLE0RmWetF0&ekv=4&page=1&t=1433924521047";
-
+	
 }
