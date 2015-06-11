@@ -149,13 +149,6 @@ public class WeiXinFetchTool {
     	return fectWeiXinContents;
 	}
 
-	/**
-	 * 根据openid抓取从搜狗搜索出来的微信文章
-	 * 
-	 * @param openid 搜索上的OpenId
-	 * @param page 当前页
-	 * @return
-	 */
 	@SuppressWarnings("unchecked")
 	public static List<News> parseData(String resource) {
 		logger.info("数据解析");
@@ -165,7 +158,6 @@ public class WeiXinFetchTool {
     	String sogouWeiXinResult = null;
 		try {
 			sogouWeiXinResult = resource;
-			logger.info("接收到搜狗搜索微信返回的原始数据");
 			sogouWeiXinResult = sogouWeiXinResult.replace("sogou.weixin.gzhcb(", "");
 			sogouWeiXinResult = sogouWeiXinResult.substring(0, sogouWeiXinResult.lastIndexOf("//"));
 		} catch (Exception e) {
