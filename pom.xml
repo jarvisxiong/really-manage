@@ -95,6 +95,8 @@
       <artifactId>spring-support</artifactId>
       <version>2.0.8</version>
     </dependency>
+    
+    <!-- 
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
@@ -112,8 +114,10 @@
       <artifactId>httpmime</artifactId>
       <version>4.3.6</version>
     </dependency>
+     -->
 
     <!-- Jetty -->
+    <!-- 
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
@@ -129,7 +133,8 @@
       <artifactId>jetty-websocket</artifactId>
       <version>8.1.16.v20140903</version>
     </dependency>
-
+     -->
+	<!-- 
     <dependency>
       <groupId>net.sourceforge.nekohtml</groupId>
       <artifactId>nekohtml</artifactId>
@@ -159,6 +164,7 @@
       <artifactId>xercesImpl</artifactId>
       <version>2.11.0</version>
     </dependency>
+	 -->
 
     <!-- Data -->
     <dependency>
@@ -179,11 +185,13 @@
       <version>1.7.1</version>
     </dependency>
 
+	<!-- 
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20140107</version>
     </dependency>
+	 -->
 
     <dependency>
       <groupId>org.htmlparser</groupId>
@@ -205,11 +213,13 @@
       <version>1.4</version>
     </dependency>
 
+	<!-- 
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>2.3</version>
     </dependency>
+	 -->
 
     <!-- Apache Commons -->
     <dependency>
@@ -265,6 +275,7 @@
       <version>1.14</version>
     </dependency>
 
+	<!-- 
     <dependency>
       <groupId>net.sourceforge.htmlunit</groupId>
       <artifactId>htmlunit-core-js</artifactId>
@@ -313,6 +324,7 @@
       <version>1.8.3-1</version>
       <scope>test</scope>
     </dependency>
+	 -->
 
     <dependency>
       <groupId>commons-pool</groupId>
@@ -332,11 +344,13 @@
       <version>3.2</version>
     </dependency>
 
+	<!-- 
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
     </dependency>
+	 -->
 
     <dependency>
       <groupId>net.sourceforge.cssparser</groupId>
@@ -413,23 +427,29 @@
       <scope>runtime</scope>
     </dependency>
 
+	<!-- 
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
       <version>3.3.5</version>
     </dependency>
+	 -->
 
+	<!-- 
     <dependency>
       <groupId>com.github.sgroschupf</groupId>
       <artifactId>zkclient</artifactId>
       <version>0.1</version>
     </dependency>
+	 -->
 
+	<!-- 
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>14.0.1</version>
     </dependency>
+	 -->
 
   </dependencies>
 
