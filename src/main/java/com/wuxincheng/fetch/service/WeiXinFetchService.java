@@ -60,6 +60,11 @@ public class WeiXinFetchService {
 	 * 定时任务抓取微信公众号文章
 	 */
 	public void processWeiXinFetch() throws ServiceException {
+		try {
+			Thread.sleep(2000*60);
+		} catch (InterruptedException e) {
+		}
+		
 		logger.info("开始定时任务抓取微信公众号文章");
 		
 		// 查询所有的公众号信息

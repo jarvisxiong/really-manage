@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.wuxincheng.common.util.ConfigHelper;
 import com.wuxincheng.common.util.FileUtil;
+import com.wuxincheng.fetch.helper.FetchImageHelper;
 import com.wuxincheng.fetch.util.FetchImageUtil;
 import com.wuxincheng.manage.dao.NewsDao;
 import com.wuxincheng.manage.model.News;
@@ -29,6 +30,48 @@ public class FetchService {
 	private NewsDao newsDao;
 
 	public void downloadAndProcessSendedIndexImg() {
+		try {
+			Thread.sleep(batchSleepMillsec*30);
+		} catch (InterruptedException e) {
+		}
+		
+		List<News> news = newsDao.querySended();
+		if (null == news || news.size() < 1) {
+			return;
+		}
+		
+		logger.info("开始处理图片 size={}张", news.size());
+		
+		String fileName = null;
+		for (News pojo : news) {
+			// 下载图片
+			try {
+				fileName = FetchImageHelper.processFetchIndexImg(pojo.getUrl());
+			} catch (Exception e) {
+				logger.error("图片下载出现异常 imgLink={}", pojo.getImgLink());
+				fileName = "logo";
+				logger.info("换成网站Logo");
+			} finally {
+				// 更新
+				Map<String, Object> updateImg = new HashMap<String, Object>();
+				updateImg.put("IMG_LOC_PATH", fileName);
+				updateImg.put("id", pojo.getId());
+				
+				newsDao.updateImgLocPath(updateImg);
+				logger.info("图片更新成功 {}", updateImg);
+			}
+			
+			try {
+				Thread.sleep(batchSleepMillsec);
+			} catch (InterruptedException e) {
+			}
+		}
+		
+		logger.info("结束处理图片");
+	}
+	
+	@Deprecated
+	public void downloadAndProcessSendedIndexImg2() {
 		List<News> news = newsDao.querySended();
 		if (null == news || news.size() < 1) {
 			return;

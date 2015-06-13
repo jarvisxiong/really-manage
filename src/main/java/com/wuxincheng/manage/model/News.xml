@@ -23,6 +23,7 @@
   
   <resultMap class="News" id="NewsSimpleListMapping">
     <result property="id" column="PK" />
+    <result property="url" column="URL" />
     <result property="title" column="TITLE" />
     <result property="state" column="STATE" />
     <result property="imgLink" column="IMG_LINK" />
@@ -143,7 +144,7 @@
   </select>
   
   <select id="queryExpireNews" resultMap="NewsSimpleListMapping">
-    SELECT n.PK, n.TITLE, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n
+    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n
     WHERE <![CDATA[n.CREATE_TIME <= date_sub(CURRENT_TIMESTAMP, INTERVAL 2 DAY)]]> AND n.STATE = '1'
   </select>
   
@@ -164,7 +165,7 @@
   </update>
   
   <select id="querySended" resultMap="NewsSimpleListMapping">
-    SELECT n.PK, n.TITLE, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n 
+    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n 
     WHERE (n.STATE = '0' OR n.STATE IS NULL) AND IMG_LOC_PATH IS NULL AND SOGOU_DOCID IS NOT NULL
   </select>
   

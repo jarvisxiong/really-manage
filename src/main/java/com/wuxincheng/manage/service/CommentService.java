@@ -23,6 +23,10 @@ public class CommentService {
 	
 	public void commentsExpireProcess() throws ServiceException {
 		System.out.println("");
+		try {
+			Thread.sleep(2000*90);
+		} catch (InterruptedException e) {
+		}
 		
 		// 查询所有过期的帖子, 在当前时间的两天前的帖子
 		List<Comment> expireComments = commentDao.queryExpireComments();

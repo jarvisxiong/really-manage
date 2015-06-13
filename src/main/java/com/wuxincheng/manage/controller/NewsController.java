@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuxincheng.common.util.ConfigHelper;
 import com.wuxincheng.common.util.Constants;
@@ -22,6 +23,7 @@ import com.wuxincheng.common.util.DateUtil;
 import com.wuxincheng.common.util.HttpClientHelper;
 import com.wuxincheng.common.util.Validation;
 import com.wuxincheng.fetch.helper.FetchHtmlHelper;
+import com.wuxincheng.fetch.helper.FetchImageHelper;
 import com.wuxincheng.fetch.service.WeiXinFetchService;
 import com.wuxincheng.manage.Pager;
 import com.wuxincheng.manage.exception.ServiceException;
@@ -208,7 +210,7 @@ public class NewsController extends BaseController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("news_url", url);
 		
-		Map<String, String> responseData = FetchHtmlHelper.getData(url);
+		Map<String, String> responseData = FetchHtmlHelper.getPraseFetchData(url);
 		
 		if(responseData == null) {
 			model.addAttribute("message", "没有找到文章内容");
@@ -317,6 +319,21 @@ public class NewsController extends BaseController {
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "抓取完成");
 		
 		return list(request, "1", null, null, null, null, model);
+	}
+	
+	@RequestMapping(value = "/refetchImage")
+	@ResponseBody
+	public Map<String, String> refetchImage(String link) {
+		logger.info("重新获取图片 link={}", link);
+		
+		if (StringUtils.isEmpty(link)) {
+			return null;
+		}
+		
+		Map<String, String> fetchImgMap = new HashMap<String, String>();
+		fetchImgMap.put("imgRefetchPath", FetchImageHelper.processFetchImage(link));
+		
+		return fetchImgMap;
 	}
 	
 	public String getQueryStartDate() {

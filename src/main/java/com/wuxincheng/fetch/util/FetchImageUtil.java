@@ -117,6 +117,8 @@ public class FetchImageUtil {
 	 * @throws IOException
 	 */
 	public static String checkImageType(File imageFile) throws IOException {
+		System.out.println("验证图片类型: " + imageFile.getAbsolutePath());
+		
 		// get image format in a file
 		File file = imageFile;
 
