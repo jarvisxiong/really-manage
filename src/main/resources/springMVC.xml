@@ -42,10 +42,12 @@
   <task:annotation-driven />
   
   <!-- 每隔四个小时定时抓取微信内容 -->
+  <!-- 
   <task:scheduled-tasks scheduler="weiXinFetchScheduler">
     <task:scheduled ref="weiXinFetchService" method="processWeiXinFetch" fixed-delay="14400000" />
   </task:scheduled-tasks>
   <task:scheduler id="weiXinFetchScheduler" pool-size="10"/>
+   -->
   
   <!-- 每天22:30触发删除前两天之前所有未发布的内容 -->
   <!-- 
