@@ -72,7 +72,7 @@ public class WeiXinFetchService {
 		if (null == weChats || weChats.size() < 1) { // 如果没有查询到公众号就结束定时任务
 			throw new ServiceException(ServiceException.GENERAL_EXCEPTION, "没有查询到公众号信息");
 		}
-		logger.info("已经查询出" + weChats.size() + "条微信公众号信息");
+		logger.debug("已经查询出" + weChats.size() + "条微信公众号信息");
 		
 		// 查询数据库中已经从微信抓取的文章唯一标识docId
 		List<String> savedWeChatNewsDocidCompare = newsDao.getAllWeChatDocid();
@@ -162,7 +162,7 @@ public class WeiXinFetchService {
 			
 			insertCount++;
 			
-			logger.info("添加文章成功, data: " + prepareSaveNew.toString());
+			logger.info("添加文章成功");
 		}
 		
 		return isFetchContinue;
