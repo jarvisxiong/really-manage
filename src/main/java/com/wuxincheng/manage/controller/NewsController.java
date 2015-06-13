@@ -205,8 +205,13 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/praeShow")
-	public String praeShow(String url, Model model) {
-		logger.info(MANAGE_NAME+"解析URL, 并显示解析后的内容");
+	public String praeShow(HttpServletRequest request, String url, Model model) {
+		if (StringUtils.isEmpty(url)) {
+			model.addAttribute("message", "抓取网址不能为空");
+			return "news/prae_url";
+		}
+		
+		logger.info("解析URL, 并显示解析后的内容");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("news_url", url);
 		
@@ -323,7 +328,7 @@ public class NewsController extends BaseController {
 	
 	@RequestMapping(value = "/refetchImage")
 	@ResponseBody
-	public Map<String, String> refetchImage(String link) {
+	public Map<String, String> refetchImage(String link, String resLink) {
 		logger.info("重新获取图片 link={}", link);
 		
 		if (StringUtils.isEmpty(link)) {
@@ -331,7 +336,7 @@ public class NewsController extends BaseController {
 		}
 		
 		Map<String, String> fetchImgMap = new HashMap<String, String>();
-		fetchImgMap.put("imgRefetchPath", FetchImageHelper.processFetchImage(link));
+		fetchImgMap.put("imgRefetchPath", FetchImageHelper.processFetchImage(link, resLink));
 		
 		return fetchImgMap;
 	}

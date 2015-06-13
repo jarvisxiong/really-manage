@@ -153,24 +153,41 @@ public class FetchImageHelper {
 	}
 
 	/**
+	 * 下载处理图片, 并删除原图片
+	 * 
+	 * @param imageLink
+	 * @param resLink
+	 * @return
+	 */
+	public static String processFetchImage(String imageLink, String resLink) {
+		String imgFileBasePath = imgHomePath + FETCH_SUB_PATH + SEPARATOR
+				+ DateUtil.getCurrentDate(new Date(), "yyyyMMdd") + SEPARATOR
+				+ getGeneratorId() + SEPARATOR;
+		// 检查目录是否存在
+		FileUtil.createOrCheckFilePathExist(imgFileBasePath);
+		
+		// 删除原图片
+		File resImageFile = new File(imgHomePath + resLink);
+		if (resImageFile.exists()) {
+			resImageFile.delete();
+		}
+		
+		return processShowByImageLink(imageLink, imgFileBasePath);
+	}
+	
+	/**
 	 * 根据图片链接下载并处理图片
 	 * 
 	 * @param imageLink 图片链接
 	 * @return
 	 */
-	public static String processFetchImage(String imageLink) {
+	public static String processShowByImageLink(String imageLink, String imgFileBasePath) {
 		logger.info("开始执行图片的抓取 imageLink={}", imageLink);
 
 		// -- 1. 获取网页中最大的图片：
 
 		File imageFile = null;
 		try {
-			String imgFileBasePath = imgHomePath + FETCH_SUB_PATH + SEPARATOR
-					+ DateUtil.getCurrentDate(new Date(), "yyyyMMdd") + SEPARATOR
-					+ getGeneratorId() + SEPARATOR;
-			// 检查目录是否存在
-			FileUtil.createOrCheckFilePathExist(imgFileBasePath);
-
 			// 图片下载
 			logger.debug("开始下载图片");
 

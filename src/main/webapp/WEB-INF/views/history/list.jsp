@@ -72,7 +72,7 @@
                   <td style="text-align: center;">${s.index+1}</td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
-                    <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
+                    <img src="${root}/imgbase/${obj.imgLocPath}" height="30px" width="30px" />&nbsp;
                     ${obj.title}
                     </a>
                   </td>

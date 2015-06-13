@@ -108,9 +108,10 @@
 		
 		$("#refetchImgBut").click( function() {
 			var link = $.trim($('#refetchImgLink').val());
+			var resLink = $('#imgLocPath').val();
 			$.ajax({
     		  	url : '${root}/manage/news/refetchImage', // 跳转到 action    
-    		  	data : {link : link},
+    		  	data : {link : link, resLink: resLink},
     		  	type : 'post',
     		  	beforeSend:function(){
     		  		$("#indexImg").attr("src", "${root}/assets/images/loading.gif");

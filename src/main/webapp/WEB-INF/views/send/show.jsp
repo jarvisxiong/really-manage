@@ -46,7 +46,7 @@
           <div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel">
             <div class="carousel-inner">
               <div class="item active">
-                <a href="${obj.url}" target="_blank"><img src="${obj.imgLink}"></a>
+                <a href="${obj.url}" target="_blank"><img src="${root}/imgbase/${obj.imgLocPath}"></a>
               </div>
             </div>
           </div>
