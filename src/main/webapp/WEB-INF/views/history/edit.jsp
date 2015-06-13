@@ -22,7 +22,7 @@
 	
 	<div class="container main-container">
 		<h5 class="page-header page-target">素材管理 - 编辑素材</h5>
-		<form action="${root}/manage/news/send/doEdit" role="form" method="post">
+		<form action="${root}/manage/news/history/doEdit" role="form" method="post">
 			<div class="row">
 				<div class="col-xs-7">
 					<!-- 隐藏字段 -->
@@ -62,22 +62,7 @@
 					    <textarea id="blogContent" name="blogContent">${blogInfo.blogContent}</textarea>
 					</div>
 		             -->
-					<div class="form-group">
-						<label for="blogState">文章状态：</label><br>
-					    
-					    <label class="radio-inline">
-						  <input type="radio" name="state" id="state" value="0" 
-					    	<c:if test="${'0' eq news.state}">checked="checked"</c:if>
-		                    <c:if test="${empty news.state}">checked="checked"</c:if>>
-					    	已经完成，我要发布
-						</label>
-						&nbsp;&nbsp;
-						<label class="radio-inline">
-						  <input type="radio" name="state" id="state" value="1" 
-					    	<c:if test="${'1' eq news.state}">checked="checked"</c:if>>
-					    	还未完成，存到素材库
-						</label>
-					</div>
+					<input type="hidden" name="state" id="state" value="${news.state}">
 					<hr>
 					<input type="submit" class="btn btn-primary btn-sm" value="保存" />
 				</div>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,6 +88,9 @@
                    -->
                   
                   <td style="text-align: center;">
+                    <a href="<%=request.getContextPath()%>/manage/news/history/edit?newsId=${obj.id}">
+                      <button type="button" class="btn btn-primary btn-sm">修改</button>
+                    </a>
                     <button type="button" class="btn btn-primary btn-sm"
                       onclick="if(confirm('您确定执行删除么?')) document.location = '<%=request.getContextPath()%>/manage/news/history/delete?newsId=${obj.id}';">删除</button>
                   </td>

@@ -9,6 +9,7 @@
     <result property="url" column="URL" />
   	<result property="domain" column="DOMAIN" />
   	<result property="imgLink" column="IMG_LINK" />
+  	<result property="imgLocPath" column="IMG_LOC_PATH" />
   	<result property="title" column="TITLE" />
   	<result property="createTime" column="CREATE_TIME" />
   	<result property="creator" column="USERNAME" />
@@ -25,6 +26,7 @@
     <result property="id" column="PK" />
     <result property="url" column="URL" />
     <result property="title" column="TITLE" />
+    <result property="imgLocPath" column="IMG_LOC_PATH" />
     <result property="state" column="STATE" />
     <result property="imgLink" column="IMG_LINK" />
     <result property="settleDate" column="SETTLE_DATE" />
@@ -36,6 +38,7 @@
     <result property="url" column="URL" />
     <result property="domain" column="DOMAIN" />
     <result property="imgLink" column="IMG_LINK" />
+    <result property="imgLocPath" column="IMG_LOC_PATH" />
     <result property="title" column="TITLE" />
     <result property="subTitle" column="SUB_TITLE" />
     <result property="content" column="CONTENT" />
@@ -46,18 +49,18 @@
     <result property="state" column="STATE" />
   </resultMap>
   
+  <!-- CREATE_TIME = CURRENT_TIMESTAMP,  -->
   <update id="update" parameterClass="News">
     UPDATE T_REALLY_NEWS SET 
       TITLE = #title#, SUB_TITLE = #subTitle#, IMG_LINK = #imgLink#, 
-      DOMAIN = #domain#,
-      CREATE_TIME = CURRENT_TIMESTAMP, STATE = #state# 
+      DOMAIN = #domain#, IMG_LOC_PATH = #imgLocPath#, STATE = #state# 
     WHERE PK = #id# 
   </update>
   
   <select id="queryNewsById" parameterClass="java.lang.String" resultMap="NewsMapping">
     SELECT 
       n.PK, n.URL, n.DOMAIN, n.IMG_LINK, n.TITLE, n.SUB_TITLE, n.CONTENT, n.STATE, 
-      DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME,
+      DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, n.IMG_LOC_PATH,
       n.TRUTH_DEGREE, n.OPINION_TIMES, c.CONTENT AS COMMENT, c.PK AS COMMENT_ID
     FROM T_REALLY_NEWS n 
       LEFT JOIN T_REALLY_COMMENT c ON n.PK = c.NEWS_ID
@@ -68,7 +71,7 @@
     SELECT 
     	n.PK, n.DOMAIN, n.IMG_LINK, n.TRUTH_DEGREE, c.PK AS COMMENT_ID,
         LEFT(n.TITLE, 30) AS TITLE, n.URL, n.TRUTH_DEGREE, n.OPINION_TIMES, 
-        n.READER_COUNT,
+        n.READER_COUNT, n.IMG_LOC_PATH,
     	DATE_FORMAT(n.CREATE_TIME,'%Y%m%d %H:%i:%S') AS CREATE_TIME, n.STATE, 
     	n.OPINION_TIMES, u.USERNAME, p.PUBLIC_NAME, p.PUBLIC_NO, n.SOGOU_OPENID
     FROM T_REALLY_NEWS n 
@@ -128,10 +131,10 @@
   
   <insert id="insert" parameterClass="News">
     INSERT INTO T_REALLY_NEWS(
-      URL, DOMAIN, IMG_LINK, TITLE, SUB_TITLE, CONTENT, CREATE_TIME, READER_COUNT,
+      URL, DOMAIN, IMG_LINK, TITLE, SUB_TITLE, CONTENT, CREATE_TIME, READER_COUNT, IMG_LOC_PATH, 
       CREATOR_ID, TRUTH_DEGREE, OPINION_TIMES, SOGOU_DOCID, SOGOU_OPENID, STATE, SETTLE_DATE)
     VALUES(
-      #url#, #domain#, #imgLink#, #title#, #subTitle#, #content#, CURRENT_TIMESTAMP, 0, 
+      #url#, #domain#, #imgLink#, #title#, #subTitle#, #content#, CURRENT_TIMESTAMP, 0, #imgLocPath#,
       #creator#, #truthDegree#, #opinionTimes#, #sogouDocid#, #sogouOpenid#, #state#, #settleDate#)
   </insert>
   
@@ -144,7 +147,7 @@
   </select>
   
   <select id="queryExpireNews" resultMap="NewsSimpleListMapping">
-    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n
+    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE, n.IMG_LOC_PATH FROM T_REALLY_NEWS n
     WHERE <![CDATA[n.CREATE_TIME <= date_sub(CURRENT_TIMESTAMP, INTERVAL 2 DAY)]]> AND n.STATE = '1'
   </select>
   
@@ -165,7 +168,7 @@
   </update>
   
   <select id="querySended" resultMap="NewsSimpleListMapping">
-    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE FROM T_REALLY_NEWS n 
+    SELECT n.PK, n.TITLE, n.URL, n.STATE, n.IMG_LINK, n.SETTLE_DATE, n.IMG_LOC_PATH FROM T_REALLY_NEWS n 
     WHERE (n.STATE = '0' OR n.STATE IS NULL) AND IMG_LOC_PATH IS NULL AND SOGOU_DOCID IS NOT NULL
   </select>
   

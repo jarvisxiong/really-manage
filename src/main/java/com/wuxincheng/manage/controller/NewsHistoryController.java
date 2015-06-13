@@ -19,6 +19,7 @@ import com.wuxincheng.common.util.Constants;
 import com.wuxincheng.common.util.DateUtil;
 import com.wuxincheng.common.util.Validation;
 import com.wuxincheng.manage.Pager;
+import com.wuxincheng.manage.model.News;
 import com.wuxincheng.manage.model.WeChat;
 import com.wuxincheng.manage.service.NewsService;
 import com.wuxincheng.manage.service.WeChatService;
@@ -34,6 +35,8 @@ import com.wuxincheng.manage.service.WeChatService;
 public class NewsHistoryController extends BaseController {
 
 	private static Logger logger = LoggerFactory.getLogger(NewsHistoryController.class);
+	
+	private static final String MANAGE_NAME = Constants.MANAGE_NAME;
 	
 	/** 每页显示条数 */
 	private final Integer pageSize = Pager.PAGER_SIZE;
@@ -159,6 +162,42 @@ public class NewsHistoryController extends BaseController {
 		newsService.delete(newsId);
 		
 		model.addAttribute(Constants.MSG_TYPE_SUCCESS, "删除成功");
+		
+		return list(request, this.currentPage, null, null, null, null, model);
+	}
+	
+	@RequestMapping(value = "/edit")
+	public String edit(String newsId, Model model) {
+		if (StringUtils.isEmpty(newsId)) { // 
+			logger.info(MANAGE_NAME+"显示文章新增页面");
+		} else {
+			logger.info(MANAGE_NAME+"显示文章修改页面");
+			
+			News news = null;
+			logger.info(MANAGE_NAME+"修改文章的编号: " + newsId);
+			
+			news = newsService.queryNewsById(newsId);
+			
+			// logger.info(MANAGE_NAME+"查询到文章信息 news: " + news.toString());
+			
+			model.addAttribute("news", news);
+		}
+		
+		return "history/edit";
+	}
+	
+	@RequestMapping(value = "/doEdit")
+	public String doEdit(HttpServletRequest request, News news, Model model) {
+		logger.info(MANAGE_NAME+"处理编辑文章数据");
+		
+		try {
+			newsService.edit(news);
+			
+			model.addAttribute(Constants.MSG_TYPE_SUCCESS, "文章编辑成功");
+		} catch (Exception e) {
+			logger.error(MANAGE_NAME+"在编辑文章时出现异常: ", e);
+			model.addAttribute(Constants.MSG_TYPE_DANGER, "文章编辑时出现异常，请联系管理员");
+		}
 		
 		return list(request, this.currentPage, null, null, null, null, model);
 	}

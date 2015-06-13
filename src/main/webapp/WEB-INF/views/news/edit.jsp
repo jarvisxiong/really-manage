@@ -123,6 +123,7 @@
     		  		$("#indexImg").attr("src", "${root}/imgbase/" + data.imgRefetchPath);
     		  	},
     		  	error : function() {
+    		  		$("#indexImg").attr("src", "${root}/assets/images/111.png");
     		  		alert("获取异常，请检查你输入的图片链接！友情提示：如果是直接在微信网页中复制图片网址链接的话，则不可用。");
     		  	}
 		  	});

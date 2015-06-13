@@ -246,7 +246,7 @@ public class NewsController extends BaseController {
 			
 			news = newsService.queryNewsById(newsId);
 			
-			logger.info(MANAGE_NAME+"查询到文章信息 news: " + news.toString());
+			// logger.info(MANAGE_NAME+"查询到文章信息 news: " + news.toString());
 			
 			model.addAttribute("news", news);
 		}
