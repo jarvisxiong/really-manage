@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +97,14 @@
                   </td>
                   <td style="text-align: left;">
                     <a href="${obj.url}" target="_blank">
-                    <img src="${obj.imgLink}" height="30px" width="30px" />&nbsp;
+                    <c:choose>
+                    <c:when test="${not empty obj.imgLocPath}">
+                    <img src="${root}/imgbase/${obj.imgLocPath}" height="30px" width="30px" />
+                    </c:when>
+                    <c:otherwise>
+                    <img src="${obj.imgLink}" height="30px" width="30px" class="img-thumbnail" />&nbsp;
+                    </c:otherwise>
+                    </c:choose>
                     ${obj.title}
                     </a>
                   </td>
