@@ -197,7 +197,7 @@ function selected(flag) {
 		var url = "<%=request.getContextPath()%>/manage/news/send/showBatch?newsIds="+newsIds;
 		var pop = new Popup({ contentType:1,scrollType:'auto',isReloadOnClose:false,width:380,height:600});
         pop.setContent("contentUrl", url);
-        pop.setContent("title", "真相日报 - 基金行业最新资讯");
+        pop.setContent("title", "咖啡日报 - 每天给你一杯对味的资讯！");
         pop.build();
         pop.show();
 	} else if (flag == 'send') {
