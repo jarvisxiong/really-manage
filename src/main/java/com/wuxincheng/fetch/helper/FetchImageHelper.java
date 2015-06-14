@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import com.wuxincheng.common.util.ConfigHelper;
 import com.wuxincheng.common.util.DateUtil;
@@ -45,6 +46,9 @@ public class FetchImageHelper {
 		// -- 1. 获取网页中最大的图片：
 
 		File firstImg = null, secendImg = null, maxFile = null;
+		
+		String imgType = null; // 图片类型
+		
 		try {
 			// 获取网页中所有的图片链接
 			List<String> imgs = FetchImageUtil.getHtmlAllImgLink(url);
@@ -62,7 +66,7 @@ public class FetchImageHelper {
 					+ getGeneratorId() + SEPARATOR;
 			// 检查目录是否存在
 			FileUtil.createOrCheckFilePathExist(imgFileBasePath);
-
+			
 			// 图片下载网页中的图片并选取出最大的图片
 			for (int i = 0; i < imgs.size(); i++) {
 				logger.debug("下载第{}张待选择图片", i + 1);
@@ -83,6 +87,15 @@ public class FetchImageHelper {
 				secendImg = file;
 				
 				System.out.println("图片大小: " + secendImg.length());
+				
+				// 判断是否为有效的图片
+				try {
+					imgType = FetchImageUtil.checkImageType(secendImg);
+				} catch (Exception e) {
+					logger.debug("不是有效的图片");
+					secendImg.delete();
+					continue;
+				}
 
 				File deleteTmp = null;
 				if (firstImg.length() > secendImg.length()) {
@@ -103,7 +116,7 @@ public class FetchImageHelper {
 				
 				// 如果图片大小超过3000返回
 				if (firstImg.length() > 10000) {
-					break;
+					// break;
 				}
 				
 				// Thread.sleep(2000);
@@ -115,11 +128,13 @@ public class FetchImageHelper {
 			// return "logo";
 		}
 
-		// -- 2. 验证图片的格式：
+		// -- 2. 验证图片格式并重命名：
 		File imgLast = null;
 		try {
 			// 验证这个图片的格式
-			String imgType = FetchImageUtil.checkImageType(maxFile);
+			if (StringUtils.isEmpty(imgType)) {
+				imgType = FetchImageUtil.checkImageType(maxFile);
+			}
 			logger.info("验证这个图片的格式 imgType={}", imgType);
 			// 创建新的带有后缀名的图片
 			imgLast = new File(maxFile.getAbsolutePath() + "." + imgType);
