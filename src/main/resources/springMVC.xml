@@ -57,12 +57,4 @@
   <task:scheduler id="commentsExpireProcessScheduler" pool-size="10"/>
    -->
   
-  <!-- 每隔两分钟抓取图片 -->
-  <!-- 
-  <task:scheduled-tasks scheduler="fetchServiceScheduler">
-    <task:scheduled ref="fetchService" method="downloadAndProcessSendedIndexImg" fixed-delay="120000" />
-  </task:scheduled-tasks>
-  <task:scheduler id="fetchServiceScheduler" pool-size="10"/>
-   -->
-  
 </beans>
