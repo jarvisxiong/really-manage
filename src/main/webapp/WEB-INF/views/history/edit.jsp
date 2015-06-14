@@ -69,7 +69,7 @@
 				
 				<div class="col-xs-5">
 					<div class="form-group">
-		              <label for="title">文章图片：</label>
+		              <label for="title">文章图片预览：</label>
 		            </div>
 					<div class="form-group">
 		              <img id="indexImg" name="indexImg" src="${root}/imgbase/${news.imgLocPath}" class="img-thumbnail" />
